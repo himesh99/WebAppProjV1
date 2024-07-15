@@ -1,6 +1,7 @@
-variable "resource_group" {
+variable "resource_group_hp" {
   type = string
   default = "patelh-sandbox-rg"
+  
 }
 variable "tfversion" {
   type = string
@@ -9,4 +10,9 @@ variable "tfversion" {
 variable "workingDirectory" {
   type = string
   default = "./"
+}
+variable "location" {
+  type = string
+  default = "uksouth"
+  
 }
