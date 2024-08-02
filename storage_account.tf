@@ -19,10 +19,3 @@ resource "azurerm_storage_container" "containerhp" {
     container_access_type = "private"
 }
 
-resource "azurerm_storage_account_network_rules" "storage_network" {
-    storage_account_id = azurerm_storage_account.storageaccount.id
-    default_action = "Allow"
-    virtual_network_subnet_ids = [azurerm_subnet.hp_subnet.id]
-
-
-}
