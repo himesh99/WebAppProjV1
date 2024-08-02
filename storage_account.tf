@@ -9,13 +9,12 @@ resource "azurerm_storage_account" "storageaccount" {
     public_network_access_enabled = false
     allow_nested_items_to_be_public = false
 
+    network_rules {
+    default_action             = "Allow"
+    virtual_network_subnet_ids = [azurerm_subnet.hp_subnet.id]
+  }
 
   
 }
 
-resource "azurerm_storage_container" "containerhp" {
-    name  = "containerhp"
-    storage_account_name = azurerm_storage_account.storageaccount.name
-    container_access_type = "private"
-}
 
