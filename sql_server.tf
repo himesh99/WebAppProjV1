@@ -1,5 +1,5 @@
 resource "azurerm_sql_server" "hp_server" {
-    name  = "hpSQLServer"
+    name  = "hpsqlServer"
     resource_group_name = var.resource_group_hp
     location = var.location
     version = "12.0"
