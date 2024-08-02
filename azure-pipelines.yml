@@ -9,21 +9,23 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-  jobs:
-    job:
-  steps:
-  - task: TerraformInstaller@0
-    inputs:
-      terraformVersion: '0.15.0'
 
-  - script: |
-      terraform init
-    displayName: 'Terraform Init'
+jobs:
+  - job:
+    displayName: Terraform init-plan-apply
+    steps:
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: '0.15.0'
 
-  - script: |
-      terraform plan -out=tfplan
-    displayName: 'Terraform Plan'
+    - script: |
+        terraform init
+      displayName: 'Terraform Init'
 
-  - script: |
-      terraform apply -input=false tfplan
-    displayName: 'Terraform Apply'
+    - script: |
+        terraform plan -out=tfplan
+      displayName: 'Terraform Plan'
+
+    - script: |
+        terraform apply -input=false tfplan
+      displayName: 'Terraform Apply'
