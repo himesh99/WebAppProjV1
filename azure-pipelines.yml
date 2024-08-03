@@ -9,5 +9,14 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-
+steps:
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'UKDDC_Azure_Subscription'
+    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+    backendAzureRmStorageAccountName: 'storageaccounthpwebapp'
+    backendAzureRmContainerName: 'containerhp'
+    backendAzureRmKey: 'terraformstatefiles/webapp.tfstate'
 
