@@ -28,3 +28,10 @@ steps:
     command: 'plan'
     environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
     backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
