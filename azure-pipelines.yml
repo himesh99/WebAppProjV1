@@ -11,6 +11,7 @@ pool:
 
 steps:
 - task: TerraformTaskV4@4
+  displayName: terraform init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -20,3 +21,10 @@ steps:
     backendAzureRmContainerName: 'containerhp'
     backendAzureRmKey: 'terraformstatefiles/webapp.tfstate'
 
+- task: TerraformTaskV4@4
+  displayName: terraform plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
