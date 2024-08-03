@@ -19,7 +19,7 @@ resource "azurerm_storage_account" "storageaccount" {
 resource "azurerm_storage_container" "containerhp" {
   name                  = "containerhp"
   storage_account_name  = azurerm_storage_account.storageaccount.name
-  container_access_type = "public"
+  container_access_type = "container"
 }
 
 
