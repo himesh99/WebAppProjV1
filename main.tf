@@ -4,6 +4,9 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.55.0"
     }
+    azapi = {
+      source = "Azure/azapi"
+    }
   }
 }
 
@@ -13,4 +16,7 @@ provider "azurerm" {
   tenant_id = var.tenant_id
 
   
+}
+
+provider "azapi" {
 }
