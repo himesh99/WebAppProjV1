@@ -22,6 +22,7 @@ resource "azurerm_storage_account" "storageaccount" {
   container_access_type = "blob"
 }**/
 
+# Had to use below config for container as above azurerm wasn't working 
 resource "azapi_resource" "container" {
    type = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
    name = "containerhp"
