@@ -7,6 +7,12 @@ terraform {
     azapi = {
       source = "Azure/azapi"
     }
+    backend "azurerm" {
+      resource_group_name  = "tfstate"
+      storage_account_name = "sahpstatevuks01"
+      container_name       = "tfstatefiles"
+      key                  = "terraform.tfstate"
+    }
   }
 }
 

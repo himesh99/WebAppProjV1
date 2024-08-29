@@ -19,7 +19,7 @@ steps:
     backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
     backendAzureRmStorageAccountName: 'sahpstatevuks01'
     backendAzureRmContainerName: 'tfstatefiles'
-    backendAzureRmKey: 'tfs-hp-dev-uks.tfstate'
+    backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTaskV4@4
   displayName: terraform plan
