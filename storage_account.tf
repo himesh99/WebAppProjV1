@@ -16,21 +16,21 @@ resource "azurerm_storage_account" "storageaccount" {
 
 }
 
-/**resource "azurerm_storage_container" "containerhp" {
+resource "azurerm_storage_container" "containerhp" {
   name                  = "containerhp"
   storage_account_name  = azurerm_storage_account.storageaccount.name
   container_access_type = "blob"
-}**/
+}
 
 # Had to use below config for container as above azurerm wasn't working 
-resource "azapi_resource" "container" {
-   type = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
-   name = "containerhp"
-   parent_id = "${azurerm_storage_account.storageaccount.id}/blobServices/default"
-   body = jsonencode({
-      properties = {
-      }
-   })
-}
+# resource "azapi_resource" "container" {
+#    type = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
+#    name = "containerhp"
+#    parent_id = "${azurerm_storage_account.storageaccount.id}/blobServices/default"
+#    body = jsonencode({
+#       properties = {
+#       }
+#    })
+# }
 
 
