@@ -17,9 +17,9 @@ steps:
     command: 'init'
     backendServiceArm: 'UKDDC_Azure_Subscription'
     backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-    backendAzureRmStorageAccountName: 'storageaccounthpwebapp'
-    backendAzureRmContainerName: 'containerhp'
-    backendAzureRmKey: 'terraformstatefiles/webapp.tfstate'
+    backendAzureRmStorageAccountName: 'sahpstatevuks01'
+    backendAzureRmContainerName: 'tfstatefiles'
+    backendAzureRmKey: 'tfs-hp-dev-uks.tfstate'
 
 - task: TerraformTaskV4@4
   displayName: terraform plan
