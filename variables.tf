@@ -1,7 +1,7 @@
 variable "resource_group_hp" {
   type = string
   default = "patelh-sandbox-rg"
-  description = "Resource Group to deploy resources into"
+  description = "Resource Group to deploy resources into."
 }
 variable "tfversion" {
   type = string
