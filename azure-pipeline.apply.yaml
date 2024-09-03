@@ -41,7 +41,7 @@ stages:
               environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
 
-- stage: Terraform Apply 
+- stage: TerraformApply 
   displayName: Terraform Apply 
   jobs: 
   - deployment: terraformapply 
