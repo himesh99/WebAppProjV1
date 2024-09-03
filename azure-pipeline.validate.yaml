@@ -9,6 +9,16 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+- name: azureSubscription
+  value: "4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3"
+- name: storageAccountName
+  value: "storageaccounthpwebapp"
+- name: containerName
+  value: "containerhp"
+- name: blobName
+  value: "tfstatefiles"
+
 stages:
 - stage:
   displayName: Terraform Init and Plan
@@ -31,6 +41,13 @@ stages:
               backendAzureRmStorageAccountName: 'sahpstatevuks01'
               backendAzureRmContainerName: 'tfstatefiles'
               backendAzureRmKey: 'terraform.tfstate'
+
+          - template: ./break-lease.yaml
+            parameters:
+              azureSubscription: ${{ variables.azureSubscription}}
+              storageAccountName: ${{ variables.storageAccountName}}
+              containerName: ${{ variables.containerName}}
+              blobName: ${{ variables.blobName}}
 
           - task: TerraformTaskV4@4
             displayName: terraform plan
