@@ -1,23 +1,25 @@
-parameters:
-  - name: tfversion
-    type: string
+trigger:
+- none
 
-  - name: workingDirectory
-    type: string
+pool:
+  vmImage: ubuntu-latest
 
 steps:
-  - task: TerraformInstaller@0
-    displayName: 'Install Terraform ${{ parameters.tfversion }}'
-    inputs:
-      terraformVersion: ${{ parameters.tfversion }}
+- task: TerraformTaskV4@4
+  displayName: terraform init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'UKDDC_Azure_Subscription'
+    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+    backendAzureRmStorageAccountName: 'sahpstatevuks01'
+    backendAzureRmContainerName: 'tfstatefiles'
+    backendAzureRmKey: 'terraform.tfstate'
 
-  - task: TerraformCLI@0
-    displayName: 'Terraform Init'
-    inputs:
-      command: 'init'
-      commandOptions: '-backend=false -input=false'
-      workingDirectory: ${{ parameters.workingDirectory }}
-
-  - template: templates/tests/terraform/allTests.yaml@templates
-    parameters:
-      terraformPath: ${{ parameters.workingDirectory }}
+- task: TerraformTaskV4@4
+  displayName: terraform plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
