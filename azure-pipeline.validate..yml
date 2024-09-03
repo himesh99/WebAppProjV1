@@ -1,5 +1,10 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
 trigger:
-- none
+- main
 
 pool:
   vmImage: ubuntu-latest
@@ -23,3 +28,10 @@ steps:
     command: 'plan'
     environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
     backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+
+# - task: TerraformTaskV4@4
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'apply'
+#     environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+#     backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
