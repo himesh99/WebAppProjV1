@@ -41,8 +41,8 @@ stages:
               environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
 
-- stage: initandplanandapply 
-  displayName: Terraform Init, Plan, and Apply 
+- stage: Terraform Apply 
+  displayName: Terraform Apply 
   jobs: 
   - deployment: terraformapply 
     displayName: Terraform Apply 
@@ -52,24 +52,6 @@ stages:
         deploy: 
           steps: 
           - checkout: self 
-          - task: TerraformTaskV4@4
-            displayName: terraform init
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              backendServiceArm: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-              backendAzureRmStorageAccountName: 'sahpstatevuks01'
-              backendAzureRmContainerName: 'tfstatefiles'
-              backendAzureRmKey: 'terraform.tfstate'
-
-          - task: TerraformTaskV4@4
-            displayName: terraform plan
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'
-              environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
