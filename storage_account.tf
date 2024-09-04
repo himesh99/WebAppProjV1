@@ -6,7 +6,7 @@ resource "azurerm_storage_account" "storageaccount" {
     location = var.location
     account_tier = "Standard"
     account_replication_type = "LRS"
-    public_network_access_enabled = false
+    public_network_access_enabled = true
     allow_nested_items_to_be_public = false
 
     network_rules {
