@@ -22,15 +22,6 @@ resource "azurerm_storage_container" "containerhp" {
   container_access_type = "private"
 }
 
-# Had to use below config for container as above azurerm wasn't working 
-# resource "azapi_resource" "container" {
-#    type = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
-#    name = "containerhp"
-#    parent_id = "${azurerm_storage_account.storageaccount.id}/blobServices/default"
-#    body = jsonencode({
-#       properties = {
-#       }
-#    })
-# }
+
 
 
