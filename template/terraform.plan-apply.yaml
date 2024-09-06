@@ -3,20 +3,25 @@
     type: string
   - name: backendAzureRmResourceGroupName
     type: string
+jobs:
+  - job: terraformPlanApply
+    displayName: Terraform Plan and Apply
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - checkout: self
+      - task: TerraformTaskV4@4
+        displayName: terraform plan for ${{ env.name }}
+        parameters:
+          provider: 'azurerm'
+          command: 'plan'
+          environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+          backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
 
-steps:
-  - task: TerraformTaskV4@4
-    displayName: terraform plan for ${{ env.name }}
-    inputs:
-      provider: 'azurerm'
-      command: 'plan'
-      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
-      backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
-
-  - task: TerraformTaskV4@4
-    displayName: terraform apply for ${{ env.name }}
-    inputs:
-      provider: 'azurerm'
-      command: 'apply'
-      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
-      backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+      - task: TerraformTaskV4@4
+        displayName: terraform apply for ${{ env.name }}
+        parameters:
+          provider: 'azurerm'
+          command: 'apply'
+          environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+          backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
