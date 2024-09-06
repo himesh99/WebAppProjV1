@@ -68,10 +68,4 @@ stages:
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
                     tfversion: ${{ variables.tfversion }}
                     backendServiceArm: ${{ variables.backendServiceArm }}
-        ${{ if or(eq(env.name, 'hpdev'), eq(env.name, 'hpprod')) }}:
-          approvals:
-            - approver: 'users'
-              timeoutInMinutes: 4320 # 3 days
-              approvals:
-                - approve
-                - reject
+  
