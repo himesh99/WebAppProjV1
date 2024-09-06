@@ -36,17 +36,15 @@ stages:
       - job: terraformInit_${{ env.name }}
         displayName: Terraform Init for ${{ env.name }}
         steps:
-          - checkout: self
-          - task: TerraformTaskV4@4
-            displayName: terraform init for ${{ env.name }}
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              backendServiceArm: ${{ variables.backendServiceArm }}
+          - template: template/terraform.validation.yaml
+            parameters:
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+              
 
   - stage: Terraform_Apply_${{ env.name }}
     displayName: Terraform Plan/Apply for ${{ env.name }}
