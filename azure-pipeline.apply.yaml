@@ -30,11 +30,11 @@ variables:
 stages:
 - ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ env.name }}
-    displayName: Terraform Init for ${{ env.name }}
+    displayName: Terraform Init and Plan for ${{ env.name }}
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
       - job: terraformInit_${{ env.name }}
-        displayName: Terraform Init for ${{ env.name }}
+        displayName: Terraform Init and Plan ${{ env.name }}
         steps:
           - template: template/terraform.validation.yaml
             parameters:
@@ -48,7 +48,7 @@ stages:
               
 
   - stage: Terraform_Apply_${{ env.name }}
-    displayName: Terraform Plan/Apply for ${{ env.name }}
+    displayName: Terraform Apply ${{ env.name }}
     condition: succeeded('Terraform_Init_${{ env.name }}')
     jobs:
       - deployment: terraformDeploy_${{ env.name }}
@@ -68,4 +68,10 @@ stages:
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
                     tfversion: ${{ variables.tfversion }}
                     backendServiceArm: ${{ variables.backendServiceArm }}
-              
+        ${{ if or(eq(env.name, 'hpdev'), eq(env.name, 'hpprod')) }}:
+          approvals:
+            - approver: 'users'
+              timeoutInMinutes: 4320 # 3 days
+              approvals:
+                - approve
+                - reject
