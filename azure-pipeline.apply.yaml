@@ -64,25 +64,25 @@ stages:
             instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
             onTimeout: 'reject'
 
-    - stage: Terraform_Apply_${{ env.name }}
-      displayName: Terraform Apply ${{ env.name }}
-      condition: succeeded('Terraform_Init_${{ env.name }}')
-      jobs:
-        - deployment: terraformDeploy_${{ env.name }}
-          displayName: Terraform Deploy for ${{ env.name }}
-          environment: ${{ env.name }}
-          strategy:
-            runOnce:
-              deploy:
-                steps:
-                  - checkout: self
-                  - template: template/terraform.plan-apply.yaml
-                    parameters:
-                      environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-                      backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                      backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-                      backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-                      backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-                      tfversion: ${{ variables.tfversion }}
-                      backendServiceArm: ${{ variables.backendServiceArm }}
-    
+  - stage: Terraform_Apply_${{ env.name }}
+    displayName: Terraform Apply ${{ env.name }}
+    condition: succeeded('Terraform_Init_${{ env.name }}')
+    jobs:
+      - deployment: terraformDeploy_${{ env.name }}
+        displayName: Terraform Deploy for ${{ env.name }}
+        environment: ${{ env.name }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - template: template/terraform.plan-apply.yaml
+                  parameters:
+                    environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+                    tfversion: ${{ variables.tfversion }}
+                    backendServiceArm: ${{ variables.backendServiceArm }}
+  
