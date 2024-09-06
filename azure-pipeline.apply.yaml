@@ -70,10 +70,10 @@ stages:
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                    command: 'plan'
+                    
 
                 - template: template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                    command: 'apply'
+                    
