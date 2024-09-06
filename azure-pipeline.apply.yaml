@@ -16,15 +16,15 @@ parameters:
     - name: hpdev
       dependsOnEnv: ""
     - name: hpprod
-      dependsOnEnv: "Dev"
+      dependsOnEnv: "hpdev"
     
 stages: 
 - stage: initandplan 
+- ${{ each env in parameters.environment }}:
   displayName: Terraform Init and Plan 
   jobs: 
   - deployment: terraformplan 
     displayName: Terraform Init and Plan 
-    # creates an environment if it doesn't already exist 
     strategy: 
       runOnce: 
         deploy: 
@@ -50,6 +50,7 @@ stages:
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
 
 - stage: TerraformApply 
+- ${{ each env in parameters.environment }}:
   displayName: Terraform Apply 
   jobs: 
   - deployment: terraformapply 
