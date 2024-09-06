@@ -29,10 +29,10 @@ variables:
  
 
 stages: 
-- ${{ each env in parameters.environments }}:
 - stage: tfinit
   displayName: Terraform Init 
   jobs:
+    - ${{ each env in parameters.environments }}:
       - deployment: terraformPlan_${{ env.name }}  # This is a deployment job
         displayName: Terraform Init and Plan for ${{ env.name }}
         environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
@@ -54,6 +54,7 @@ stages:
 - stage: TerraformPlanApply
   displayName: Terraform Plan and Apply
   jobs:
+    - ${{ each env in parameters.environments }}:
       - deployment: terraformApply_${{ env.name }}  # Deployment job for apply
         displayName: Terraform Apply for ${{ env.name }}
         environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
