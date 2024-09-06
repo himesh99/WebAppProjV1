@@ -10,80 +10,81 @@ pool:
   vmImage: ubuntu-latest
 
 parameters:
-- name: environment
+- name: environments
   type: object
   default:
-    - name: hpdev
+    - name: hptest
       dependsOnEnv: ""
     - name: hpprod
-      dependsOnEnv: "hpdev"
+      dependsOnEnv: "hptest"
     
 stages: 
-- stage: initandplan 
-- ${{ each env in parameters.environment }}:
-  displayName: Terraform Init and Plan 
-  jobs: 
-  - deployment: terraformplan 
-    displayName: Terraform Init and Plan 
-    # creates an environment if it doesn't already exist 
-    environment: 'hpprod' 
-    strategy: 
-      runOnce: 
-        deploy: 
-          steps:
-          - checkout: self
-          - task: TerraformTaskV4@4
-            displayName: terraform init
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              backendServiceArm: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-              backendAzureRmStorageAccountName: 'sahpstatevuks01'
-              backendAzureRmContainerName: 'tfstatefiles'
-              backendAzureRmKey: 'terraform.tfstate'
+# Terraform Init and Plan Stage
+- stage: initandplan
+  displayName: Terraform Init and Plan
+  jobs:
+    - ${{ each env in parameters.environments }}:
+      - job: terraformPlan_${{ env.name }}
+        displayName: Terraform Init and Plan for ${{ env.name }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: TerraformTaskV4@4
+                  displayName: terraform init for ${{ env.name }}
+                  inputs:
+                    provider: 'azurerm'
+                    command: 'init'
+                    backendServiceArm: 'UKDDC_Azure_Subscription'
+                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+                    backendAzureRmStorageAccountName: 'sahpstatevuks01'
+                    backendAzureRmContainerName: 'tfstatefiles'
+                    backendAzureRmKey: 'terraform.tfstate'
 
-          - task: TerraformTaskV4@4
-            displayName: terraform plan
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'
-              environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+                - task: TerraformTaskV4@4
+                  displayName: terraform plan for ${{ env.name }}
+                  inputs:
+                    provider: 'azurerm'
+                    command: 'plan'
+                    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
 
-- stage: TerraformApply 
-  displayName: Terraform Apply 
-- ${{ each env in parameters.environment }}:
-  jobs: 
-  - deployment: terraformapply 
-    displayName: Terraform Apply 
-    environment: 'hpprod' 
-    strategy: 
-      runOnce: 
-        deploy: 
-          steps: 
-          - checkout: self 
-          - task: TerraformTaskV4@4
-            displayName: terraform init
-            inputs:
-              provider: 'azurerm'
-              command: 'init'
-              backendServiceArm: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-              backendAzureRmStorageAccountName: 'sahpstatevuks01'
-              backendAzureRmContainerName: 'tfstatefiles'
-              backendAzureRmKey: 'terraform.tfstate'
-          - task: TerraformTaskV4@4
-            displayName: terraform plan
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'
-              environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-          - task: TerraformTaskV4@4
-            displayName: terraform Apply
-            inputs:
-              provider: 'azurerm'
-              command: 'apply'
-              environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+# Terraform Apply Stage
+- stage: TerraformApply
+  displayName: Terraform Apply
+  jobs:
+    - ${{ each env in parameters.environments }}:
+      - job: terraformApply_${{ env.name }}
+        displayName: Terraform Apply for ${{ env.name }}
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: TerraformTaskV4@4
+                  displayName: terraform init for ${{ env.name }}
+                  inputs:
+                    provider: 'azurerm'
+                    command: 'init'
+                    backendServiceArm: 'UKDDC_Azure_Subscription'
+                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+                    backendAzureRmStorageAccountName: 'sahpstatevuks01'
+                    backendAzureRmContainerName: 'tfstatefiles'
+                    backendAzureRmKey: 'terraform.tfstate'
+
+                - task: TerraformTaskV4@4
+                  displayName: terraform plan for ${{ env.name }}
+                  inputs:
+                    provider: 'azurerm'
+                    command: 'plan'
+                    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+
+                - task: TerraformTaskV4@4
+                  displayName: terraform apply for ${{ env.name }}
+                  inputs:
+                    provider: 'azurerm'
+                    command: 'apply'
+                    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
