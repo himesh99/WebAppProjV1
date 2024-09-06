@@ -9,6 +9,15 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+parameters:
+- name: environment
+  type: object
+  default:
+    - name: hpdev
+      dependsOnEnv: ""
+    - name: hpprod
+      dependsOnEnv: "Dev"
+    
 stages: 
 - stage: initandplan 
   displayName: Terraform Init and Plan 
@@ -16,11 +25,11 @@ stages:
   - deployment: terraformplan 
     displayName: Terraform Init and Plan 
     # creates an environment if it doesn't already exist 
-    environment: 'hpvalidation' 
     strategy: 
       runOnce: 
         deploy: 
           steps:
+          - ${{ each env in parameters.environment }}:
           - checkout: self
           - task: TerraformTaskV4@4
             displayName: terraform init
@@ -51,6 +60,7 @@ stages:
       runOnce: 
         deploy: 
           steps: 
+          - ${{ each env in parameters.environment }}:
           - checkout: self 
           - task: TerraformTaskV4@4
             displayName: terraform init
@@ -70,6 +80,7 @@ stages:
               environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
           - task: TerraformTaskV4@4
+            displayName: terraform Apply
             inputs:
               provider: 'azurerm'
               command: 'apply'
