@@ -9,14 +9,14 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-# parameters:
-# - name: environment
-#   type: object
-#   default:
-#     - name: hpdev
-#       dependsOnEnv: ""
-#     - name: hpprod
-#       dependsOnEnv: "hpdev"
+parameters:
+- name: environment
+  type: object
+  default:
+    - name: hpdev
+      dependsOnEnv: ""
+    - name: hpprod
+      dependsOnEnv: "hpdev"
     
 stages: 
 - stage: initandplan 
@@ -25,6 +25,7 @@ stages:
   - deployment: terraformplan 
     displayName: Terraform Init and Plan 
     # creates an environment if it doesn't already exist 
+    environment: 'hprod' 
     strategy: 
       runOnce: 
         deploy: 
