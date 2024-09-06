@@ -13,7 +13,7 @@ parameters:
 
 steps:
   - task: TerraformTaskV4@4
-    displayName: terraform plan for ${{ environments.name }}
+    displayName: terraform plan for 
     inputs:
       provider: 'azurerm'
       command: 'plan'
@@ -21,7 +21,7 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
 
   - task: TerraformTaskV4@4
-    displayName: terraform apply for ${{ environments.name }}
+    displayName: terraform apply for 
     inputs:
       provider: 'azurerm'
       command: 'apply'
