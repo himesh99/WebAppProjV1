@@ -11,6 +11,8 @@ parameters:
     type: string
   - name: backendAzureRmKey
     type: string
+  - name: environmentServiceNameAzureRM
+    type: string
 
 
 steps:
@@ -25,3 +27,12 @@ steps:
       backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
       backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
+    
+          
+  - task: TerraformTaskV4@4
+    displayName: terraform plan for 
+    inputs:
+      provider: 'azurerm'
+      command: 'plan'
+      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+      backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}

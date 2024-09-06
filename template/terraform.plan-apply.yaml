@@ -13,12 +13,16 @@ parameters:
 
 steps:
   - task: TerraformTaskV4@4
-    displayName: terraform plan for 
+    displayName: terraform init
     inputs:
       provider: 'azurerm'
-      command: 'plan'
-      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+      command: 'init'
+      tfVersion: ${{ parameters.tfversion }}
+      backendServiceArm: ${{ parameters.backendServiceArm }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+      backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
+      backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
+      backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
 
   - task: TerraformTaskV4@4
     displayName: terraform apply for 
