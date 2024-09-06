@@ -25,7 +25,7 @@ stages:
   - deployment: terraformplan 
     displayName: Terraform Init and Plan 
     # creates an environment if it doesn't already exist 
-    environment: 'hprod' 
+    environment: 'hpprod' 
     strategy: 
       runOnce: 
         deploy: 
