@@ -75,14 +75,14 @@ stages:
 
                 - task: TerraformTaskV4@4
                   displayName: terraform plan for ${{ env.name }}
-                  template: template/terraform.plan-apply.yaml
+                - template: template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
 
                 - task: TerraformTaskV4@4
                   displayName: terraform apply for ${{ env.name }}
-                  template: template/terraform.plan-apply.yaml
+                - template: template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
