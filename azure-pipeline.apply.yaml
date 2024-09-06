@@ -29,7 +29,6 @@ stages:
       runOnce: 
         deploy: 
           steps:
-          - ${{ each env in parameters.environment }}:
           - checkout: self
           - task: TerraformTaskV4@4
             displayName: terraform init
@@ -60,7 +59,6 @@ stages:
       runOnce: 
         deploy: 
           steps: 
-          - ${{ each env in parameters.environment }}:
           - checkout: self 
           - task: TerraformTaskV4@4
             displayName: terraform init
