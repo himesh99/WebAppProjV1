@@ -27,39 +27,17 @@ variables:
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
-
-stages: 
-- stage: tfinit
-  displayName: Terraform Init 
-  jobs:
-    - ${{ each env in parameters.environments }}:
-      - deployment: terraformPlan_${{ env.name }}  # This is a deployment job
-        displayName: Terraform Init and Plan for ${{ env.name }}
-        environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
+stages:
+- ${{ each env in parameters.environments }}:
+  - stage: Terraform_${{ env.name }}
+    displayName: Terraform for ${{ env.name }}
+    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_${{ env.dependsOnEnv }}')))
+    jobs:
+      - deployment: terraformDeploy_${{ env.name }}
+        displayName: Terraform Deploy for ${{ env.name }}
+        environment: ${{ env.name }}
         strategy:
-          runOnce:  # Correct usage of runOnce under a deployment job
-            deploy:
-              steps:
-                - template: template/terraform.validation.yaml
-                  parameters:
-                    tfversion: ${{ variables.tfversion }}
-                    backendServiceArm: ${{ variables.backendServiceArm }}
-                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-               
-
-# Terraform Apply Stage
-- stage: TerraformPlanApply
-  displayName: Terraform Plan and Apply
-  jobs:
-    - ${{ each env in parameters.environments }}:
-      - deployment: terraformApply_${{ env.name }}  # Deployment job for apply
-        displayName: Terraform Apply for ${{ env.name }}
-        environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
-        strategy:
-          runOnce:  # Correct usage of runOnce under a deployment job
+          runOnce:
             deploy:
               steps:
                 - checkout: self
@@ -68,21 +46,12 @@ stages:
                   inputs:
                     provider: 'azurerm'
                     command: 'init'
-                    backendServiceArm: 'UKDDC_Azure_Subscription'
+                    backendServiceArm: ${{ variables.backendServiceArm }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
                     backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
                     backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
 
-                - task: TerraformTaskV4@4
-                  displayName: terraform plan for ${{ env.name }}
-                - template: template/terraform.plan-apply.yaml
-                  parameters:
-                    environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-
-                - task: TerraformTaskV4@4
-                  displayName: terraform apply for ${{ env.name }}
                 - template: template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
