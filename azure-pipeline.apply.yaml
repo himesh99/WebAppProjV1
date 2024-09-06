@@ -18,10 +18,20 @@ parameters:
     - name: hpprod
       dependsOnEnv: "hpdev"
 
+variables:
+  tfversion: '1.7.1'
+  backendServiceArm: 'UKDDC_Azure_Subscription'
+  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+  backendAzureRmStorageAccountName: 'sahpstatevuks01'
+  backendAzureRmContainerName: 'tfstatefiles'
+  backendAzureRmKey: 'terraform.tfstate'
+  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+
 stages: 
 # Terraform Init and Plan Stage
-- stage: initandplan
-  displayName: Terraform Init and Plan
+- stage: tfinit
+  displayName: Terraform Init 
   jobs:
     - ${{ each env in parameters.environments }}:
       - deployment: terraformPlan_${{ env.name }}  # This is a deployment job
@@ -31,29 +41,19 @@ stages:
           runOnce:  # Correct usage of runOnce under a deployment job
             deploy:
               steps:
-                - checkout: self
-                - task: TerraformTaskV4@4
-                  displayName: terraform init for ${{ env.name }}
-                  inputs:
-                    provider: 'azurerm'
-                    command: 'init'
-                    backendServiceArm: 'UKDDC_Azure_Subscription'
-                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-                    backendAzureRmStorageAccountName: 'sahpstatevuks01'
-                    backendAzureRmContainerName: 'tfstatefiles'
-                    backendAzureRmKey: 'terraform.tfstate'
-
-                - task: TerraformTaskV4@4
-                  displayName: terraform plan for ${{ env.name }}
-                  inputs:
-                    provider: 'azurerm'
-                    command: 'plan'
-                    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+                - template: template/terraform.validation.yaml
+                  parameters:
+                    tfversion: ${{ variables.tfversion }}
+                    backendServiceArm: ${{ variables.backendServiceArm }}
+                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+               
 
 # Terraform Apply Stage
-- stage: TerraformApply
-  displayName: Terraform Apply
+- stage: TerraformPlanApply
+  displayName: Terraform Plan and Apply
   jobs:
     - ${{ each env in parameters.environments }}:
       - deployment: terraformApply_${{ env.name }}  # Deployment job for apply
@@ -70,23 +70,21 @@ stages:
                     provider: 'azurerm'
                     command: 'init'
                     backendServiceArm: 'UKDDC_Azure_Subscription'
-                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-                    backendAzureRmStorageAccountName: 'sahpstatevuks01'
-                    backendAzureRmContainerName: 'tfstatefiles'
-                    backendAzureRmKey: 'terraform.tfstate'
+                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
 
                 - task: TerraformTaskV4@4
                   displayName: terraform plan for ${{ env.name }}
-                  inputs:
-                    provider: 'azurerm'
-                    command: 'plan'
-                    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+                  template: template/terraform.plan-apply.yaml
+                  parameters:
+                    environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
 
                 - task: TerraformTaskV4@4
                   displayName: terraform apply for ${{ env.name }}
-                  inputs:
-                    provider: 'azurerm'
-                    command: 'apply'
-                    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-                    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+                  template: template/terraform.plan-apply.yaml
+                  parameters:
+                    environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}

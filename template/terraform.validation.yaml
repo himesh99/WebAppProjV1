@@ -1,0 +1,27 @@
+parameters:
+  - name: tfversion
+    type: string
+  - name: backendServiceArm
+    type: string
+  - name: backendAzureRmResourceGroupName
+    type: string
+  - name: backendAzureRmStorageAccountName
+    type: string
+  - name: backendAzureRmContainerName
+    type: string
+  - name: backendAzureRmKey
+    type: string
+
+
+steps:
+  - task: TerraformTaskV4@4
+    displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        tfVersion: ${{ parameters.tfversion }}
+        backendServiceArm: ${{ parameters.backendServiceArm }}
+        backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+        backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
+        backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
+        backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
