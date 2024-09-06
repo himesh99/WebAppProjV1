@@ -3,6 +3,13 @@ parameters:
     type: string
   - name: backendAzureRmResourceGroupName
     type: string
+  - name: environments
+    type: object
+    default:
+      - name: hpdev
+        dependsOnEnv: ""
+      - name: hpprod
+        dependsOnEnv: "hpdev"
 
 steps:
   - task: TerraformTaskV4@4
