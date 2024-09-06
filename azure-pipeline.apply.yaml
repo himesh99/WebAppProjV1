@@ -26,7 +26,7 @@ variables:
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+ 
 
 stages: 
 # Terraform Init and Plan Stage
