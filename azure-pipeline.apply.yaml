@@ -20,6 +20,7 @@ parameters:
     
 stages: 
 - stage: initandplan 
+- ${{ each env in parameters.environment }}:
   displayName: Terraform Init and Plan 
   jobs: 
   - deployment: terraformplan 
@@ -52,6 +53,7 @@ stages:
 
 - stage: TerraformApply 
   displayName: Terraform Apply 
+- ${{ each env in parameters.environment }}:
   jobs: 
   - deployment: terraformapply 
     displayName: Terraform Apply 
