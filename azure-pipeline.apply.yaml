@@ -9,22 +9,22 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-parameters:
-- name: environment
-  type: object
-  default:
-    - name: hpdev
-      dependsOnEnv: ""
-    - name: hpprod
-      dependsOnEnv: "hpdev"
+# parameters:
+# - name: environment
+#   type: object
+#   default:
+#     - name: hpdev
+#       dependsOnEnv: ""
+#     - name: hpprod
+#       dependsOnEnv: "hpdev"
     
 stages: 
 - stage: initandplan 
-- ${{ each env in parameters.environment }}:
   displayName: Terraform Init and Plan 
   jobs: 
   - deployment: terraformplan 
     displayName: Terraform Init and Plan 
+    # creates an environment if it doesn't already exist 
     strategy: 
       runOnce: 
         deploy: 
@@ -35,8 +35,6 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              env: ${{env.name}}
-              dependsOnEnv: ${{ env.dependsOnEnv }}
               backendServiceArm: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
               backendAzureRmStorageAccountName: 'sahpstatevuks01'
@@ -52,7 +50,6 @@ stages:
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
 
 - stage: TerraformApply 
-- ${{ each env in parameters.environment }}:
   displayName: Terraform Apply 
   jobs: 
   - deployment: terraformapply 
@@ -68,8 +65,6 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'init'
-              env: ${{env.name}}
-              dependsOnEnv: ${{ env.dependsOnEnv }}
               backendServiceArm: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
               backendAzureRmStorageAccountName: 'sahpstatevuks01'
@@ -80,8 +75,6 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              env: ${{env.name}}
-              dependsOnEnv: ${{ env.dependsOnEnv }}
               environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
           - task: TerraformTaskV4@4
@@ -89,7 +82,5 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              env: ${{env.name}}
-              dependsOnEnv: ${{ env.dependsOnEnv }}
               environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
