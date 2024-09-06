@@ -5,6 +5,16 @@ parameters:
     type: string
   - name: environments
     type: object
+  - name: tfversion
+    type: string
+  - name: backendServiceArm
+    type: string
+  - name: backendAzureRmStorageAccountName
+    type: string
+  - name: backendAzureRmContainerName
+    type: string
+  - name: backendAzureRmKey
+    type: string
     default:
       - name: hpdev
         dependsOnEnv: ""
