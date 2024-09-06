@@ -13,21 +13,22 @@ parameters:
 - name: environments
   type: object
   default:
-    - name: hptest
+    - name: hpdev
       dependsOnEnv: ""
     - name: hpprod
-      dependsOnEnv: "hptest"
-    
+      dependsOnEnv: "hpdev"
+
 stages: 
 # Terraform Init and Plan Stage
 - stage: initandplan
   displayName: Terraform Init and Plan
   jobs:
     - ${{ each env in parameters.environments }}:
-      - job: terraformPlan_${{ env.name }}
+      - deployment: terraformPlan_${{ env.name }}  # This is a deployment job
         displayName: Terraform Init and Plan for ${{ env.name }}
+        environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
         strategy:
-          runOnce:
+          runOnce:  # Correct usage of runOnce under a deployment job
             deploy:
               steps:
                 - checkout: self
@@ -55,10 +56,11 @@ stages:
   displayName: Terraform Apply
   jobs:
     - ${{ each env in parameters.environments }}:
-      - job: terraformApply_${{ env.name }}
+      - deployment: terraformApply_${{ env.name }}  # Deployment job for apply
         displayName: Terraform Apply for ${{ env.name }}
+        environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
         strategy:
-          runOnce:
+          runOnce:  # Correct usage of runOnce under a deployment job
             deploy:
               steps:
                 - checkout: self
