@@ -63,3 +63,9 @@ stages:
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+                    tfversion: ${{ variables.tfversion }}
+                    backendServiceArm: ${{ variables.backendServiceArm }}
+              
