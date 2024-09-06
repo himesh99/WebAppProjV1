@@ -29,14 +29,14 @@ variables:
  
 
 stages: 
+- ${{ each env in parameters.environments }}:
 # Terraform Init and Plan Stage
 - stage: tfinit
   displayName: Terraform Init 
   jobs:
-    - ${{ each env in parameters.environments }}:
-      - deployment: terraformPlan_${{ env.name }}  # This is a deployment job
-        displayName: Terraform Init and Plan for ${{ env.name }}
-        environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
+      - deployment: terraformPlan_${{ environments.name }}  # This is a deployment job
+        displayName: Terraform Init and Plan for ${{ environments.name }}
+        environment: ${{ environments.name }}  # Automatically creates an environment if it doesn't exist
         strategy:
           runOnce:  # Correct usage of runOnce under a deployment job
             deploy:
@@ -55,17 +55,16 @@ stages:
 - stage: TerraformPlanApply
   displayName: Terraform Plan and Apply
   jobs:
-    - ${{ each env in parameters.environments }}:
-      - deployment: terraformApply_${{ env.name }}  # Deployment job for apply
-        displayName: Terraform Apply for ${{ env.name }}
-        environment: ${{ env.name }}  # Automatically creates an environment if it doesn't exist
+      - deployment: terraformApply_${{ environments.name }}  # Deployment job for apply
+        displayName: Terraform Apply for ${{ environments.name }}
+        environment: ${{ environments.name }}  # Automatically creates an environment if it doesn't exist
         strategy:
           runOnce:  # Correct usage of runOnce under a deployment job
             deploy:
               steps:
                 - checkout: self
                 - task: TerraformTaskV4@4
-                  displayName: terraform plan and apply for ${{ env.name }}
+                  displayName: terraform plan and apply for ${{ environments.name }}
                 - template: template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
