@@ -49,7 +49,7 @@ stages:
   - stage: Wait${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
     condition: succeeded()
-    dependsOn: Plan${{env.name}}
+    dependsOn: ${{env.name}}
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
