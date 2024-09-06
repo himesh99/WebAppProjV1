@@ -29,9 +29,28 @@ variables:
  
 stages:
 - ${{ each env in parameters.environments }}:
-  - stage: Terraform_${{ env.name }}
-    displayName: Terraform for ${{ env.name }}
-    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_${{ env.dependsOnEnv }}')))
+  - stage: Terraform_Init_${{ env.name }}
+    displayName: Terraform Init for ${{ env.name }}
+    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
+    jobs:
+      - job: terraformInit_${{ env.name }}
+        displayName: Terraform Init for ${{ env.name }}
+        steps:
+          - checkout: self
+          - task: TerraformTaskV4@4
+            displayName: terraform init for ${{ env.name }}
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: ${{ variables.backendServiceArm }}
+              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+
+  - stage: Terraform_Apply_${{ env.name }}
+    displayName: Terraform Plan/Apply for ${{ env.name }}
+    condition: succeeded('Terraform_Init_${{ env.name }}')
     jobs:
       - deployment: terraformDeploy_${{ env.name }}
         displayName: Terraform Deploy for ${{ env.name }}
@@ -41,17 +60,6 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                - task: TerraformTaskV4@4
-                  displayName: terraform init for ${{ env.name }}
-                  inputs:
-                    provider: 'azurerm'
-                    command: 'init'
-                    backendServiceArm: ${{ variables.backendServiceArm }}
-                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-
                 - template: template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
