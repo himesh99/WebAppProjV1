@@ -47,22 +47,22 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               
   - stage: Wait${{env.name}}
-        displayName: '${{env.name}} Waiting for Approval'
-        condition: succeeded()
-        dependsOn: Plan${{env.name}}
-        pool:
-          vmImage: 'ubuntu-latest'
-        jobs:
-          - job: waitForValidation
-            displayName: '${{env.name}} Wait for external validation'
-            pool: server
-            timeoutInMinutes: 4320 # job times out in 3 days
-            steps:
-            - task: ManualValidation@0
-              timeoutInMinutes: 1440 # task times out in 1 day
-              inputs:
-                instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
-                onTimeout: 'reject'
+    displayName: '${{env.name}} Waiting for Approval'
+    condition: succeeded()
+    dependsOn: Plan${{env.name}}
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: waitForValidation
+        displayName: '${{env.name}} Wait for external validation'
+        pool: server
+        timeoutInMinutes: 4320 # job times out in 3 days
+        steps:
+        - task: ManualValidation@0
+          timeoutInMinutes: 1440 # task times out in 1 day
+          inputs:
+            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
+            onTimeout: 'reject'
 
     - stage: Terraform_Apply_${{ env.name }}
       displayName: Terraform Apply ${{ env.name }}
