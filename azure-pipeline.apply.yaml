@@ -46,12 +46,10 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               
-  - stage: Wait${{env.name}}
+  - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
-    condition: succeeded()
-    dependsOn: ${{env.name}}
-    pool:
-      vmImage: 'ubuntu-latest'
+    condition: succeeded('Terraform_Init_${{ env.name }}')
+    dependsOn: Terraform_Init_${{ env.name }}
     jobs:
       - job: waitForValidation
         displayName: '${{env.name}} Wait for external validation'
@@ -66,7 +64,8 @@ stages:
 
   - stage: Terraform_Apply_${{ env.name }}
     displayName: Terraform Apply ${{ env.name }}
-    condition: succeeded('Terraform_Init_${{ env.name }}')
+    condition: succeeded('Wait_${{ env.name }}')
+    dependsOn: Wait_${{ env.name }}
     jobs:
       - deployment: terraformDeploy_${{ env.name }}
         displayName: Terraform Deploy for ${{ env.name }}
@@ -85,4 +84,3 @@ stages:
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
                     tfversion: ${{ variables.tfversion }}
                     backendServiceArm: ${{ variables.backendServiceArm }}
-  
