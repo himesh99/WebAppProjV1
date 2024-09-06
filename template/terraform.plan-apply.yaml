@@ -3,8 +3,6 @@ parameters:
     type: string
   - name: backendAzureRmResourceGroupName
     type: string
-  - name: environments
-    type: object
   - name: tfversion
     type: string
   - name: backendServiceArm
@@ -15,6 +13,8 @@ parameters:
     type: string
   - name: backendAzureRmKey
     type: string
+  - name: environments
+    type: object
     default:
       - name: hpdev
         dependsOnEnv: ""
