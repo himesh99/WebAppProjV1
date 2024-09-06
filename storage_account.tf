@@ -6,7 +6,7 @@ resource "azurerm_storage_account" "storageaccount" {
     location = var.location
     account_tier = "Standard"
     account_replication_type = "LRS"
-    public_network_access_enabled = false
+    public_network_access_enabled = true
     allow_nested_items_to_be_public = false
 
     network_rules {
@@ -19,18 +19,9 @@ resource "azurerm_storage_account" "storageaccount" {
 resource "azurerm_storage_container" "containerhp" {
   name                  = "containerhp"
   storage_account_name  = azurerm_storage_account.storageaccount.name
-  container_access_type = "blob"
+  container_access_type = "private"
 }
 
-# Had to use below config for container as above azurerm wasn't working 
-# resource "azapi_resource" "container" {
-#    type = "Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01"
-#    name = "containerhp"
-#    parent_id = "${azurerm_storage_account.storageaccount.id}/blobServices/default"
-#    body = jsonencode({
-#       properties = {
-#       }
-#    })
-# }
+
 
 
