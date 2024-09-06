@@ -43,7 +43,6 @@ stages:
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               
 
   - stage: Terraform_Apply_${{ env.name }}
