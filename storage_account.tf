@@ -8,7 +8,7 @@ resource "azurerm_storage_account" "storageaccount" {
     account_replication_type = "LRS"
     public_network_access_enabled = true
     allow_nested_items_to_be_public = false
-
+    tags = var.tags
     network_rules {
     default_action             = "Allow"
     virtual_network_subnet_ids = [azurerm_subnet.hp_subnet.id]

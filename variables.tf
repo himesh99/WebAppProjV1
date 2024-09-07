@@ -23,3 +23,17 @@ variable "tenant_id" {
   type = string
   default = "3e0088dc-0629-4ae6-aa8c-813e7a296f50"
 }
+variable "tags" {
+  type = map(string)
+  default = {
+    Application-criticality = "low"
+    Application-name = "DDC Sandboxes"
+    Business-unit = "Azure Team Eagle"
+    Business-unit-sponsor = "DDC"
+    Cost-centre = "DDC"
+    Data-classification = "TBC"
+    Deployment-date = "2024-09-07 15:04 UTC"
+    Environment-type = "sandbox"
+
+  }
+}

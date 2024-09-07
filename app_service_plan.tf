@@ -6,4 +6,5 @@ resource "azurerm_app_service_plan" "wordpress_plan" {
       tier = "Standard"
       size = "S1"
     }
+    tags = var.tags
 }

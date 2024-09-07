@@ -5,4 +5,5 @@ resource "azurerm_sql_server" "hp_server" {
     version = "12.0"
     administrator_login          = "hpadministrator"
     administrator_login_password = "thisLion99"
+    tags = var.tags
 }
