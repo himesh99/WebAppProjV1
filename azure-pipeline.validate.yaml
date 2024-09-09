@@ -15,7 +15,7 @@ stages:
   jobs:
   - deployment:
     displayName: Terraform Init and Plan
-    environment: 'hpvDev'
+    environment: 'hpDev'
     strategy:
       runOnce:
         deploy:
