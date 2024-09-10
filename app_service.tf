@@ -13,12 +13,12 @@ resource "azurerm_app_service" "webapp" {
    connection_string {
      name = "SQLAZDBConnstr"
      type = "SQLAzure"
-     value = azurerm_sql_server.hp_server.connection_strings[0].value
+     value = "Server=tcp:${azurerm_sql_server.hp_server.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_server.hp_server.name};Persist Security Info=False;User ID=${azurerm_sql_server.hp_server.administrator_login};Password=${azurerm_sql_server.hp_server.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
    }
 }
 
 resource "azurerm_app_service_source_control" "sourcecontrol" {
-  app_id             = azurerm_linux_web_app.webapp.id
+  app_id             = azurerm_app_service.webapp.id
   repo_url           = "https://github.com/Azure-Samples/nodejs-docs-hello-world"
   branch             = "master"
   use_manual_integration = true
