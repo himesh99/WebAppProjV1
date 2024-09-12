@@ -7,7 +7,7 @@ resource "azurerm_app_service" "webapp" {
     site_config {
      always_on = true
    }
-   app_settings = {
+   app_settings = { 
      "VaultName" = azurerm_key_vault.himeshkv.name
    }
    connection_string {
@@ -17,10 +17,10 @@ resource "azurerm_app_service" "webapp" {
    }
 }
 
-resource "azurerm_app_service_source_control" "sourcecontrol" {
-  app_id             = azurerm_app_service.webapp.id
-  repo_url           = "https://github.com/Azure-Samples/nodejs-docs-hello-world"
-  branch             = "master"
-  use_manual_integration = true
-  use_mercurial      = false
-}
+# resource "azurerm_app_service_source_control" "sourcecontrol" {
+#   app_id             = azurerm_app_service.webapp.id
+#   repo_url           = "https://github.com/Azure-Samples/nodejs-docs-hello-world"
+#   branch             = "master"
+#   use_manual_integration = true
+#   use_mercurial      = false
+# }
