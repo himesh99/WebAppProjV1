@@ -87,16 +87,4 @@ stages:
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
                     tfversion: ${{ variables.tfversion }}
                     backendServiceArm: ${{ variables.backendServiceArm }}
-                - task: AzureWebApp@1
-                  inputs:
-                    azureSubscription: 'UKDDC_Azure_Subscription'
-                    appType: 'webApp'
-                    appName: 'webapp-deployment-test-001'
-                    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
-                - task: ArchiveFiles@2
-                  inputs:
-                    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/index.html'
-                    includeRootFolder: false
-                    archiveType: 'zip'
-                    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-                    replaceExistingArchive: true
+
