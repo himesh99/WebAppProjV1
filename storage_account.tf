@@ -14,6 +14,10 @@ resource "azurerm_storage_account" "storageaccount" {
     virtual_network_subnet_ids = [azurerm_subnet.hp_subnet.id]
   }
 
+  static_website {
+      index_document = "index.html"
+  }
+
 }
 
 resource "azurerm_storage_container" "containerhp" {

@@ -9,7 +9,8 @@ resource "azurerm_app_service" "webapp" {
     }
 
     app_settings = {
-      "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.storageaccount.name}.blob.core.windows.net/\$web/index.html"
+
   }
   #  connection_string {
   #    name = "SQLAZDBConnstr"
