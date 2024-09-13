@@ -4,12 +4,13 @@ resource "azurerm_app_service" "webapp" {
     location = var.location
     app_service_plan_id = azurerm_app_service_plan.webapp_plan.id
     tags = var.tags
-  #   site_config {
-  #    always_on = true
-  #  }
-  #  app_settings = { 
-  #    "VaultName" = azurerm_key_vault.himeshkv.name
-  #  }
+    site_config {
+      app_command_line = "dotnet ./index.html"
+    }
+
+    app_settings = {
+      "WEBSITE_RUN_FROM_PACKAGE" = "1"
+  }
   #  connection_string {
   #    name = "SQLAZDBConnstr"
   #    type = "SQLAzure"
