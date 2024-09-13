@@ -9,7 +9,7 @@ resource "azurerm_app_service" "webapp" {
     }
 
     app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.storageaccount.name}.blob.core.windows.net/\$web/index.html"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.storageaccount.name}.blob.core.windows.net/$web/index.html"
 
   }
   #  connection_string {
@@ -18,4 +18,3 @@ resource "azurerm_app_service" "webapp" {
   #    value = "Server=tcp:${azurerm_sql_server.hp_server.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_server.hp_server.name};Persist Security Info=False;User ID=${azurerm_sql_server.hp_server.administrator_login};Password=${azurerm_sql_server.hp_server.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   #  }
 }
-
