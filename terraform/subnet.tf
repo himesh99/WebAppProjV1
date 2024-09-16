@@ -1,9 +1,9 @@
-resource "azurerm_subnet" "hp_subnet" {
-    name = "subnethp"
+resource "azurerm_subnet" "webapp_snet" {
+    name = "snet-shared-uksouth-001"
     resource_group_name = var.resource_group_hp
     address_prefixes     = ["10.0.1.0/24"]
     service_endpoints    = ["Microsoft.Storage"]
-    virtual_network_name = azurerm_virtual_network.vnet_test.name
+    virtual_network_name = azurerm_virtual_network.webapp_vnet.name
 
   
 }

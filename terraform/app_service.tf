@@ -1,20 +1,8 @@
 resource "azurerm_app_service" "webapp" {
-   name  = "webapp-deployment-test-001"
+    name  = "webapp-deployment-test-001"
     resource_group_name = var.resource_group_hp
     location = var.location
-    app_service_plan_id = azurerm_app_service_plan.webapp_plan.id
+    app_service_plan_id = azurerm_app_service_plan.app-deployment-dev.id
     tags = var.tags
-    site_config {
-      app_command_line = "dotnet ./index.html"
-    }
 
-    app_settings = {
-    "WEBSITE_RUN_FROM_PACKAGE" = "https://${azurerm_storage_account.storageaccount.name}.blob.core.windows.net/$web/index.html"
-
-  }
-  #  connection_string {
-  #    name = "SQLAZDBConnstr"
-  #    type = "SQLAzure"
-  #    value = "Server=tcp:${azurerm_sql_server.hp_server.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_server.hp_server.name};Persist Security Info=False;User ID=${azurerm_sql_server.hp_server.administrator_login};Password=${azurerm_sql_server.hp_server.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-  #  }
 }

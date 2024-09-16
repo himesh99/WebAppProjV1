@@ -1,7 +1,7 @@
 
 
 resource "azurerm_storage_account" "storageaccount" {
-    name  = "storageaccounthpwebapp"
+    name  = "stwebappdata001"
     resource_group_name = var.resource_group_hp
     location = var.location
     account_tier = "Standard"
@@ -11,7 +11,7 @@ resource "azurerm_storage_account" "storageaccount" {
     tags = var.tags
     network_rules {
     default_action             = "Allow"
-    virtual_network_subnet_ids = [azurerm_subnet.hp_subnet.id]
+    virtual_network_subnet_ids = [azurerm_subnet.webapp_snet.id]
   }
 
   static_website {
