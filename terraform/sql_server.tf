@@ -1,5 +1,5 @@
 resource "azurerm_sql_server" "sqldb" {
-    name  = "sqldb-servers"
+    name  = "sqldb-servers-webapp-001"
     resource_group_name = var.resource_group_hp
     location = var.location
     version = "12.0"
