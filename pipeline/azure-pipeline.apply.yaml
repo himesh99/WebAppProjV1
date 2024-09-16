@@ -1,4 +1,4 @@
-## Starter pipeline
+# Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -6,87 +6,53 @@
 trigger:
 - main
 
-pr:
-- none
-
 pool:
   vmImage: ubuntu-latest
 
-parameters:
-- name: environments
-  type: object
-  default:
-    - name: Development
-      dependsOnEnv: ""
-    - name: Production
-      dependsOnEnv: "Development"
-
 variables:
-  tfversion: '1.7.1'
-  backendServiceArm: 'UKDDC_Azure_Subscription'
-  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-  backendAzureRmStorageAccountName: 'sahpstatevuks01'
-  backendAzureRmContainerName: 'tfstatefiles'
-  backendAzureRmKey: 'terraform.tfstate'
-  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
   workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-stages:
-- ${{ each env in parameters.environments }}:
-  - stage: Terraform_Init_${{ env.name }}
-    displayName: Terraform Init and Plan for ${{ env.name }}
-    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
-    jobs:
-      - job: terraformInit_${{ env.name }}
-        displayName: Terraform Init and Plan ${{ env.name }}
-        steps:
-          - template: template/terraform.validation.yaml
-            parameters:
-              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-              tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
-              workingDirectory: ${{ variables.workingDirectory }}
-              
-  - stage: Wait_${{env.name}}
-    displayName: '${{env.name}} Waiting for Approval'
-    condition: succeeded('Terraform_Init_${{ env.name }}')
-    dependsOn: Terraform_Init_${{ env.name }}
-    jobs:
-      - job: waitForValidation
-        displayName: '${{env.name}} Wait for external validation'
-        pool: server
-        timeoutInMinutes: 4320 # job times out in 3 days
-        steps:
-        - task: ManualValidation@0
-          timeoutInMinutes: 1440 # task times out in 1 day
-          inputs:
-            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
-            onTimeout: 'reject'
 
-  - stage: Terraform_Apply_${{ env.name }}
-    displayName: Terraform Apply ${{ env.name }}
-    condition: succeeded('Wait_${{ env.name }}')
-    dependsOn: Wait_${{ env.name }}
-    jobs:
-      - deployment: terraformDeploy_${{ env.name }}
-        displayName: Terraform Deploy for ${{ env.name }}
-        environment: ${{ env.name }}
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - checkout: self
-                - template: template/terraform.plan-apply.yaml
-                  parameters:
-                    environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-                    tfversion: ${{ variables.tfversion }}
-                    backendServiceArm: ${{ variables.backendServiceArm }}
-                    workingDirectory: ${{ variables.workingDirectory }}
+stages:
+- stage:
+  displayName: Terraform Init and Plan
+  jobs:
+  - deployment:
+    displayName: Terraform Init and Plan
+    environment: 'Development'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+          - task: TerraformTaskV4@4
+            displayName: terraform init
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'UKDDC_Azure_Subscription'
+              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+              backendAzureRmStorageAccountName: 'sahpstatevuks01'
+              backendAzureRmContainerName: 'tfstatefiles'
+              backendAzureRmKey: 'terraform.tfstate'
+              workingDirectory: ${{ variables.workingDirectory }}
+
+
+          - task: TerraformTaskV4@4
+            displayName: terraform plan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+              workingDirectory: ${{ variables.workingDirectory }}
+          
+          - task: TerraformTaskV4@4
+            displayName: terraform apply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+              backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+              workingDirectory: ${{ variables.workingDirectory }}
+
 
