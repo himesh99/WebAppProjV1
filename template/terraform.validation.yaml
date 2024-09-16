@@ -9,6 +9,8 @@ parameters:
     type: string
   - name: backendAzureRmContainerName
     type: string
+ - name: workingDirectory
+    type: string
   - name: backendAzureRmKey
     type: string
   - name: environmentServiceNameAzureRM
@@ -27,6 +29,7 @@ steps:
       backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
       backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
+      workingDirectory: ${{ parameters.workingDirectory }}
     
           
   - task: TerraformTaskV4@4
@@ -36,3 +39,4 @@ steps:
       command: 'plan'
       environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+      workingDirectory: ${{ parameters.workingDirectory }}

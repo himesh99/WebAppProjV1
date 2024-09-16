@@ -10,6 +10,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+
 stages:
 - stage:
   displayName: Terraform Init and Plan
@@ -32,6 +35,8 @@ stages:
               backendAzureRmStorageAccountName: 'sahpstatevuks01'
               backendAzureRmContainerName: 'tfstatefiles'
               backendAzureRmKey: 'terraform.tfstate'
+              workingDirectory: ${{ variables.workingDirectory }}
+
 
           - task: TerraformTaskV4@4
             displayName: terraform plan
@@ -40,4 +45,5 @@ stages:
               command: 'plan'
               environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
               backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+              workingDirectory: ${{ variables.workingDirectory }}
 
