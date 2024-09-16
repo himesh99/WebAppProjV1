@@ -39,7 +39,7 @@ stages:
       - job: terraformInit_${{ env.name }}
         displayName: Terraform Init and Plan ${{ env.name }}
         steps:
-          - template: ./template/terraform.validation.yaml
+          - template: ../template/terraform.validation.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
