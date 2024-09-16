@@ -11,6 +11,8 @@ parameters:
     type: string
   - name: backendAzureRmContainerName
     type: string
+  - name: workingDirectory
+    type: string
   - name: backendAzureRmKey
     type: string
   - name: environments
@@ -33,6 +35,7 @@ steps:
       backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
       backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
+      workingDirectory: ${{ parameters.workingDirectory }}
 
   - task: TerraformTaskV4@4
     displayName: terraform apply for 
@@ -41,3 +44,4 @@ steps:
       command: 'apply'
       environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+      workingDirectory: ${{ parameters.workingDirectory }}

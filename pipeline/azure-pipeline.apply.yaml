@@ -1,4 +1,4 @@
-# Starter pipeline
+## Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -29,7 +29,7 @@ variables:
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
- 
+  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
 stages:
 - ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ env.name }}
@@ -48,6 +48,7 @@ stages:
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
+              workingDirectory: ${{ variables.workingDirectory }}
               
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
@@ -87,4 +88,5 @@ stages:
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
                     tfversion: ${{ variables.tfversion }}
                     backendServiceArm: ${{ variables.backendServiceArm }}
+                    workingDirectory: ${{ variables.workingDirectory }}
 
