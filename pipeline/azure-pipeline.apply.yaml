@@ -48,6 +48,7 @@ stages:
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
+              workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
@@ -87,4 +88,5 @@ stages:
                     backendAzureRmKey: ${{ variables.backendAzureRmKey }}
                     tfversion: ${{ variables.tfversion }}
                     backendServiceArm: ${{ variables.backendServiceArm }}
+                    workingDirectory: $(System.DefaultWorkingDirectory)/terraform
 
