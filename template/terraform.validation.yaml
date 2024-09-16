@@ -9,7 +9,7 @@ parameters:
     type: string
   - name: backendAzureRmContainerName
     type: string
- - name: workingDirectory
+  - name: workingDirectory
     type: string
   - name: backendAzureRmKey
     type: string
