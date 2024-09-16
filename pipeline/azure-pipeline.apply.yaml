@@ -79,7 +79,7 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                - template: template/terraform.plan-apply.yaml
+                - template: ../template/terraform.plan-apply.yaml
                   parameters:
                     environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
                     backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
