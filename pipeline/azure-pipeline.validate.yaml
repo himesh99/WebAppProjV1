@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- HPDev
+- bugfix*
 
 pool:
   vmImage: ubuntu-latest
@@ -15,7 +15,7 @@ stages:
   jobs:
   - deployment:
     displayName: Terraform Init and Plan
-    environment: 'hpDev'
+    environment: 'Development'
     strategy:
       runOnce:
         deploy:

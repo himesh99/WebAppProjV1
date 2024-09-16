@@ -16,10 +16,10 @@ parameters:
   - name: environments
     type: object
     default:
-      - name: hpdev
+      - name: Development
         dependsOnEnv: ""
-      - name: hpprod
-        dependsOnEnv: "hpdev"
+      - name: Production
+        dependsOnEnv: "Development"
 
 steps:
   - task: TerraformTaskV4@4
