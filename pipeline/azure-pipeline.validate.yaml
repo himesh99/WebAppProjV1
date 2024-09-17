@@ -34,7 +34,7 @@ stages:
   - stage: Terraform_Init_${{ env.name }}
     displayName: Terraform Plan ${{ env.name }}
     jobs:
-      - job: ${{ env.name }}
+      - job: ${{ env.name }} Environment
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:

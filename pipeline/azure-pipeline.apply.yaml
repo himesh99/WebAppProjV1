@@ -36,7 +36,7 @@ stages:
     displayName: Terraform Plan ${{ env.name }}
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
-      - job: ${{ env.name }}
+      - job: ${{ env.name }} Environment
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
@@ -70,21 +70,16 @@ stages:
     condition: succeeded('Wait_${{ env.name }}')
     dependsOn: Wait_${{ env.name }}
     jobs:
-      - deployment: ${{ env.name }}
-        environment: ${{ env.name }}
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - checkout: self
-                - template: ../template/terraform.plan-apply.yaml
-                  parameters:
-                    environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-                    backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-                    backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-                    backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
-                    backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-                    tfversion: ${{ variables.tfversion }}
-                    backendServiceArm: ${{ variables.backendServiceArm }}
-                    workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+      - job: ${{ env.name }} Environment
+        steps:
+          - template: ../template/terraform.plan-apply.yaml
+            parameters:
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+              tfversion: ${{ variables.tfversion }}
+              backendServiceArm: ${{ variables.backendServiceArm }}
+              workingDirectory: $(System.DefaultWorkingDirectory)/terraform
 
