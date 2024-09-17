@@ -36,7 +36,7 @@ stages:
     displayName: Terraform Plan ${{ env.name }}
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
-      - job: terraformInit_${{ env.name }}
+      - job: ${{ env.name }}
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
@@ -70,7 +70,7 @@ stages:
     condition: succeeded('Wait_${{ env.name }}')
     dependsOn: Wait_${{ env.name }}
     jobs:
-      - deployment: terraformDeploy_${{ env.name }}
+      - deployment: ${{ env.name }}
         environment: ${{ env.name }}
         strategy:
           runOnce:
