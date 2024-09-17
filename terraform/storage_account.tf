@@ -1,7 +1,7 @@
 
 
 resource "azurerm_storage_account" "storageaccount" {
-    name  = "stwebappdata001"
+    name  = "st-webapp-data-001"
     resource_group_name = var.resource_group_hp
     location = var.location
     account_tier = "Standard"
@@ -13,15 +13,10 @@ resource "azurerm_storage_account" "storageaccount" {
     default_action             = "Allow"
     virtual_network_subnet_ids = [azurerm_subnet.webapp_snet.id]
   }
-
-  static_website {
-      index_document = "index.html"
-  }
-
 }
 
-resource "azurerm_storage_container" "containerhp" {
-  name                  = "containerhp"
+resource "azurerm_storage_container" "container" {
+  name                  = "st-blob-container-webapp-001"
   storage_account_name  = azurerm_storage_account.storageaccount.name
   container_access_type = "private"
 }
