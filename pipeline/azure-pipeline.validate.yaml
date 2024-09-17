@@ -32,10 +32,9 @@ variables:
 stages:
 - ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ env.name }}
-    displayName: Terraform Init and Plan for ${{ env.name }}
+    displayName: Terraform Plan ${{ env.name }}
     jobs:
       - job: terraformInit_${{ env.name }}
-        displayName: Terraform Init and Plan ${{ env.name }}
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:

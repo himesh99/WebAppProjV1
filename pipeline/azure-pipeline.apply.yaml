@@ -33,11 +33,10 @@ variables:
 stages:
 - ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ env.name }}
-    displayName: Terraform Init and Plan for ${{ env.name }}
+    displayName: Terraform Plan ${{ env.name }}
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
       - job: terraformInit_${{ env.name }}
-        displayName: Terraform Init and Plan ${{ env.name }}
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
@@ -58,10 +57,10 @@ stages:
       - job: waitForValidation
         displayName: '${{env.name}} Wait for external validation'
         pool: server
-        timeoutInMinutes: 4320 # job times out in 3 days
+        timeoutInMinutes: 300 # job times out in 5 hours
         steps:
         - task: ManualValidation@0
-          timeoutInMinutes: 1440 # task times out in 1 day
+          timeoutInMinutes: 240 # task times out in 4 hour
           inputs:
             instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
             onTimeout: 'reject'
@@ -72,7 +71,6 @@ stages:
     dependsOn: Wait_${{ env.name }}
     jobs:
       - deployment: terraformDeploy_${{ env.name }}
-        displayName: Terraform Deploy for ${{ env.name }}
         environment: ${{ env.name }}
         strategy:
           runOnce:
