@@ -29,6 +29,7 @@ variable "tenant_id" {
 }
 variable "tags" {
   type = map(string)
+  description = "Defines the tags"
   default = {
     Application-criticality = "low"
     Application-name = "DDC Sandboxes"
@@ -38,7 +39,7 @@ variable "tags" {
     Data-classification = "TBC"
     Deployment-date = "2024-09-07 15:04 UTC"
     Environment-type = "sandbox"
-    description = "Defines the tags"
+    Project = "Azure Team Eagle"
 
   }
 }
