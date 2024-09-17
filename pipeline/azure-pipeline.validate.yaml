@@ -7,6 +7,15 @@ trigger:
 - bugfix*
 - bugfix/**
 
+parameters:
+- name: environments
+  type: object
+  default:
+    - name: Development
+      dependsOnEnv: ""
+    - name: Production
+      dependsOnEnv: "Development"
+      
 pool:
   vmImage: ubuntu-latest
 
