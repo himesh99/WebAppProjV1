@@ -8,7 +8,7 @@ resource "random_password" "sqlpass" {
   override_special = "_%@"
 }
 
-resource "azurerm_sql_server" "sqldb" {
+resource "azurerm_sql_server" "sqlsvr" {
     name  = "sqldb-servers-webapp-001"
     resource_group_name = var.resource_group_hp
     location = var.location
