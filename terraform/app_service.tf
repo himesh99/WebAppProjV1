@@ -7,6 +7,7 @@ resource "azurerm_app_service" "webapp" {
 
     app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = "1"
-    "DATABASE_URL" = output.webapp_connection_string
+    "DATABASE_URL" = "Server=tcp:${azurerm_sql_server.sql_server.name}.database.windows.net,1433;Database=${azurerm_sql_database.sqldb.name};User ID=${output.sql_server_admin_username}@${azurerm_sql_server.sql_server.name};Password=${output.sql_server_admin_password};Encrypt=true;Connection Timeout=30;"
+
   }
 }
