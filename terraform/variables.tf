@@ -54,3 +54,10 @@ variable "secrets" {
   description = "Define Azure Key Vault secrets"
   default     = []
 }
+
+variable "object_id" {
+  type = string
+  default = "18755058-a4c0-4705-b50a-35348fb876d6"
+  description = "Defines the service principal id"
+}
+
