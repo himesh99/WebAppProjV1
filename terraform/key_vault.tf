@@ -6,9 +6,12 @@ resource "azurerm_key_vault" "webappkv" {
     tenant_id = var.tenant_id
     tags = var.tags
 
-    access_policy {
+}
+
+resource "azurerm_key_vault_access_policy" "webappkv_access_policy" {
+      key_vault_id = azurerm_key_vault.webappkv.id
       tenant_id = var.tenant_id
-      #object_id = var.service_principal_id
+      object_id = var.object_id
 
       key_permissions = [
         "get",
@@ -32,7 +35,6 @@ resource "azurerm_key_vault" "webappkv" {
         "restore",
       ]
     }
-}
 
 resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   name         = "sql-server-admin-password"
