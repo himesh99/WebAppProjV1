@@ -37,8 +37,8 @@ resource "azurerm_key_vault_access_policy" "webappkv_access_policy" {
     }
 
 resource "azurerm_key_vault_secret" "sql_server_admin_password" {
-  name         = "sql-server-admin-password"
-  value        = random_password.sqlpass.result
+  name   = "sql-server-admin-password"
+  value = azurerm_sql_server.sqlsvr.administrator_login_password
   key_vault_id = azurerm_key_vault.webappkv.id
   tags         = var.tags
   content_type = "password"
