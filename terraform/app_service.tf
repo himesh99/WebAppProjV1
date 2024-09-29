@@ -5,4 +5,8 @@ resource "azurerm_app_service" "webapp" {
     app_service_plan_id = azurerm_app_service_plan.app-deployment.id
     tags = var.tags
 
+    app_settings = {
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "DATABASE_URL" = "Server=tcp:${azurerm_sql_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_sql_database.sqldb.name};User ID=${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
+  }
 }

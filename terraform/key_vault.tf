@@ -7,3 +7,12 @@ resource "azurerm_key_vault" "webappkv" {
     tags = var.tags
 
 }
+
+resource "azurerm_key_vault_secret" "sql_server_admin_password" {
+  name         = "sql-server-admin-password"
+  value        = random_password.sqlpass.result
+  key_vault_id = azurerm_key_vault.webappkv.id
+  tags         = var.tags
+  content_type = "password"
+
+}
