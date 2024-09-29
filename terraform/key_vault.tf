@@ -14,25 +14,25 @@ resource "azurerm_key_vault_access_policy" "webappkv_access_policy" {
       object_id = var.object_id
 
       key_permissions = [
-        "get",
-        "list",
-        "update",
-        "create",
-        "import",
-        "delete",
-        "recover",
-        "backup",
-        "restore",
+        "Get",
+        "List",
+        "Update",
+        "Create",
+        "Import",
+        "Delete",
+        "Recover",
+        "Backup",
+        "Restore",
       ]
 
       secret_permissions = [
-        "get",
-        "list",
-        "set",
-        "delete",
-        "recover",
-        "backup",
-        "restore",
+        "Get",
+        "List",
+        "Set",
+        "Delete",
+        "Recover",
+        "Backup",
+        "Restore",
       ]
     }
 
