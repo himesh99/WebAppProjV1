@@ -16,4 +16,5 @@ resource "azurerm_sql_server" "sqlsvr" {
     administrator_login          = local.sql_server_username
     administrator_login_password = random_password.sqlpass.result
     tags = var.tags
+    
 }
