@@ -13,7 +13,7 @@ resource "azurerm_app_service" "webapp" {
     }
 
     storage_account {
-        name              = "stoargeaccountwebapp"
+        name              = "stoargeaccountwebapp001ukddceagle"
         type              = "AzureBlob"
         account_name = azurerm_storage_account.storageaccount.name
         share_name = azurerm_storage_container.container.name
