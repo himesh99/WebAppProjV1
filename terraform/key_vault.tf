@@ -45,10 +45,3 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   content_type = "password"
   depends_on = [azurerm_key_vault_access_policy.webappkv_access_policy]
 }
-
-resource "azurerm_role_assignment" "key_vault_secret_user" {
-  scope                = azurerm_key_vault.webappkv.id
-  role_definition_name = "Key Vault Secrets User"
-  principal_id         = "0e4b967e-0513-4269-aa22-687166d31276"  // Replace with your Object ID
-}
-
