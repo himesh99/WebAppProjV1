@@ -27,9 +27,7 @@ resource "azurerm_key_vault" "webappkv" {
     secret_permissions = [
       "Get",
       "List",
-      "Update",
-      "Create",
-      "Import",
+      "Set",
       "Delete",
       "Recover",
       "Backup",
