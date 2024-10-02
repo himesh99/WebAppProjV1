@@ -72,3 +72,11 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   content_type = "password"
   depends_on = [azurerm_key_vault_access_policy.webappkv_access_policy, azurerm_key_vault_access_policy.webappkv_access_policy_2]
 }
+
+// Additional configuration to address the "Forbidden" error
+resource "azurerm_role_assignment" "key_vault_contributor" {
+  scope                = azurerm_key_vault.webappkv.id
+  role_definition_name = "Key Vault Contributor"
+  principal_id         = var.object_id
+  depends_on = [azurerm_key_vault.webappkv]
+}
