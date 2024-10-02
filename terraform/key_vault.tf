@@ -5,7 +5,7 @@ resource "azurerm_key_vault" "webappkv" {
     sku_name = "standard"
     tenant_id = var.tenant_id
     tags = var.tags
-    enable_rbac_authorization = false
+    enable_rbac_authorization = true
 }
 
 # resource "azurerm_key_vault_access_policy" "webappkv_access_policy" {
