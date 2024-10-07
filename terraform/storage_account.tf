@@ -11,7 +11,7 @@ resource "azurerm_storage_account" "storageaccount" {
   tags                            = var.tags
   network_rules {
     default_action             = "Allow"
-    virtual_network_subnet_ids = [azurerm_subnet.webapp_snet.id]
+    virtual_network_subnet_ids = [azurerm_subnet.service.id]
   }
 }
 

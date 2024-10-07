@@ -2,7 +2,7 @@ resource "azurerm_private_endpoint" "storage_private_endpoint" {
   name                = "storage-private-endpoint-001"
   location            = var.location
   resource_group_name = var.resource_group_hp
-  subnet_id           = azurerm_subnet.webapp_snet.id
+  subnet_id           = azurerm_subnet.service.id
 
   private_service_connection {
     name                           = "storage-private-connection-001"
@@ -16,7 +16,7 @@ resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
   name                = "keyvault-private-endpoint-001"
   location            = var.location
   resource_group_name = var.resource_group_hp
-  subnet_id           = azurerm_subnet.webapp_snet.id
+  subnet_id           = azurerm_subnet.service.id
 
   private_service_connection {
     name                           = "keyvault-private-connection-001"
@@ -30,7 +30,7 @@ resource "azurerm_private_endpoint" "sql_private_endpoint" {
   name                = "sql-private-endpoint-001"
   location            = var.location
   resource_group_name = var.resource_group_hp
-  subnet_id           = azurerm_subnet.webapp_snet.id
+  subnet_id           = azurerm_subnet.database.id
 
   private_service_connection {
     name                           = "sql-private-connection-001"
