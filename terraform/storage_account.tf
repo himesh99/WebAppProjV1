@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storageaccount" {
-  name                            = "stwebappdata001"
+  name                            = "stwebappdataacc001"
   resource_group_name             = var.resource_group_hp
   location                        = var.location
   account_tier                    = "Standard"
