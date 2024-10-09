@@ -40,6 +40,7 @@ resource "azurerm_key_vault" "webappkv" {
     bypass = "AzureServices"
     default_action = "Deny"
     virtual_network_subnet_ids = [ azurerm_subnet.service.id]
+    ip_rules = ["84.69.79.240/32"] 
   }
 
 }
