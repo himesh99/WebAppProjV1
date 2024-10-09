@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                = "webapp-kv-001"
+  name                = "webapp-kv-uks-001"
   resource_group_name = var.resource_group_hp
   location            = var.location
   sku_name            = "standard"
@@ -38,7 +38,7 @@ resource "azurerm_key_vault" "webappkv" {
 
   network_acls {
     bypass = "AzureServices"
-    default_action = "Allow"
+    default_action = "Deny"
     virtual_network_subnet_ids = [ azurerm_subnet.service.id]
   }
 
