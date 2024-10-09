@@ -5,7 +5,6 @@ resource "azurerm_key_vault" "webappkv" {
   sku_name            = "standard"
   tenant_id           = var.tenant_id
   tags                = var.tags
-  public_network_access_enabled = true
 
   # Ensure to set the access policies here
   access_policy {
@@ -38,9 +37,8 @@ resource "azurerm_key_vault" "webappkv" {
 
   network_acls {
     bypass = "AzureServices"
-    default_action = "Deny"
+    default_action = "Allow"
     virtual_network_subnet_ids = [ azurerm_subnet.service.id]
-   
   }
 
 }
