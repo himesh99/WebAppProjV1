@@ -37,7 +37,7 @@ resource "azurerm_key_vault" "webappkv" {
 
   network_acls {
     bypass = "None"
-    default_action = "allow"
+    default_action = "Allow"
     virtual_network_subnet_ids = [ azurerm_subnet.service.id]
   }
 
