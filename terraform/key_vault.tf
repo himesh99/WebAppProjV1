@@ -5,7 +5,6 @@ resource "azurerm_key_vault" "webappkv" {
   sku_name            = "standard"
   tenant_id           = var.tenant_id
   tags                = var.tags
-  public_network_access_enabled = true
 
   # Ensure to set the access policies here
   access_policy {
@@ -38,7 +37,7 @@ resource "azurerm_key_vault" "webappkv" {
 
   network_acls {
     bypass = "None"
-    default_action = "Deny"
+    default_action = "allow"
     virtual_network_subnet_ids = [ azurerm_subnet.service.id]
   }
 
@@ -106,5 +105,4 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   key_vault_id = azurerm_key_vault.webappkv.id
   tags         = var.tags
   content_type = "password"
-  depends_on   = [azurerm_key_vault_access_policy.access_policy_1]
 }
