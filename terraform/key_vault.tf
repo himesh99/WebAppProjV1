@@ -7,7 +7,6 @@ resource "azurerm_key_vault" "webappkv" {
   tags                = var.tags
   public_network_access_enabled = true
 
-  # Ensure to set the access policies here
   access_policy {
 
     tenant_id = var.tenant_id
