@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                = "webapp-kv-001"
+  name                = "webapp-kv-001-test3"
   resource_group_name = var.resource_group_hp
   location            = var.location
   sku_name            = "standard"
