@@ -13,6 +13,8 @@ parameters:
     type: string
   - name: backendAzureRmKey
     type: string
+  - name: backendAzureAccessKey
+    type: string
   - name: environmentServiceNameAzureRM
     type: string
 
@@ -29,6 +31,7 @@ steps:
       backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
       backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
+      backendAzureAccessKey: ${{ parameters.backendAzureAccessKey }}
       workingDirectory: ${{ parameters.workingDirectory }}
     
           
