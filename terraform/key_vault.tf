@@ -35,13 +35,6 @@ resource "azurerm_key_vault" "webappkv" {
     ]
   }
 
-  network_acls {
-    bypass = "AzureServices"
-    default_action = "Deny"
-    virtual_network_subnet_ids = [ azurerm_subnet.service.id]
-    ip_rules = ["84.69.79.240/32", "108.143.102.153/32", "108.142.210.216/32"] 
-  }
-
 }
 
 resource "azurerm_key_vault_access_policy" "access_policy_1" {
