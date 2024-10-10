@@ -28,7 +28,6 @@ variables:
   backendAzureRmStorageAccountName: 'sahpstatevuks01'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
-  backendAzureAccessKey: 'xVVCq3sQ06ldTGtjMNzOIyxLMFOAaSMSR7k+gQ/twsQwjIezjboBExjG0z9pLfeEjyIOssnMuto5+AStq5cJig=='
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
 stages:
@@ -48,7 +47,6 @@ stages:
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
-              backendAzureAccessKey: ${{ variables.backendAzureAccessKey }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               
   - stage: Wait_${{env.name}}
