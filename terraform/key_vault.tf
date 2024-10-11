@@ -1,11 +1,10 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                = "webapp-kv-001"
+  name                = "app-kv-001"
   resource_group_name = var.resource_group_hp
   location            = var.location
   sku_name            = "standard"
   tenant_id           = var.tenant_id
   tags                = var.tags
-  public_network_access_enabled = true
 
   access_policy {
 
@@ -99,5 +98,5 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   key_vault_id = azurerm_key_vault.webappkv.id
   tags         = var.tags
   content_type = "password"
-  depends_on = [ azurerm_key_vault_access_policy.access_policy_1, azurerm_key_vault_access_policy.webappkv_access_policy_2 ]
+  #depends_on = [ azurerm_key_vault_access_policy.access_policy_1, azurerm_key_vault_access_policy.webappkv_access_policy_2 ]
 }
