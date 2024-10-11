@@ -92,11 +92,11 @@ resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
   ]
 }
 
-resource "azurerm_key_vault_secret" "sql_server_admin_password" {
-  name         = "sql-server-password"
-  value        = azurerm_sql_server.sqlsvr.administrator_login_password
-  key_vault_id = azurerm_key_vault.webappkv.id
-  tags         = var.tags
-  content_type = "password"
-  #depends_on = [ azurerm_key_vault_access_policy.access_policy_1, azurerm_key_vault_access_policy.webappkv_access_policy_2 ]
-}
+# resource "azurerm_key_vault_secret" "sql_server_admin_password" {
+#   name         = "sql-server-password"
+#   value        = azurerm_sql_server.sqlsvr.administrator_login_password
+#   key_vault_id = azurerm_key_vault.webappkv.id
+#   tags         = var.tags
+#   content_type = "password"
+#   #depends_on = [ azurerm_key_vault_access_policy.access_policy_1, azurerm_key_vault_access_policy.webappkv_access_policy_2 ]
+# }
