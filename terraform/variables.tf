@@ -66,7 +66,6 @@ variable "sa_access_key" {
   default = "X/oxLevITii1fcgdxp1oRq+0ujmHELv0dFcOR9k2Pfe8qPEBn8fAm/JQvYpeEIOmEpiTlAdpw4dx+AStoZSU+w=="
 }
 
-variable "env" {
-  type        = string
-  description = "The environment for deployment (e.g., Development, Production)"
+variable "service_name" {
+  type = string
 }

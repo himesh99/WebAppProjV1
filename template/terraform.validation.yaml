@@ -32,7 +32,7 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
     
           
-  - task: TerraformTaskV4@4
+  - task: erraformCLI@0
     displayName: Terraform Plan
     inputs:
       provider: 'azurerm'
@@ -40,3 +40,5 @@ steps:
       environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
+      commandOptions: >
+      -var-file $(System.DefaultWorkingDirectory)/terraform/$(env).tfvars
