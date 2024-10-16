@@ -41,4 +41,4 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: >
-        -var-file $(System.DefaultWorkingDirectory)/terraform/$(env).tfvars
+        -var-file $(System.DefaultWorkingDirectory)/terraform/$(environment).tfvars
