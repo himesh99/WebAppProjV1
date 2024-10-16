@@ -15,8 +15,6 @@ parameters:
     type: string
   - name: backendAzureRmKey
     type: string
-  - name: environments
-    type: string
 
 steps:
   - task: TerraformTaskV4@4
