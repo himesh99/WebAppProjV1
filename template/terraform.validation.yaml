@@ -15,7 +15,7 @@ parameters:
     type: string
   - name: environmentServiceNameAzureRM
     type: string
-  - name: env
+  - name: environments
     type: string
 
 
@@ -43,4 +43,4 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: >
-        -var-file "$(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.env}}.tfvars"
+        -var-file "$(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.environments}}.tfvars"
