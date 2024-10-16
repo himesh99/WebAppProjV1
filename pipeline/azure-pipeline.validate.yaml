@@ -37,6 +37,7 @@ stages:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.validation.yaml
+          - template: ../envs/variables-${{env.name}}.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}

@@ -16,12 +16,7 @@ parameters:
   - name: backendAzureRmKey
     type: string
   - name: environments
-    type: object
-    default:
-      - name: Development
-        dependsOnEnv: ""
-      - name: Production
-        dependsOnEnv: "Development"
+    type: string
 
 steps:
   - task: TerraformTaskV4@4
