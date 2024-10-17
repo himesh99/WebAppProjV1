@@ -49,7 +49,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
-              environment: '${{env.name}}'
+              environment: ${{env.name}}
               
               
   - stage: Wait_${{env.name}}
@@ -86,4 +86,4 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
-              environment: '${{env.name}}'
+              environment: ${{env.name}}
