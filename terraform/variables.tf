@@ -67,9 +67,5 @@ variable "sa_access_key" {
 }
 
 variable "environment" {
-  type    = map(string)
-  default = {
-    "Development" = "Development"
-    "Production" = "Production"
-  }
+  type    = string
   }
