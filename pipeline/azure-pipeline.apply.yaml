@@ -37,7 +37,6 @@ stages:
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        environment: '${{env.name}}'
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
@@ -50,6 +49,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+              environment: '${{env.name}}'
               
               
   - stage: Wait_${{env.name}}
@@ -74,7 +74,6 @@ stages:
     dependsOn: Wait_${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        environment: '${{env.name}}'
         steps:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
@@ -87,4 +86,4 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
-
+              environment: '${{env.name}}'
