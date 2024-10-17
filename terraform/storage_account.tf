@@ -14,7 +14,7 @@ resource "azurerm_storage_account" "storageaccount" {
 }
 
 resource "azurerm_storage_container" "container" {
-  name                  = "st-blob-container-webapp-${var.environment}-001"
+  name                  = "st-blob-container-webapp-${var.environment}"
   storage_account_name  = azurerm_storage_account.storageaccount.name
   container_access_type = "private"
 }
