@@ -29,7 +29,6 @@ steps:
       backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
       workingDirectory: ${{ parameters.workingDirectory }}
-      commandOptions: '-var-file=${{ lower(env.name) }}.tfvars'
 
 
   - task: TerraformTaskV4@4
@@ -40,5 +39,4 @@ steps:
       environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
-      commandOptions: '-var-file=${{ lower(env.name) }}.tfvars'
 

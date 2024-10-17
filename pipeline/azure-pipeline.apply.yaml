@@ -48,6 +48,7 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+              commandOptions: '-var-file=${{ lower(env.name) }}.tfvars'
               
               
   - stage: Wait_${{env.name}}
@@ -83,5 +84,6 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+              commandOptions: '-var-file=${{ lower(env.name) }}.tfvars'
              
 
