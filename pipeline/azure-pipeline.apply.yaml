@@ -70,7 +70,7 @@ stages:
 
   - stage: Terraform_Apply_${{ env.name }}
     displayName: Terraform Apply ${{ env.name }}
-    '${{env.name}}'
+    environment: '${{env.name}}'
     condition: succeeded('Wait_${{ env.name }}')
     dependsOn: Wait_${{ env.name }}
     jobs:
