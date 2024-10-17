@@ -48,6 +48,7 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+              commandOptions: '-var "environment=${{ parameters.environment }}"'
               
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
@@ -82,4 +83,5 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+              commandOptions: '-var "environment=${{ parameters.environment }}"'
 
