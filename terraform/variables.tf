@@ -65,3 +65,7 @@ variable "sa_access_key" {
   type    = string
   default = "X/oxLevITii1fcgdxp1oRq+0ujmHELv0dFcOR9k2Pfe8qPEBn8fAm/JQvYpeEIOmEpiTlAdpw4dx+AStoZSU+w=="
 }
+
+variable "environment" {
+  type    = string
+  }
