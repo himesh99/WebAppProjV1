@@ -34,10 +34,10 @@ stages:
 - ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ env.name }}
     displayName: Terraform Plan ${{ env.name }}
-    environment: '${{env.name}}'
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
+        environment: '${{env.name}}'
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
@@ -70,11 +70,11 @@ stages:
 
   - stage: Terraform_Apply_${{ env.name }}
     displayName: Terraform Apply ${{ env.name }}
-    environment: '${{env.name}}'
     condition: succeeded('Wait_${{ env.name }}')
     dependsOn: Wait_${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
+        environment: '${{env.name}}'
         steps:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
