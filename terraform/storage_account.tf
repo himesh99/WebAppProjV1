@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storageaccount" {
-  name                            = "stwebappdata${var.environment}001"
+  name                            = "stwebappdata${var.environment}"
   resource_group_name             = var.resource_group_hp
   location                        = var.location
   account_tier                    = "Standard"
@@ -14,7 +14,7 @@ resource "azurerm_storage_account" "storageaccount" {
 }
 
 resource "azurerm_storage_container" "container" {
-  name                  = "st-blob-container-webapp-${var.environment}"
+  name                  = "st-blob-container-webapp-${var.environment}-001"
   storage_account_name  = azurerm_storage_account.storageaccount.name
   container_access_type = "private"
 }
