@@ -1,2 +1,2 @@
-environment                   = "development"
-env                           = "development"
+environment                   = "Development"
+env                           = "Development"
