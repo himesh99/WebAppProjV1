@@ -13,12 +13,9 @@ pool:
   vmImage: ubuntu-latest
 
 parameters:
-  - name: environments
+  - name: env
     type: string
     default: 'development'
-  - name: dependsOnEnv
-    type: string
-    default: ''
 
 variables:
   tfversion: '1.7.1'
@@ -38,6 +35,7 @@ stages:
       - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.validation.yaml
+          - template: ../template/vairables/variables-${{parameters.env}}.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
@@ -76,6 +74,7 @@ stages:
       - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.plan-apply.yaml
+          - template: ../template/vairables/variables-${{parameters.env}}.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
