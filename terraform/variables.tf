@@ -69,3 +69,8 @@ variable "sa_access_key" {
 variable "environment" {
   type    = string
   }
+variable "environments" {
+  type    = list(string)
+  default = ["Development", "Production"]  # Add more environments as needed
+}
+
