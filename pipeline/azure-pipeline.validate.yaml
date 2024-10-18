@@ -39,8 +39,8 @@ stages:
           - template: ../template/terraform.validation.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
