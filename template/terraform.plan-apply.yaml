@@ -17,6 +17,8 @@ parameters:
     type: string
   - name: tfvarsfile
     type: string
+  - name: env
+    type: string
 
 steps:
   - task: TerraformTaskV4@4
