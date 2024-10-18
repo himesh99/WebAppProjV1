@@ -13,9 +13,13 @@ pool:
   vmImage: ubuntu-latest
 
 parameters:
-  - name: environments
-    type: string
-    default: 'development'
+- name: environments
+  type: object
+  default:
+    - name: Development
+      dependsOnEnv: ""
+    - name: Production
+      dependsOnEnv: "Development"
 
 variables:
   tfversion: '1.7.1'
@@ -27,15 +31,14 @@ variables:
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
 stages:
-#- ${{ each env in parameters.environments }}:
-  - stage: Terraform_Init_${{ parameters.environments }}
-    displayName: Terraform Plan ${{  parameters.environments }}
-    condition: and(succeeded(), or(eq('${{ parameters.environments }}', ''), succeeded('Terraform_Apply_${{ parameters.environments }}')))
+- ${{ each env in parameters.environments }}:
+  - stage: Terraform_Init_${{ env.name }}
+    displayName: Terraform Plan ${{ env.name }}
+    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
-      - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
+      - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.validation.yaml
-          - template: ../template/vairables/variables-${{parameters.environments}}.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
@@ -45,36 +48,34 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.environments}}.tfvars 
-              environments: ${{variables.env}}
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
               
               
               
-  - stage: Wait_${{parameters.environments}}
-    displayName: '${{parameters.environments}} Waiting for Approval'
-    condition: succeeded('Terraform_Init_${{ parameters.environments }}')
-    dependsOn: Terraform_Init_${{ parameters.environments }}
+  - stage: Wait_${{env.name}}
+    displayName: '${{env.name}} Waiting for Approval'
+    condition: succeeded('Terraform_Init_${{ env.name }}')
+    dependsOn: Terraform_Init_${{ env.name }}
     jobs:
       - job: waitForValidation
-        displayName: '${{parameters.environments}} Wait for external validation'
+        displayName: '${{env.name}} Wait for external validation'
         pool: server
         timeoutInMinutes: 300 # job times out in 5 hours
         steps:
         - task: ManualValidation@0
           timeoutInMinutes: 240 # task times out in 4 hour
           inputs:
-            instructions: 'Please validate the Terraform Plan for ${parameters.environments}} environment to resume'
+            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
             onTimeout: 'reject'
 
-  - stage: Terraform_Apply_${{ parameters.environments }}
-    displayName: Terraform Apply ${{ parameters.environments }}
-    condition: succeeded('Wait_${{ parameters.environments }}')
-    dependsOn: Wait_${{ parameters.environments }}
+  - stage: Terraform_Apply_${{ env.name }}
+    displayName: Terraform Apply ${{ env.name }}
+    condition: succeeded('Wait_${{ env.name }}')
+    dependsOn: Wait_${{ env.name }}
     jobs:
-      - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
+      - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.plan-apply.yaml
-          - template: ../template/vairables/variables-${{parameters.environments}}.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
@@ -84,5 +85,5 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.environments}}.tfvars
-              environments: ${{variables.env}}
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
+              environment: ${{env.name}}
