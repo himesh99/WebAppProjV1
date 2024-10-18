@@ -16,17 +16,17 @@ parameters:
 - name: environments
   type: object
   default:
-    - name: Development
+    - name: development
       dependsOnEnv: ""
-    - name: Production
-      dependsOnEnv: "Development"
+    - name: production
+      dependsOnEnv: "development"
 
 variables:
   tfversion: '1.7.1'
   backendServiceArm: 'UKDDC_Azure_Subscription'
   backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-  backendAzureRmStorageAccountName: 'sahpstatevuks01'
-  backendAzureRmContainerName: 'tfstatefiles'
+  backendAzureRmStorageAccountName: 'sahpstatevuks01${{parameters.environments}}'
+  backendAzureRmContainerName: 'tfstatefiles${{parameters.environments}}'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  

@@ -11,10 +11,10 @@ parameters:
 - name: environments
   type: object
   default:
-    - name: Development
+    - name: development
       dependsOnEnv: ""
-    - name: Production
-      dependsOnEnv: "Development"
+    - name: production
+      dependsOnEnv: "development"
       
 pool:
   vmImage: ubuntu-latest
@@ -24,7 +24,7 @@ variables:
   tfversion: '1.7.1'
   backendServiceArm: 'UKDDC_Azure_Subscription'
   backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-  backendAzureRmStorageAccountName: 'sahpstatevuks01'
+  backendAzureRmStorageAccountName: 'sahpstatevuks${{parameters.environments}}'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
