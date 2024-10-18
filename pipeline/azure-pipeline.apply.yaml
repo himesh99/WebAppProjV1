@@ -30,7 +30,7 @@ stages:
 #- ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ parameters.environments }}
     displayName: Terraform Plan ${{  parameters.environments }}
-    condition: and(succeeded(), or(eq('${{ parameters.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ parameters.dependsOnEnv }}')))
+    condition: and(succeeded(), or(eq('${{ parameters.environments }}', ''), succeeded('Terraform_Apply_${{ parameters.dependsOnEnv }}')))
     jobs:
       - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
         steps:
