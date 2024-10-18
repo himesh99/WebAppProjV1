@@ -41,6 +41,7 @@ stages:
           - template: ../template/terraform.validation.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+              env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
@@ -78,6 +79,7 @@ stages:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+              env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
