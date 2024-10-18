@@ -32,7 +32,7 @@ variables:
 stages:
 #- ${{ each env in parameters.environments }}:
   - stage: Terraform_Init_${{ parameters.environments }}
-    displayName: Terraform Plan ${{  paarameters.environments }}
+    displayName: Terraform Plan ${{  parameters.environments }}
     condition: and(succeeded(), or(eq('${{ parameters.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ parameters.dependsOnEnv }}')))
     jobs:
       - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
@@ -47,7 +47,7 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.environments}}.tfvars 
               environments: ${{variables.env}}
               
               
@@ -58,7 +58,7 @@ stages:
     dependsOn: Terraform_Init_${{ parameters.environments }}
     jobs:
       - job: waitForValidation
-        displayName: '${{eparameters.environments}} Wait for external validation'
+        displayName: '${{parameters.environments}} Wait for external validation'
         pool: server
         timeoutInMinutes: 300 # job times out in 5 hours
         steps:
@@ -71,7 +71,7 @@ stages:
   - stage: Terraform_Apply_${{ parameters.environments }}
     displayName: Terraform Apply ${{ parameters.environments }}
     condition: succeeded('Wait_${{ parameters.environments }}')
-    dependsOn: Wait_${{ eparameters.environments }}
+    dependsOn: Wait_${{ parameters.environments }}
     jobs:
       - job: ${{ replace(parameters.environments, ' ', '_') }}_Environment
         steps:
@@ -85,5 +85,5 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.environments}}.tfvars
               environments: ${{variables.env}}
