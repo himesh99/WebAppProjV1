@@ -81,8 +81,8 @@ stages:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
