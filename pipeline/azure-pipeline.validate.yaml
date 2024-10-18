@@ -24,7 +24,7 @@ variables:
   tfversion: '1.7.1'
   backendServiceArm: 'UKDDC_Azure_Subscription'
   backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-  backendAzureRmStorageAccountName: 'sahpstatevuks${{parameters.environments}}'
+  backendAzureRmStorageAccountName: 'sahpstatevuks'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'

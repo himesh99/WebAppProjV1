@@ -25,8 +25,8 @@ variables:
   tfversion: '1.7.1'
   backendServiceArm: 'UKDDC_Azure_Subscription'
   backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-  backendAzureRmStorageAccountName: 'sahpstatevuks01${{parameters.environments}}'
-  backendAzureRmContainerName: 'tfstatefiles${{parameters.environments}}'
+  backendAzureRmStorageAccountName: 'sahpstatevuks'
+  backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
@@ -43,8 +43,8 @@ stages:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{parameters.environments}}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{parameters.environments}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
