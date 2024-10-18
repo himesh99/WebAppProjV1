@@ -16,6 +16,9 @@ parameters:
   - name: environments
     type: string
     default: 'development'
+  - name: dependsOnEnv
+    type: string
+    default: ''
 
 variables:
   tfversion: '1.7.1'
@@ -28,9 +31,9 @@ variables:
  
 stages:
 #- ${{ each env in parameters.environments }}:
-  - stage: Terraform_Init_${{ env.name }}
-    displayName: Terraform Plan ${{ env.name }}
-    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
+  - stage: Terraform_Init_${{ parameters.env }}
+    displayName: Terraform Plan ${{  paarameters.env }}
+    condition: and(succeeded(), or(eq('${{ parameters.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ parameters.dependsOnEnv }}')))
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
@@ -49,28 +52,28 @@ stages:
               
               
               
-  - stage: Wait_${{env.name}}
-    displayName: '${{env.name}} Waiting for Approval'
-    condition: succeeded('Terraform_Init_${{ env.name }}')
-    dependsOn: Terraform_Init_${{ env.name }}
+  - stage: Wait_${{parameters.env}}
+    displayName: '${{parameters.env}} Waiting for Approval'
+    condition: succeeded('Terraform_Init_${{ parameters.env }}')
+    dependsOn: Terraform_Init_${{ parameters.env }}
     jobs:
       - job: waitForValidation
-        displayName: '${{env.name}} Wait for external validation'
+        displayName: '${{eparameters.env}} Wait for external validation'
         pool: server
         timeoutInMinutes: 300 # job times out in 5 hours
         steps:
         - task: ManualValidation@0
           timeoutInMinutes: 240 # task times out in 4 hour
           inputs:
-            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
+            instructions: 'Please validate the Terraform Plan for ${parameters.env}} environment to resume'
             onTimeout: 'reject'
 
-  - stage: Terraform_Apply_${{ env.name }}
-    displayName: Terraform Apply ${{ env.name }}
-    condition: succeeded('Wait_${{ env.name }}')
-    dependsOn: Wait_${{ env.name }}
+  - stage: Terraform_Apply_${{ parameters.env }}
+    displayName: Terraform Apply ${{ parameters.env }}
+    condition: succeeded('Wait_${{ parameters.env }}')
+    dependsOn: Wait_${{ eparameters.env }}
     jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Environment
+      - job: ${{ replace(parameters.env, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
