@@ -37,8 +37,6 @@ stages:
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        pool: 
-          vmImage: 'ubuntu-latest'  # Ensure this job runs on an agent
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
@@ -51,6 +49,8 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+              
+              
               
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
@@ -73,9 +73,7 @@ stages:
     condition: succeeded('Wait_${{ env.name }}')
     dependsOn: Wait_${{ env.name }}
     jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Deployment  # Changed job name to indicate deployment
-        pool: 
-          vmImage: 'ubuntu-latest'  # Ensure this job runs on an agent
+      - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
@@ -87,5 +85,4 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
-              environment: ${{env.name}}  # Pass the environment variable
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars
