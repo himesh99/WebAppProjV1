@@ -46,5 +46,5 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
-       env:  ${{ parameters.env }}
+      env:  ${{ parameters.env }}
 
