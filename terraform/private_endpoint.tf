@@ -1,4 +1,5 @@
 resource "azurerm_private_endpoint" "storage_private_endpoint" {
+  for_each   = toset(var.environments)
   name                = "storage-private-endpoint-${var.environment}-001"
   location            = var.location
   resource_group_name = var.resource_group_hp
@@ -13,6 +14,7 @@ resource "azurerm_private_endpoint" "storage_private_endpoint" {
 }
 
 resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
+  for_each   = toset(var.environments)
   name                = "keyvault-private-endpoint-${var.environment}-001"
   location            = var.location
   resource_group_name = var.resource_group_hp
@@ -27,6 +29,7 @@ resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
 }
 
 resource "azurerm_private_endpoint" "sql_private_endpoint" {
+  for_each   = toset(var.environments)
   name                = "sql-private-endpoint-${var.environment}-001"
   location            = var.location
   resource_group_name = var.resource_group_hp

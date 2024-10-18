@@ -1,4 +1,5 @@
 resource "azurerm_storage_account" "storageaccount" {
+  for_each   = toset(var.environments)
   name                            = "stwebappdata${var.environment}"
   resource_group_name             = var.resource_group_hp
   location                        = var.location

@@ -9,6 +9,7 @@ resource "random_password" "sqlpass" {
 }
 
 resource "azurerm_sql_server" "sqlsvr" {
+  for_each   = toset(var.environments)
   name                         = "sqldb-servers-webapp-${var.environment}-001"
   resource_group_name          = var.resource_group_hp
   location                     = var.location
