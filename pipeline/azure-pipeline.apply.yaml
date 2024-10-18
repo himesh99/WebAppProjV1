@@ -13,7 +13,7 @@ pool:
   vmImage: ubuntu-latest
 
 parameters:
-  - name: env
+  - name: environments
     type: string
     default: 'development'
 
