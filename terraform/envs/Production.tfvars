@@ -1,2 +1,2 @@
-environment                   = "Production"
-env                           = "Production"  
+environment                   = "production"
+env                           = "production"  
