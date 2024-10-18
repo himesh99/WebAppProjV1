@@ -1,5 +1,5 @@
 resource "azurerm_sql_database" "sqldb" {
-  for_each            = toset(var.environment)
+  for_each   = "${var.environment}"          
   name = "sqldb-webapp-${var.environment}-001"
   resource_group_name              = var.resource_group_hp
   location                         = var.location
