@@ -38,6 +38,7 @@ resource "azurerm_key_vault" "webappkv" {
 }
 
 resource "azurerm_key_vault_access_policy" "access_policy_1" {
+  for_each   = toset(var.environments)
   key_vault_id = azurerm_key_vault.webappkv[each.key].id
   tenant_id    = var.tenant_id
   object_id    = var.object_id
@@ -66,6 +67,7 @@ resource "azurerm_key_vault_access_policy" "access_policy_1" {
 }
 
 resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
+  for_each   = toset(var.environments)
   key_vault_id = azurerm_key_vault.webappkv[each.key].id
   tenant_id    = var.tenant_id
   object_id    = "0e4b967e-0513-4269-aa22-687166d31276"
