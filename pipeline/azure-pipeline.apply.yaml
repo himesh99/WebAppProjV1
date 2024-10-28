@@ -52,7 +52,23 @@ stages:
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
               
               
-              
+  - stage: Terraform Checks ${{env.name}}
+    displayName: Tfchecks
+    jobs:
+      -job: TFchecks
+      steps:
+      - task: AzureCLI@2
+        displayName: Run checks
+        inputs:
+          azureSubscription: "${{ parameters.backendServiceArm }}"
+          scriptType: "bash"
+          scriptLocation: "inlineScript"
+          inlineScript: |
+            # export TF_LOG="TRACE"
+            az account show
+            terraform apply -auto-approve # -state-out=test.tfstate -var 'tenant=${{ parameters.tenant }}' -var 'region=${{ parameters.regionAbbreviated }}' -var 'environment=${{ parameters.environmentClass }}' -var 'service=${{ parameters.serviceAbbreviatedName }}'
+            workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"    
+
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
     condition: succeeded('Terraform_Init_${{ env.name }}')
