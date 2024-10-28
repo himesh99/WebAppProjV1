@@ -25,7 +25,7 @@ data "azurerm_app_service" "webapp" {
 
 check "webapp" {
   assert {
-    condition = data.azure_rm_app_service.webapp == "webapp-deploymrnt-development-001"
+    condition = data.azurerm_app_service.webapp == "webapp-deploymrnt-development-001"
     error_message = "Name of web app is ${data.azurerm_app_service.webapp.name}, should be webapp-deploymrnt-development-001"
   }
 }
