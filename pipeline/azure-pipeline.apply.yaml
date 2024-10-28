@@ -52,7 +52,7 @@ stages:
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
               
               
-  - stage: Terraform Checks ${{env.name}}
+  - stage: Terraform_Checks_${{env.name}}
     displayName: Tfchecks
     jobs:
       - job: TFchecks
