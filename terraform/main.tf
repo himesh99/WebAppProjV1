@@ -18,7 +18,7 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
 }
 
-data "azure_rm_app_service" "webapp" {
+data "azurerm_app_service" "webapp" {
   name = "webapp-deployment-development-001"
   resource_group_name = var.resource_group_hp
 }
