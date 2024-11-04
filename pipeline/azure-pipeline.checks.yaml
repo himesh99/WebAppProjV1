@@ -22,7 +22,7 @@ stages:
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
-        - task:
+        - task: AzureCLI@2
           displayName: Run checks
           inputs:
             azureSubscription: "${{ parameters.backendServiceArm }}"
