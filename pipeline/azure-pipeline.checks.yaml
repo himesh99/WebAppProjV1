@@ -14,8 +14,14 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  tfversion: '1.7.1'
   backendServiceArm: 'UKDDC_Azure_Subscription'
   environment: 'development'
+  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+  backendAzureRmStorageAccountName: 'sahpstatevuks'
+  backendAzureRmContainerName: 'tfstatefiles'
+  backendAzureRmKey: 'terraform.tfstate'
+  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
 
 
 stages:
