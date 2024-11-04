@@ -19,19 +19,12 @@ parameters:
     type: string
   - name: env
     type: string
-    
+
 steps:
   - task: TerraformCLI@1
     displayName: 'Terraform format'
     inputs:
       command: 'fmt'
-      workingDirectory: ${{ parameters.workingDirectory }}
-      allowTelemetryCollection: false
-
-  - task: TerraformCLI@1
-    displayName: 'Terraform Validate'
-    inputs:
-      command: 'validate'
       workingDirectory: ${{ parameters.workingDirectory }}
       allowTelemetryCollection: false
       
@@ -50,7 +43,13 @@ steps:
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
 
-
+  - task: TerraformCLI@1
+    displayName: 'Terraform Validate'
+    inputs:
+      command: 'validate'
+      workingDirectory: ${{ parameters.workingDirectory }}
+      allowTelemetryCollection: false
+    
   - task: TerraformTaskV4@4
     displayName: Terraform Apply
     inputs:
