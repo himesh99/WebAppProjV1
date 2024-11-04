@@ -15,6 +15,7 @@ pool:
 
 variables:
   backendServiceArm: 'UKDDC_Azure_Subscription'
+  environment: 'development'
 
 
 stages:
@@ -28,13 +29,13 @@ stages:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               env: ${{ parameters.environments }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{environments.name}}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{environments.name}}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{variables.environment}}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{variables.environment}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.environments}}.tfvars 
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{variables.environment}}.tfvars 
 
   - stage: Terraform_Run_Checks
     jobs:
