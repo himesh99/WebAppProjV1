@@ -18,9 +18,9 @@ variables:
 
 
 stages:
-  - stage: Terraform Run Checks
+  - stage: Terraform_Run_Checks
     jobs:
-      - job: Dev Checks
+      - job: Dev_Checks
         steps:
         - task: AzureCLI@2
           displayName: Run checks
