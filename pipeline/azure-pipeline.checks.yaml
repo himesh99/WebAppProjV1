@@ -1,0 +1,36 @@
+trigger:
+- main
+
+pr:
+- none
+
+parameters:
+- name: environments
+  type: object
+  default:
+    - name: development
+      dependsOnEnv: ""
+    - name: production
+      dependsOnEnv: "development"
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- ${{ each env in parameters.environments }}:
+  - stage: Terraform_Init_${{ env.name }}
+    jobs:
+      - job: ${{ replace(env.name, ' ', '_') }}_Environment
+        steps:
+        task:
+        displayName: Run checks
+        inputs:
+          azureSubscription: "${{ parameters.backendServiceArm }}"
+          scriptType: "bash"
+          scriptLocation: "inlineScript"
+          inlineScript: |
+            # export TF_LOG="TRACE"
+            az account show
+            terraform apply -auto-approve
+            workingDirectory: "$(System.DefaultWorkingDirectory)/checks" 
+            commandOptions: "-var-file=../terraform/envs/${{env}}.tfvars -lock=false"   
