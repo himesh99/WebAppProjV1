@@ -50,6 +50,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+              values: $(System.DefaultWorkingDirectory)/config/values.tfvars
               
               
   - stage: Terraform_Checks_${{env.name}}
@@ -67,7 +68,8 @@ stages:
               # export TF_LOG="TRACE"
               az account show
               terraform apply -auto-approve
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"    
+              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform" 
+              commandOptions: "-var-file=config/values.tfvars -lock=false"   
 
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
@@ -104,4 +106,5 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
-            
+              checks: -var-file=../config/checks.tfvars
+              values: $(System.DefaultWorkingDirectory)/config/values.tfvars

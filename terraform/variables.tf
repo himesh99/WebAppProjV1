@@ -20,11 +20,9 @@ variable "location" {
 }
 variable "subscription_id" {
   type    = string
-  default = "4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3"
 }
 variable "tenant_id" {
   type        = string
-  default     = "3e0088dc-0629-4ae6-aa8c-813e7a296f50"
   description = "Defines the tenant id"
 }
 variable "tags" {
@@ -57,13 +55,11 @@ variable "secrets" {
 
 variable "object_id" {
   type        = string
-  default     = "18755058-a4c0-4705-b50a-35348fb876d6"
   description = "Defines the service principal id"
 }
 
 variable "sa_access_key" {
   type    = string
-  default = "X/oxLevITii1fcgdxp1oRq+0ujmHELv0dFcOR9k2Pfe8qPEBn8fAm/JQvYpeEIOmEpiTlAdpw4dx+AStoZSU+w=="
 }
 
 variable "environment" {

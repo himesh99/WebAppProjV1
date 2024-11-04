@@ -8,7 +8,8 @@ terraform {
       source = "Azure/azapi"
     }
   }
-  backend "azurerm" {
+  backend "local" {
+    path = "../terraform.tfstate"
   }
 }
 
