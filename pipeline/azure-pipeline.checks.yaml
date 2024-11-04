@@ -33,4 +33,4 @@ stages:
               az account show
               terraform apply -auto-approve
               workingDirectory: "$(System.DefaultWorkingDirectory)/checks" 
-              commandOptions: "-var-file=../terraform/envs/${{env}}.tfvars -lock=false"   
+              commandOptions: "-var-file=../terraform/envs/${{env.name}}.tfvars -lock=false"   
