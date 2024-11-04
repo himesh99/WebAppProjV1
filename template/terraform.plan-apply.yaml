@@ -19,8 +19,6 @@ parameters:
     type: string
   - name: env
     type: string
-  - name: values
-    type: string
   - name: checks
     type: string
 steps:
@@ -38,7 +36,6 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
-      values: ${{parameters.values}}
       checks: ${{parameters.checks}}
 
 
@@ -52,6 +49,5 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
-      values: ${{parameters.values}}
       checks: ${{parameters.checks}}
 

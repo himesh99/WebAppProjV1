@@ -46,5 +46,4 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-              values: $(System.DefaultWorkingDirectory)/config/values.tfvars
 
