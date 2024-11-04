@@ -27,7 +27,7 @@ stages:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              env: ${{ parameters.environments }}
+              env: ${{ variables.environment }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{variables.environment}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{variables.environment}}
@@ -36,6 +36,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{variables.environment}}.tfvars 
+              checks: -var-file=../config/checks.tfvars
 
   - stage: Terraform_Run_Checks
     jobs:
