@@ -19,10 +19,8 @@ parameters:
     type: string
   - name: env
     type: string
-  - name: checks
-    type: string
-steps:
     
+steps:
   - task: TerraformCLI@1
     displayName: 'Terraform format'
     inputs:
