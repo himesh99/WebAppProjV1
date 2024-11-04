@@ -19,7 +19,10 @@ parameters:
     type: string
   - name: env
     type: string
-
+  - name: values
+    type: string
+  - name: checks
+    type: string
 steps:
   - task: TerraformTaskV4@4
     displayName: Terraform Init
@@ -35,6 +38,8 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
+      values: ${{parameters.values}}
+      checks: ${{parameters.checks}}
 
 
   - task: TerraformTaskV4@4
@@ -47,4 +52,6 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
+      values: ${{parameters.values}}
+      checks: ${{parameters.checks}}
 
