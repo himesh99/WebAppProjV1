@@ -22,6 +22,20 @@ parameters:
 
 
 steps:
+  - task: TerraformCLI@1
+    displayName: 'Terraform format'
+    inputs:
+      command: 'fmt'
+      allowTelemetryCollection: false
+      workingDirectory: ${{ parameters.workingDirectory }}
+
+  - task: TerraformCLI@1
+    displayName: 'Terraform Validate'
+    inputs:
+      command: 'validate'
+      allowTelemetryCollection: false
+      workingDirectory: ${{ parameters.workingDirectory }}
+      
   - task: TerraformTaskV4@4
     displayName: Terraform Init
     inputs:
