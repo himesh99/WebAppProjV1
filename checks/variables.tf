@@ -1,13 +1,13 @@
 variable "subscription_id" {
-  type    = string
+  type = string
 }
 variable "tenant_id" {
   type        = string
   description = "Defines the tenant id"
 }
 variable "environment" {
-  type    = string
-  }
+  type = string
+}
 
 variable "resource_group_hp" {
   type        = string

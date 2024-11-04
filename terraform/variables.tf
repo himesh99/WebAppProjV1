@@ -19,7 +19,7 @@ variable "location" {
   description = "Defines the location"
 }
 variable "subscription_id" {
-  type    = string
+  type = string
 }
 variable "tenant_id" {
   type        = string
@@ -59,10 +59,10 @@ variable "object_id" {
 }
 
 variable "sa_access_key" {
-  type    = string
+  type = string
 }
 
 variable "environment" {
-  type    = string
-  }
+  type = string
+}
 
