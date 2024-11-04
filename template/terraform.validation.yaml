@@ -19,6 +19,8 @@ parameters:
     type: string
   - name: env
     type: string
+  - name: values
+    type: string
 
 
 steps:
@@ -35,6 +37,7 @@ steps:
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
       workingDirectory: ${{ parameters.workingDirectory }}
       env:  ${{ parameters.env }}
+      values: ${{parameters.values}}
     
           
   - task: TerraformTaskV4@4
@@ -46,6 +49,7 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
+      values: ${{parameters.values}}
       env:  ${{ parameters.env }}
       # commandOptions: >
       #   -var-file "$(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.env}}.tfvars"
