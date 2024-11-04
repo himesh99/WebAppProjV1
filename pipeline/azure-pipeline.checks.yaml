@@ -13,6 +13,7 @@ steps:
 - task: TerraformCLI@1
   inputs:
     command: 'init'
+    workingDirectory: 'checks'
     backendType: 'local'
 
 - task: TerraformCLI@1
