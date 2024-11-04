@@ -35,5 +35,5 @@ steps:
   inputs:
     command: 'apply'
     workingDirectory: 'checks'
-    commandOptions: "-var-file=config/checks.tfvars -lock=false"
+    commandOptions: "-var-file=../config/checks.tfvars -lock=false"
     allowTelemetryCollection: false
