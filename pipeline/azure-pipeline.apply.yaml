@@ -50,7 +50,6 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
-              values: $(System.DefaultWorkingDirectory)/config/values.tfvars
               
               
   - stage: Terraform_Checks_${{env.name}}
@@ -107,4 +106,3 @@ stages:
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
               checks: -var-file=../config/checks.tfvars
-              values: $(System.DefaultWorkingDirectory)/config/values.tfvars
