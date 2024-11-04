@@ -5,7 +5,7 @@
 
 trigger:
 - bugfix*
-- bugfix/**
+- feature*
 
 parameters:
 - name: environments
