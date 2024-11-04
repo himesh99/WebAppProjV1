@@ -50,25 +50,6 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
-              
-              
-  - stage: Terraform_Checks_${{env.name}}
-    displayName: Tfchecks
-    jobs:
-      - job: TFchecks
-        steps:
-        - task: AzureCLI@2
-          displayName: Run checks
-          inputs:
-            azureSubscription: "${{ parameters.backendServiceArm }}"
-            scriptType: "bash"
-            scriptLocation: "inlineScript"
-            inlineScript: |
-              # export TF_LOG="TRACE"
-              az account show
-              terraform apply -auto-approve
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform" 
-              commandOptions: "-var-file=config/values.tfvars -lock=false"   
 
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
