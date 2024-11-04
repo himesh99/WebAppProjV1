@@ -22,15 +22,15 @@ stages:
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
-        task:
-        displayName: Run checks
-        inputs:
-          azureSubscription: "${{ parameters.backendServiceArm }}"
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
-          inlineScript: |
-            # export TF_LOG="TRACE"
-            az account show
-            terraform apply -auto-approve
-            workingDirectory: "$(System.DefaultWorkingDirectory)/checks" 
-            commandOptions: "-var-file=../terraform/envs/${{env}}.tfvars -lock=false"   
+        - task:
+          displayName: Run checks
+          inputs:
+            azureSubscription: "${{ parameters.backendServiceArm }}"
+            scriptType: "bash"
+            scriptLocation: "inlineScript"
+            inlineScript: |
+              # export TF_LOG="TRACE"
+              az account show
+              terraform apply -auto-approve
+              workingDirectory: "$(System.DefaultWorkingDirectory)/checks" 
+              commandOptions: "-var-file=../terraform/envs/${{env}}.tfvars -lock=false"   
