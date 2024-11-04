@@ -18,9 +18,9 @@ variables:
 
 
 stages:
-  - stage: Terraform_Init_${{ env.name }}
+  - stage: Terraform Run Checks
     jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Environment
+      - job: Dev Checks
         steps:
         - task: AzureCLI@2
           displayName: Run checks
