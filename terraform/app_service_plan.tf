@@ -1,10 +1,7 @@
-resource "azurerm_app_service_plan" "app-deployment" {
+resource "azurerm_service_plan" "webappservice" {
   name                = "webapp-deployment-${var.environment}-001"
   resource_group_name = var.resource_group_hp
   location            = var.location
-  sku {
-    tier = "Standard"
-    size = "S1"
-  }
-  tags = var.tags
+  os_type             = "Linux"
+  sku_name            = "B1"
 }
