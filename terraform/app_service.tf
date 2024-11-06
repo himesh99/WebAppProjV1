@@ -12,9 +12,9 @@ resource "azurerm_linux_web_app" "webapp" {
   location            = var.location
   tags                = var.tags
   site_config {
-    
+
   }
-  service_plan_id =  azurerm_service_plan.webappservice.id
+  service_plan_id = azurerm_service_plan.webappservice.id
 
 
 
