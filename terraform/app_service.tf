@@ -1,9 +1,21 @@
-resource "azurerm_app_service" "webapp" {
+resource "azurerm_service_plan" "webappservice" {
+  name                = "webappservice${var.environment}plan"
+  resource_group_name = var.resource_group_hp
+  location            = var.location
+  os_type             = "Linux"
+  sku_name            = "P1v2"
+}
+
+resource "azurerm_linux_web_app" "webapp" {
   name                = "webapp-deployment-${var.environment}-001"
   resource_group_name = var.resource_group_hp
   location            = var.location
-  app_service_plan_id = azurerm_app_service_plan.app-deployment.id
   tags                = var.tags
+  site_config {
+    
+  }
+  service_plan_id =  azurerm_service_plan.webappservice.id
+
 
 
   connection_string {
