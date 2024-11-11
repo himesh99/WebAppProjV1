@@ -9,7 +9,7 @@ resource "random_password" "sqlpass" {
 }
 
 resource "azurerm_sql_server" "sqlsvr" {
-  name                         = "sqldb-servers-webapp-${var.environment}-001"
+  name                         = "sqlsvr-webapp-${var.environment}"
   resource_group_name          = var.resource_group_hp
   location                     = var.location
   version                      = "12.0"
