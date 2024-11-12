@@ -51,33 +51,33 @@ resource "azurerm_key_vault" "webappkv" {
 
 }
 
-resource "azurerm_key_vault_access_policy" "access_policy_1" {
-  key_vault_id = azurerm_key_vault.webappkv.id
-  tenant_id    = var.tenant_id
-  object_id    = var.object_id
+# resource "azurerm_key_vault_access_policy" "access_policy_1" {
+#   key_vault_id = azurerm_key_vault.webappkv.id
+#   tenant_id    = var.tenant_id
+#   object_id    = var.object_id
 
-  key_permissions = [
-    "Get",
-    "List",
-    "Update",
-    "Create",
-    "Import",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-  ]
+#   key_permissions = [
+#     "Get",
+#     "List",
+#     "Update",
+#     "Create",
+#     "Import",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#   ]
 
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-  ]
-}
+#   secret_permissions = [
+#     "Get",
+#     "List",
+#     "Set",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#   ]
+# }
 
 resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
   key_vault_id = azurerm_key_vault.webappkv.id
