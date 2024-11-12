@@ -1,7 +1,7 @@
-import {
-  to = azurerm_key_vault_access_policy.access_policy_1
-  id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/18755058-a4c0-4705-b50a-35348fb876d6"
-}
+# import {
+#   to = azurerm_key_vault_access_policy.access_policy_1
+#   id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/18755058-a4c0-4705-b50a-35348fb876d6"
+# }
 
 import {
   to = azurerm_key_vault_access_policy.webappkv_access_policy_2
