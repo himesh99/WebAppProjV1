@@ -10,7 +10,7 @@
 
 import {
   to = azurerm_key_vault_secret.sql_server_admin_password
-  id = "https://app-kv-development-001.vault.azure.net/secrets/sql-server-development-password/c8334438d10d4f21beafd58f6a2931c4"
+  id = "https://kv-development-uks-001.vault.azure.net/secrets/sql-server-development-password/e93daaaeb9884ff4827a13689156960f"
 }
 
 resource "azurerm_key_vault" "webappkv" {
