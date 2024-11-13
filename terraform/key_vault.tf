@@ -21,34 +21,6 @@ resource "azurerm_key_vault" "webappkv" {
   tenant_id           = var.tenant_id
   tags                = var.tags
 
-  # access_policy {
-
-  #   tenant_id = var.tenant_id
-  #   object_id = var.object_id
-
-  #   key_permissions = [
-  #     "Get",
-  #     "List",
-  #     "Update",
-  #     "Create",
-  #     "Import",
-  #     "Delete",
-  #     "Recover",
-  #     "Backup",
-  #     "Restore",
-  #   ]
-
-  #   secret_permissions = [
-  #     "Get",
-  #     "List",
-  #     "Set",
-  #     "Delete",
-  #     "Recover",
-  #     "Backup",
-  #     "Restore",
-  #   ]
-  # }
-
 }
 
 resource "azurerm_key_vault_access_policy" "access_policy_1" {
