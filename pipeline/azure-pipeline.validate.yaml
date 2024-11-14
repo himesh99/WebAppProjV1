@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- bugfix*
+- codefix*
 - feature*
 
 parameters:
@@ -45,4 +45,5 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
 

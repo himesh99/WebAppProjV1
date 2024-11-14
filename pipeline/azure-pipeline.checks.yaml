@@ -1,5 +1,5 @@
 trigger:
-- bugfix*
+- codefix*
 - feature*
 
 pool:
