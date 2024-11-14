@@ -8,10 +8,10 @@
 #   id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/0e4b967e-0513-4269-aa22-687166d31276"
 # }
 
-import {
-  to = azurerm_key_vault_secret.sql_server_admin_password
-  id = "https://kv-development-uks-001.vault.azure.net/secrets/sql-server-development-password/e93daaaeb9884ff4827a13689156960f"
-}
+# import {
+#   to = azurerm_key_vault_secret.sql_server_admin_password
+#   id = "https://kv-development-uks-001.vault.azure.net/secrets/sql-server-development-password/e93daaaeb9884ff4827a13689156960f"
+# }
 
 resource "azurerm_key_vault" "webappkv" {
   name                = "kv-${var.environment}-uks-001"
