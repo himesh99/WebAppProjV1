@@ -85,7 +85,13 @@ stages:
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
+                  
+  - stage: Terraform_DeployApp_${{ env.name }}
+    displayName: Terraform  ${{ env.name }}
+    condition: succeeded('Wait_${{ env.name }}')
+    dependsOn: Wait_${{ env.name }}
+    jobs:
       - job: AppDeloyment
         steps:
         - task: AzureCLI@2
@@ -96,6 +102,6 @@ stages:
             inlineScript: |
               # Replace with the actual web app name, resource group, and ZIP package path
               az webapp deployment source config-zip \
-                --resource-group "patelh-sandox-rg" \
+                --resource-group "patelh-sandbox-rg" \
                 --name "app-web-development-001" \
                 --src "himeshwebapp.zip"
