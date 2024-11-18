@@ -86,7 +86,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
-      - job: Web app deploy
+      - job: AppDeloyment
         steps:
         - task: AzureCLI@2
           inputs:
