@@ -86,3 +86,16 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars       
+      - job: Web app deploy
+        steps:
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: ${{variables.backendServiceArm}}
+            scriptType: bash
+            scriptLocation: inlineScript
+            inlineScript: |
+              # Replace with the actual web app name, resource group, and ZIP package path
+              az webapp deployment source config-zip \
+                --resource-group "patelh-sandox-rg" \
+                --name "app-web-development-001" \
+                --src "himeshwebapp.zip"
