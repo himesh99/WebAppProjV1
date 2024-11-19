@@ -5,7 +5,7 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
-    linux_fx_version = "NODE|16-lts"
+    linux_fx_version    = "NODE|16-lts"
   }
   service_plan_id = azurerm_service_plan.webappservice.id
 
