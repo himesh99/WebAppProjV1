@@ -5,8 +5,6 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
-    app_command_line    = ""
-
   }
   service_plan_id = azurerm_service_plan.webappservice.id
 
@@ -16,10 +14,6 @@ resource "azurerm_linux_web_app" "webapp" {
     name  = "DATABASE_URL"
     type  = "SQLServer"
     value = "Server=tcp:${azurerm_sql_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_sql_database.sqldb.name};User ID=${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
-  }
-  app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE = "1" # Enable deployment from zip package (optional)
-    WEBSITE_AUTH_DISABLED    = "true"
   }
 }
 

@@ -87,24 +87,4 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
-              
-  - stage: Deploy_Static_HTML_${{ env.name }}
-    displayName: Deploy Static HTML for ${{ env.name }}
-    condition: succeeded('Terraform_Apply_${{ env.name }}')
-    dependsOn: Terraform_Apply_${{ env.name }}
-    jobs:
-      - job: Deploy_WebApp_${{ env.name }}
-        steps:
-          - task: AzureCLI@2
-            displayName: Webapp deploy
-            inputs:
-              azureSubscription: ${{ variables.environmentServiceNameAzureRM }}
-              scriptType: bash
-              scriptLocation: inlineScript
-              inlineScript: |
-                echo "Deploying static HTML to Web App"
-                az webapp deployment source config-zip \
-                  --resource-group ${{ variables.backendAzureRmResourceGroupName }} \
-                  --name ${{ variables.webAppName }} \
-                  --src $(System.DefaultWorkingDirectory)/site.zip
             
