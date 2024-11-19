@@ -5,7 +5,7 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
-    app_command_line = ""
+    app_command_line    = ""
 
   }
   service_plan_id = azurerm_service_plan.webappservice.id
@@ -19,7 +19,7 @@ resource "azurerm_linux_web_app" "webapp" {
   }
   app_settings = {
     WEBSITE_RUN_FROM_PACKAGE = "1" # Enable deployment from zip package (optional)
-     WEBSITE_AUTH_DISABLED = "true"
+    WEBSITE_AUTH_DISABLED    = "true"
   }
 }
 
