@@ -1,12 +1,12 @@
-import {
-  to = azurerm_key_vault_access_policy.access_policy_1
-  id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/18755058-a4c0-4705-b50a-35348fb876d6"
-}
+# import {
+#   to = azurerm_key_vault_access_policy.access_policy_1
+#   id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/18755058-a4c0-4705-b50a-35348fb876d6"
+# }
 
-import {
-  to = azurerm_key_vault_access_policy.webappkv_access_policy_2
-  id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/0e4b967e-0513-4269-aa22-687166d31276"
-}
+# import {
+#   to = azurerm_key_vault_access_policy.webappkv_access_policy_2
+#   id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/0e4b967e-0513-4269-aa22-687166d31276"
+# }
 
 # import {
 #   to = azurerm_key_vault_secret.sql_server_admin_password
@@ -23,67 +23,67 @@ resource "azurerm_key_vault" "webappkv" {
 
 }
 
-resource "azurerm_key_vault_access_policy" "access_policy_1" {
-  key_vault_id = azurerm_key_vault.webappkv.id
-  tenant_id    = var.tenant_id
-  object_id    = var.object_id
+# resource "azurerm_key_vault_access_policy" "access_policy_1" {
+#   key_vault_id = azurerm_key_vault.webappkv.id
+#   tenant_id    = var.tenant_id
+#   object_id    = var.object_id
 
-  key_permissions = [
-    "Get",
-    "List",
-    "Update",
-    "Create",
-    "Import",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-  ]
+#   key_permissions = [
+#     "Get",
+#     "List",
+#     "Update",
+#     "Create",
+#     "Import",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#   ]
 
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-  ]
-}
+#   secret_permissions = [
+#     "Get",
+#     "List",
+#     "Set",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#   ]
+# }
 
-resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
-  key_vault_id = azurerm_key_vault.webappkv.id
-  tenant_id    = var.tenant_id
-  object_id    = "0e4b967e-0513-4269-aa22-687166d31276"
+# resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
+#   key_vault_id = azurerm_key_vault.webappkv.id
+#   tenant_id    = var.tenant_id
+#   object_id    = "0e4b967e-0513-4269-aa22-687166d31276"
 
-  key_permissions = [
-    "Get",
-    "List",
-    "Update",
-    "Create",
-    "Import",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-  ]
+#   key_permissions = [
+#     "Get",
+#     "List",
+#     "Update",
+#     "Create",
+#     "Import",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#   ]
 
-  secret_permissions = [
-    "Get",
-    "List",
-    "Set",
-    "Delete",
-    "Recover",
-    "Backup",
-    "Restore",
-  ]
-}
+#   secret_permissions = [
+#     "Get",
+#     "List",
+#     "Set",
+#     "Delete",
+#     "Recover",
+#     "Backup",
+#     "Restore",
+#   ]
+# }
 
-resource "azurerm_key_vault_secret" "sql_server_admin_password" {
-  name         = "sql-server-${var.environment}-password"
-  value        = azurerm_sql_server.sqlsvr.administrator_login_password
-  key_vault_id = azurerm_key_vault.webappkv.id
-  tags         = var.tags
-  content_type = "password"
-  depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
-}
+# resource "azurerm_key_vault_secret" "sql_server_admin_password" {
+#   name         = "sql-server-${var.environment}-password"
+#   value        = azurerm_sql_server.sqlsvr.administrator_login_password
+#   key_vault_id = azurerm_key_vault.webappkv.id
+#   tags         = var.tags
+#   content_type = "password"
+#   depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
+# }
