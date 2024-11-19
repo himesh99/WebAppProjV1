@@ -5,6 +5,7 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
+    linux_fx_version = "NODE|16-lts"
   }
   service_plan_id = azurerm_service_plan.webappservice.id
 
@@ -15,15 +16,18 @@ resource "azurerm_linux_web_app" "webapp" {
     type  = "SQLServer"
     value = "Server=tcp:${azurerm_sql_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_sql_database.sqldb.name};User ID=${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
   }
-
+  app_settings = {
+    WEBSITE_RUN_FROM_PACKAGE = "1" # Enable deployment from zip package (optional)
+  }
 }
 
 
-#  Deploy code from a public GitHub repo
-resource "azurerm_app_service_source_control" "sourcecontrol" {
-  app_id                 = azurerm_linux_web_app.webapp.id
-  repo_url               = "https://github.com/himesh99/himesh-hello-world"
-  branch                 = "master"
-  use_manual_integration = true
-  use_mercurial          = false
-}
+
+# #  Deploy code from a public GitHub repo
+# resource "azurerm_app_service_source_control" "sourcecontrol" {
+#   app_id                 = azurerm_linux_web_app.webapp.id
+#   repo_url               = "https://github.com/himesh99/himesh-hello-world"
+#   branch                 = "master"
+#   use_manual_integration = true
+#   use_mercurial          = false
+# }

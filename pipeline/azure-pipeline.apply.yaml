@@ -29,6 +29,7 @@ variables:
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+  webappname: 'app-web-development-001'
  
 stages:
 - ${{ each env in parameters.environments }}:
@@ -86,3 +87,19 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
+
+      - job: Deploy_Static_HTML
+        displayName: Deploy Static HTML for ${{ env.name }}
+        steps:
+          - task: AzureCLI@2
+            inputs:
+            azureSubscription: ${{ variables.environmentServiceNameAzureRM }}
+            scriptType: bash
+            scriptLocation: inlineScript
+            inlineScript: |
+              echo "Deploying static HTML to Web App"
+              az webapp deployment source config-zip \
+                --resource-group ${{ variables.backendAzureRmResourceGroupName }} \
+                --name ${{ variables.webAppName }} \
+                --src $(System.DefaultWorkingDirectory)/site.zip
+          
