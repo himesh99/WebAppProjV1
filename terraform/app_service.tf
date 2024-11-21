@@ -7,6 +7,9 @@ resource "azurerm_linux_web_app" "webapp" {
     minimum_tls_version = "1.2"
   }
   service_plan_id = azurerm_service_plan.webappservice.id
+  app_settings ={
+    "WEBSITE_RUN_FROM_PACKSGE" = "https://github.com/himesh99/himesh-hello-world.zip"
+  }
 
 
 
