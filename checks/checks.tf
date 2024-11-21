@@ -18,5 +18,12 @@ check "vnet" {
     condition     = data.azurerm_virtual_network.webapp.location == "uksouth"
     error_message = "Location of the virtual network is ${data.azurerm_virtual_network.webapp.location}, should be uksouth"
   }
-
 }
+
+check "db"{
+  assert {
+    condition = data.azurerm_sql_database.edition == "Standard"
+    error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
+  }
+}
+
