@@ -1,4 +1,4 @@
-data "azurerm_app_service" "webapp" {
+data "azurerm_linux_web_app" "webapp" {
   name                = "app-web-${var.environment}-001"
   resource_group_name = var.resource_group_hp
 }
