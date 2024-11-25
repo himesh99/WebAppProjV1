@@ -4,12 +4,12 @@ check "webapp" {
     error_message = "Name of web app is ${data.azurerm_linux_web_app.webapp.name}, should be app-web-${var.environment}-001"
   }
   assert {
-    condition     = data.azurerm_app_service.webapp.enabled == true
+    condition     = data.azurerm_linux_web_app.webapp.enabled == true
     error_message = "Web app enabled is ${data.azurerm_linux_web_app.webapp.enabled}, should be true"
   }
   assert {
-    condition     = data.azurerm_app_service.webapp.https_only == true
-    error_message = "Web app https only is ${data.azurerm_app_service.webapp.https_only}, should be true"
+    condition     = data.azurerm_linux_web_app.webapp.https_only == true
+    error_message = "Web app https only is ${data.azurerm_linux_web_app.webapp.https_only}, should be true"
   }
 }
 
