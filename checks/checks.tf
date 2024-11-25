@@ -1,6 +1,6 @@
 check "webapp" {
   assert {
-    condition     = data.azurerm_linux_web_app.webapp.name == "webapp-deploymentapp-web-${var.environment}-001"
+    condition     = data.azurerm_linux_web_app.webapp.name == "app-web-${var.environment}-001"
     error_message = "Name of web app is ${data.azurerm_linux_web_app.webapp.name}, should be app-web-${var.environment}-001"
   }
   assert {
