@@ -77,7 +77,6 @@ stages:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
@@ -86,4 +85,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
+              env: #${{ parameters.env }}    
+                TF_VAR_az_subscription_id: $(TF_VAR_az_subscription_id)
+                TF_VAR_env: ${{ parameters.env }}  
             
