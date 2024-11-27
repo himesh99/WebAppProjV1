@@ -62,7 +62,6 @@ steps:
         # Extract the service principal details and set them as pipeline variables      
         SubId=$(az account show --query id --output tsv)      
         echo "##vso[task.setvariable variable=TF_VAR_az-subscription-id]$SubId"
-        echo "##vso[task.setvariable variable=TF_VAR_env_name]${{ parameters.env }}"
         
   - task: TerraformTaskV4@4
     displayName: Terraform Plan
@@ -73,7 +72,4 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }} -var "az-subscription-id=$(TF_VAR_az-subscription-id)"'  
-      env: ${{ parameters.env }}     
-      #TF_VAR_az-subscription-id: $(TF_VAR_az-subscription-id)
-      # commandOptions: >
-      #   -var-file "$(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.env}}.tfvars"
+      env: ${{ parameters.env }}
