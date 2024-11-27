@@ -73,7 +73,7 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: >-
-        '-var-file=${{ parameters.tfVarsFile }}'
+        -var-file=${{ parameters.tfVarsFile }}
         $(TF_VAR_az-subscription-id)
       env: ${{ parameters.env }}     
       # commandOptions: >
