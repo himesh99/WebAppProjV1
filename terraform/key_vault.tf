@@ -26,7 +26,7 @@ resource "azurerm_key_vault" "webappkv" {
 resource "azurerm_key_vault_access_policy" "access_policy_1" {
   key_vault_id = azurerm_key_vault.webappkv.id
   tenant_id    = var.tenant_id
-  object_id    = var.object_id
+  object_id    = data.azurerm_key_vault_secret.object_id.value
 
   key_permissions = [
     "Get",
