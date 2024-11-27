@@ -21,11 +21,11 @@ variable "location" {
 # variable "subscription_id" {
 #   type = string
 # }
-variable "az_subscription_id" {
+variable "az-subscription-id" {
   description = "The subscription ID"
   type        = string
   validation {
-    condition     = length(var.az_subscription_id) > 0
+    condition     = length(var.az-subscription-id) > 0
     error_message = "The subscription ID must not be empty"
   }
 }
