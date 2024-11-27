@@ -85,7 +85,7 @@ stages:
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
-              env: #${{ parameters.env }}    
-                TF_VAR_az_subscription_id: $(TF_VAR_az_subscription_id)
-                TF_VAR_env: ${{ parameters.env }}  
+              env: ${{ parameters.env }}    
+              TF_VAR_az_subscription_id: $(TF_VAR_az_subscription_id)
+         
             
