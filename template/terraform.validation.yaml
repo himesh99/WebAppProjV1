@@ -74,6 +74,6 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env: ${{ parameters.env }}     
-      az_subscription_id: $(TF_VAR_az_subscription_id)
+      TF_VAR_az_subscription_id: $(TF_VAR_az_subscription_id)
       # commandOptions: >
       #   -var-file "$(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.env}}.tfvars"
