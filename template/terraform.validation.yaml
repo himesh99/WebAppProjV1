@@ -73,8 +73,7 @@ steps:
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
-      env: #${{ parameters.env }}    
-        TF_VAR_az_subscription_id: $(TF_VAR_az_subscription_id)
-        TF_VAR_env: ${{ parameters.env }}  
+      env: ${{ parameters.env }}     
+      TF_VAR_az_subscription_id: $(TF_VAR_az_subscription_id)
       # commandOptions: >
       #   -var-file "$(System.DefaultWorkingDirectory)/terraform/envs/${{parameters.env}}.tfvars"
