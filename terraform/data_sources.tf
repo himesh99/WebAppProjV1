@@ -4,7 +4,7 @@ data "azurerm_key_vault" "config_kv" {
 }
 
 data "azurerm_key_vault_secret" "tenant_id" {
-  name         = "tenant_id"
+  name         = "tenantid"
   key_vault_id = data.azurerm_key_vault.config_kv.id
 }
 
