@@ -29,10 +29,10 @@ variable "az-subscription-id" {
     error_message = "The subscription ID must not be empty"
   }
 }
-variable "tenant_id" {
-  type        = string
-  description = "Defines the tenant id"
-}
+# variable "tenant_id" {
+#   type        = string
+#   description = "Defines the tenant id"
+# }
 variable "tags" {
   type        = map(string)
   description = "Defines the tags"
@@ -66,9 +66,9 @@ variable "secrets" {
 #   description = "Defines the service principal id"
 # }
 
-variable "sa_access_key" {
-  type = string
-}
+# variable "sa_access_key" {
+#   type = string
+# }
 
 variable "environment" {
   type = string
