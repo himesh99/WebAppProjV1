@@ -18,8 +18,16 @@ variable "location" {
   default     = "uksouth"
   description = "Defines the location"
 }
-variable "subscription_id" {
-  type = string
+# variable "subscription_id" {
+#   type = string
+# }
+variable "az_subscription_id" {  
+  description = "The subscription ID"  
+  type        = string  
+  validation {    
+    condition     = length(var.az_subscription_id) > 0    
+    error_message = "The subscription ID must not be empty"  
+    }
 }
 variable "tenant_id" {
   type        = string

@@ -39,13 +39,3 @@ steps:
     runAzLogin: true
     commandOptions: '-var-file=../config/checks.tfvars -lock=false'
     allowTelemetryCollection: true
-
-
-# - task: TerraformCLI@1
-#   displayName: 'Terraform Apply'
-#   inputs:
-#     azureSubscription: "UKDDC_Azure_Subscription"
-#     command: 'apply'
-#     workingDirectory: 'checks'
-#     commandOptions: "-var-file=../config/checks.tfvars -lock=false"
-#     allowTelemetryCollection: false

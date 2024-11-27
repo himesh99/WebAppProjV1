@@ -8,7 +8,7 @@ resource "azurerm_linux_web_app" "webapp" {
   }
   service_plan_id = azurerm_service_plan.webappservice.id
   app_settings = {
-    "WEBSITE_RUN_FROM_PACKSGE" = "https://github.com/himesh99/himesh-hello-world.zip"
+    "WEBSITE_RUN_FROM_PACKAGE" = "https://github.com/himesh99/himesh-hello-world.zip"
   }
 
 
@@ -26,7 +26,6 @@ resource "azurerm_linux_web_app" "webapp" {
 resource "azurerm_app_service_source_control" "sourcecontrol" {
   app_id   = azurerm_linux_web_app.webapp.id
   repo_url = "https://github.com/himesh99/himesh-hello-world"
-  #repo_url = "https://github.com/himesh99/testwebpage"
   branch                 = "main"
   use_manual_integration = true
   use_mercurial          = false
