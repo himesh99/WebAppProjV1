@@ -12,7 +12,7 @@ terraform {
 provider "azurerm" {
   features {}
   subscription_id = var.az-subscription-id
-  tenant_id       = var.tenant_id
+  tenant_id       = data.azurerm_key_vault_secret.tenant_id.value
 }
 
 
