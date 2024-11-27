@@ -61,10 +61,10 @@ variable "secrets" {
   default     = []
 }
 
-variable "object_id" {
-  type        = string
-  description = "Defines the service principal id"
-}
+# variable "object_id" {
+#   type        = string
+#   description = "Defines the service principal id"
+# }
 
 variable "sa_access_key" {
   type = string
