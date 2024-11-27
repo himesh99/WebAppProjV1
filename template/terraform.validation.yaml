@@ -22,18 +22,6 @@ parameters:
 
 
 steps:
-  - task: AzureCLI@2  
-    displayName: 'Export Azure Subscription ID'  
-    inputs:    
-      azureSubscription: UKDDC_Azure_Subscription    
-      scriptType: bash    
-      addSpnToEnvironment: true    
-      scriptLocation: inlineScript    
-      inlineScript: |      
-        # Extract the service principal details and set them as pipeline variables      
-        SubId=$(az account show --query id --output tsv)      
-        echo "##vso[task.setvariable variable=TF_VAR_az_subscription_id]$SubId"
-        echo "##vso[task.setvariable variable=TF_VAR_env_name]${{ parameters.env }}"
 
   - task: TerraformCLI@1
     displayName: 'Terraform format'
@@ -63,7 +51,19 @@ steps:
       allowTelemetryCollection: false
       workingDirectory: ${{ parameters.workingDirectory }}
     
-          
+  - task: AzureCLI@2  
+    displayName: 'Export Azure Subscription ID'  
+    inputs:    
+      azureSubscription: UKDDC_Azure_Subscription    
+      scriptType: bash    
+      addSpnToEnvironment: true    
+      scriptLocation: inlineScript    
+      inlineScript: |      
+        # Extract the service principal details and set them as pipeline variables      
+        SubId=$(az account show --query id --output tsv)      
+        echo "##vso[task.setvariable variable=TF_VAR_az_subscription_id]$SubId"
+        echo "##vso[task.setvariable variable=TF_VAR_env_name]${{ parameters.env }}"
+        
   - task: TerraformTaskV4@4
     displayName: Terraform Plan
     inputs:
