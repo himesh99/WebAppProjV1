@@ -39,3 +39,4 @@ steps:
     runAzLogin: true
     commandOptions: '-var-file=../config/checks.tfvars -lock=false'
     allowTelemetryCollection: true
+    failOnStandardError: true
