@@ -10,6 +10,7 @@ check "webapp" {
   assert {
     condition     = data.azurerm_app_service.webapp.https_only == true
     error_message = "Web app https only is ${data.azurerm_app_service.webapp.https_only}, should be true"
+    fail          = true
   }
 }
 
