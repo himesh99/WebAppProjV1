@@ -54,6 +54,7 @@ resource "azurerm_key_vault_access_policy" "access_policy_1" {
 resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
   key_vault_id = azurerm_key_vault.webappkv.id
   tenant_id    = data.azurerm_key_vault_secret.tenant_id.value
+  #Allow V1-ADOTeam
   object_id    = "0e4b967e-0513-4269-aa22-687166d31276"
 
   key_permissions = [
