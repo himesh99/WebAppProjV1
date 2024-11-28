@@ -1,6 +1,6 @@
 check "webapp" {
   assert {
-    condition     = data.azurerm_app_service.webapp.name == "webapp-deployment-development-001"
+    condition     = data.azurerm_app_service.webapp.name == "app-web-${var.environment}-001"
     error_message = "Name of web app is ${data.azurerm_app_service.webapp.name}, should be webapp-deployment-development-001"
   }
   assert {
@@ -20,10 +20,10 @@ check "vnet" {
   }
 }
 
-# check "db" {
-#   assert {
-#     condition     = data.azurerm_sql_database.edition == "Standard"
-#     error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
-#   }
-# }
+check "db" {
+  assert {
+    condition     = data.azurerm_sql_database.edition == "Standard"
+    error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
+  }
+}
 
