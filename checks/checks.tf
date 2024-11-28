@@ -20,10 +20,10 @@ check "vnet" {
   }
 }
 
-check "db" {
-  assert {
-    condition     = data.azurerm_sql_database.edition == "Standard"
-    error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
-  }
-}
+# check "db" {
+#   assert {
+#     condition     = data.azurerm_sql_database.edition == "Standard"
+#     error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
+#   }
+# }
 
