@@ -1,7 +1,3 @@
-variable "tenant_id" {
-  type        = string
-  description = "Defines the tenant id"
-}
 variable "environment" {
   type = string
 }
