@@ -18,7 +18,7 @@ check "vnet" {
 
 check "db" {
   assert {
-    condition     = data.azurerm_sql_database.edition == "Standard"
+    condition     = data.azurerm_sql_database.sqldb.edition == "Standard"
     error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
   }
 }
