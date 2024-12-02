@@ -3,24 +3,25 @@ variable "resource_group_hp" {
   default     = "patelh-sandbox-rg"
   description = "Resource Group to deploy resources into."
 }
+
 variable "tfversion" {
   type        = string
   default     = "1.3.7"
   description = "Defines the terraofrm version"
 }
+
 variable "workingDirectory" {
   type        = string
   default     = "./"
   description = "States the root working directory"
 }
+
 variable "location" {
   type        = string
   default     = "uksouth"
   description = "Defines the location"
 }
-# variable "subscription_id" {
-#   type = string
-# }
+
 variable "az-subscription-id" {
   description = "The subscription ID"
   type        = string
@@ -29,10 +30,7 @@ variable "az-subscription-id" {
     error_message = "The subscription ID must not be empty"
   }
 }
-# variable "tenant_id" {
-#   type        = string
-#   description = "Defines the tenant id"
-# }
+
 variable "tags" {
   type        = map(string)
   description = "Defines the tags"
@@ -61,16 +59,12 @@ variable "secrets" {
   default     = []
 }
 
-# variable "object_id" {
-#   type        = string
-#   description = "Defines the service principal id"
-# }
-
-# variable "sa_access_key" {
-#   type = string
-# }
-
 variable "environment" {
   type = string
 }
 
+variable "" {
+  type = string
+  description = "V1 objectID"
+  default = "0e4b967e-0513-4269-aa22-687166d31276"
+}

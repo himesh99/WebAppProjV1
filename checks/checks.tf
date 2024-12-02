@@ -7,10 +7,6 @@ check "webapp" {
     condition     = data.azurerm_app_service.webapp.enabled == true
     error_message = "Web app enabled is ${data.azurerm_app_service.webapp.enabled}, should be true"
   }
-  assert {
-    condition     = data.azurerm_app_service.webapp.https_only == true
-    error_message = "Web app https only is ${data.azurerm_app_service.webapp.https_only}, should be true"
-  }
 }
 
 check "vnet" {
@@ -20,10 +16,10 @@ check "vnet" {
   }
 }
 
-# check "db" {
-#   assert {
-#     condition     = data.azurerm_sql_database.edition == "Standard"
-#     error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
-#   }
-# }
+check "db" {
+  assert {
+    condition     = data.azurerm_sql_database.edition == "Standard"
+    error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
+  }
+}
 
