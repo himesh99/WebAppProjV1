@@ -16,10 +16,10 @@ check "vnet" {
   }
 }
 
-# check "db" {
-#   assert {
-#     condition     = data.azurerm_sql_database.webapp.edition == "Standard"
-#     error_message = "All SQL databases should have an Standard edition, please change edition if not stnadard"
-#   }
-# }
+check "kv" {
+  assert {
+    condition     = data.azurerm_key_vault.webapp.enable_rbac_authorization == false
+    error_message = "RBAC authorization should be false, please change rbac autorization if enabled"
+  }
+}
 
