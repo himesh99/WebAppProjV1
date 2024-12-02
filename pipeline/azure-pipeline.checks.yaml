@@ -2,6 +2,14 @@ trigger:
 - codefix*
 - feature*
 
+parameters:
+- name: environments
+  type: object
+  default:
+    - name: development
+    - name: production
+     
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -49,6 +57,6 @@ steps:
     environmentServiceName: 'UKDDC_Azure_Subscription'
     providerAzureRmSubscriptionId: '4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3'
     runAzLogin: true
-    commandOptions: '-var-file=../config/checks.tfvars -lock=false'
+    commandOptions: '-var-file=../terraform/envs/${{parameters.environments}}.tfvars -lock=false'
     allowTelemetryCollection: true
     failOnStandardError: true
