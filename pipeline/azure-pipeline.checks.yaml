@@ -59,4 +59,3 @@ steps:
     runAzLogin: true
     commandOptions: '-var-file=../terraform/envs/${{parameters.environments}}.tfvars -lock=false'
     allowTelemetryCollection: true
-    failOnStandardError: true

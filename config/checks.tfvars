@@ -1,5 +1,5 @@
-resource_group_hp = "patelh-sandbox-rg"
-environment       = "development"
+resource_group_hp = var.resource_group_hp
+environment       = var.environment
 
 
  

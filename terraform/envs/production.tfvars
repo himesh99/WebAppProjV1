@@ -1,3 +1,3 @@
 environment       = "production"
 env               = "production"
-resource_group_hp = "patelh-sandbox-rg"
+resource_group_hp = var.resource_group_hp

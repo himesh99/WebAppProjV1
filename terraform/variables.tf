@@ -63,8 +63,8 @@ variable "environment" {
   type = string
 }
 
-variable "" {
-  type = string
+variable "object_id" {
+  type        = string
   description = "V1 objectID"
-  default = "0e4b967e-0513-4269-aa22-687166d31276"
+  default     = "0e4b967e-0513-4269-aa22-687166d31276"
 }
