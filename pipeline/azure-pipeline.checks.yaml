@@ -30,6 +30,18 @@ steps:
     workingDirectory: 'checks'
     allowTelemetryCollection: false
 
+- task: AzureCLI@2  
+  displayName: 'Export Azure Subscription ID'  
+  inputs:    
+    azureSubscription: UKDDC_Azure_Subscription    
+    scriptType: bash    
+    addSpnToEnvironment: true    
+    scriptLocation: inlineScript    
+    inlineScript: |      
+      # Extract the service principal details and set them as pipeline variables      
+      SubId=$(az account show --query id --output tsv)      
+      echo "##vso[task.setvariable variable=TF_VAR_az-subscription-id]$SubId"
+
 - task: TerraformCLI@1
   inputs:
     command: 'apply'
