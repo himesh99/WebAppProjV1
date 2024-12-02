@@ -1,6 +1,3 @@
-variable "subscription_id" {
-  type = string
-}
 variable "tenant_id" {
   type        = string
   description = "Defines the tenant id"
