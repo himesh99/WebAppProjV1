@@ -2,16 +2,11 @@ trigger:
 - codefix*
 - feature*
 
-parameters:
-- name: environments
-  type: object
-  default:
-    - name: development
-    - name: production
-     
-
 pool:
   vmImage: 'ubuntu-latest'
+
+variables:
+backendServiceArm: 'UKDDC_Azure_Subscription'
 
 steps:
 - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
@@ -54,8 +49,8 @@ steps:
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/checks'
-    environmentServiceName: 'UKDDC_Azure_Subscription'
-    providerAzureRmSubscriptionId: '4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3'
+    #environmentServiceName: {{vairables.backendServiceArm }}
+    #providerAzureRmSubscriptionId: '4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3'
     runAzLogin: true
-    commandOptions: '-var-file=../terraform/envs/${{parameters.environments}}.tfvars -lock=false'
+    commandOptions: '-var-file=../config/checks.tfvars
     allowTelemetryCollection: true

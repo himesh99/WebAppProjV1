@@ -59,10 +59,10 @@ stages:
       - job: waitForValidation
         displayName: '${{env.name}} Wait for external validation'
         pool: server
-        timeoutInMinutes: 300 # job times out in 5 hours
+        timeoutInMinutes: 180
         steps:
         - task: ManualValidation@0
-          timeoutInMinutes: 240 # task times out in 4 hour
+          timeoutInMinutes: 120 # task times out in 4 hour
           inputs:
             instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
             onTimeout: 'reject'
