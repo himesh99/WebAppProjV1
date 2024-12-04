@@ -4,9 +4,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.55.0"
     }
-    azapi = {
-      source = "Azure/azapi"
-    }
   }
   backend "local" {
     path = "../terraform.tfstate"
