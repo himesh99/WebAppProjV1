@@ -72,5 +72,5 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }} -var "az-subscription-id=$(TF_VAR_az-subscription-id)"'  
       env: ${{ parameters.env }}     
-      az_subscription_id: $(TF_VAR_az_subscription_id)
+      #az_subscription_id: $(TF_VAR_az_subscription_id)
 
