@@ -6,7 +6,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-backendServiceArm: 'UKDDC_Azure_Subscription'
+  backendServiceArm: 'UKDDC_Azure_Subscription'
 
 steps:
 - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
