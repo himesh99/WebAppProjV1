@@ -38,10 +38,12 @@ stages:
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
+              env: ${{ env.name }}
               environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+              backendAzureRmResourceGroupName: ${{variables/backendAzureRmResourceGroupName}}
               tfversion: ${{ variables.tfversion }}
               backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
