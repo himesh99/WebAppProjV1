@@ -41,7 +41,6 @@ variable "tags" {
     Business-unit-sponsor   = "DDC"
     Cost-centre             = "DDC"
     Data-classification     = "TBC"
-    Deployment-date         = "2024-09-07 15:04 UTC"
     Environment-type        = "sandbox"
     Project                 = "Azure Team Eagle"
 
@@ -62,6 +61,12 @@ variable "secrets" {
 variable "environment" {
   type = string
 }
+
+
+
+
+
+
 
 variable "object_id" {
   type        = string
