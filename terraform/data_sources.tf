@@ -18,4 +18,8 @@ data "azurerm_key_vault_secret" "object_id" {
   key_vault_id = data.azurerm_key_vault.config_kv.id
 }
 
+data "azurerm_key_vault_secret" "v1_object_id" {
+  name         = "v1objectid"
+  key_vault_id = data.azurerm_key_vault.config_kv.id
+}
 
