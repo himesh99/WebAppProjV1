@@ -1,6 +1,4 @@
 parameters:
-  - name: environmentServiceNameAzureRM
-    type: string
   - name: backendAzureRmResourceGroupName
     type: string
   - name: tfversion
@@ -67,7 +65,7 @@ steps:
     inputs:
       provider: 'azurerm'
       command: 'apply'
-      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+      backendServiceArm: ${{ parameters.backendServiceArm }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }} -var "az-subscription-id=$(TF_VAR_az-subscription-id)"'  

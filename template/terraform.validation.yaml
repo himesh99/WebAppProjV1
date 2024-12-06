@@ -13,8 +13,6 @@ parameters:
     type: string
   - name: backendAzureRmKey
     type: string
-  - name: environmentServiceNameAzureRM
-    type: string
   - name: tfvarsfile
     type: string
   - name: env
@@ -68,7 +66,7 @@ steps:
     inputs:
       provider: 'azurerm'
       command: 'plan'
-      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+      backendServiceArm: ${{ parameters.backendServiceArm }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }} -var "az-subscription-id=$(TF_VAR_az-subscription-id)"'  

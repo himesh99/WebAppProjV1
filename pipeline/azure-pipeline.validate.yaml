@@ -27,7 +27,6 @@ variables:
   backendAzureRmStorageAccountName: 'sahpstatevuks'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
-  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
 
 stages:
 - ${{ each env in parameters.environments }}:
@@ -39,7 +38,6 @@ stages:
           - template: ../template/terraform.validation.yaml
             parameters:
               env: ${{ env.name }}
-              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
