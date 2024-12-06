@@ -3,6 +3,7 @@ resource "azurerm_linux_web_app" "webapp" {
   resource_group_name = var.resource_group_hp
   location            = var.location
   tags                = var.tags
+  virtual_network_subnet_id = azurerm_subnet.service.id 
   site_config {
     minimum_tls_version = "1.2"
   }
