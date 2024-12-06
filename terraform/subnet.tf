@@ -12,7 +12,7 @@ resource "azurerm_subnet" "service" {
   name                 = "snet-shared-uksouth-${var.environment}-002"
   resource_group_name  = var.resource_group_hp
   address_prefixes     = ["10.0.2.0/24"]
-  service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Storage"]
+  service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Storage", "Microsoft.Web"]
   virtual_network_name = azurerm_virtual_network.webapp_vnet.name
 
 
