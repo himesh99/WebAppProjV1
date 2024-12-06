@@ -32,7 +32,7 @@ variables:
  
 stages:
 - ${{ each env in parameters.environments }}:
-  - stage: Terraform_Init_${{ env.name }}
+  - stage: Terraform_Plan_${{ env.name }}
     displayName: Terraform Plan ${{ env.name }}
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
     jobs:
