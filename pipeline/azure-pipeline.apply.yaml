@@ -23,11 +23,12 @@ parameters:
 
 variables:
   tfversion: '1.7.1'
-  backendServiceArm: 'UKDDC_Azure_Subscription'
+  #backendServiceArm: 'UKDDC_Azure_Subscription'
   backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
   backendAzureRmStorageAccountName: 'sahpstatevuks'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
+  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
 stages:
 - ${{ each env in parameters.environments }}:
@@ -39,13 +40,14 @@ stages:
         steps:
           - template: ../template/terraform.validation.yaml
             parameters:
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
+              #backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
 
@@ -74,13 +76,14 @@ stages:
         steps:
           - template: ../template/terraform.plan-apply.yaml
             parameters:
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               env: ${{ env.name }}
               backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
+              #backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
             

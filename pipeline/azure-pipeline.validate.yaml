@@ -22,11 +22,12 @@ pool:
 variables:
   workingDirectory: $(System.DefaultWorkingDirectory)/terraform
   tfversion: '1.7.1'
-  backendServiceArm: 'UKDDC_Azure_Subscription'
+  #backendServiceArm: 'UKDDC_Azure_Subscription'
   backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
   backendAzureRmStorageAccountName: 'sahpstatevuks'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'
+  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
 
 stages:
 - ${{ each env in parameters.environments }}:
@@ -38,12 +39,13 @@ stages:
           - template: ../template/terraform.validation.yaml
             parameters:
               env: ${{ env.name }}
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
               backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
               backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
               backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               backendAzureRmResourceGroupName: ${{variables.backendAzureRmResourceGroupName}}
               tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
+              #backendServiceArm: ${{ variables.backendServiceArm }}
               workingDirectory: $(System.DefaultWorkingDirectory)/terraform
               tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
 
