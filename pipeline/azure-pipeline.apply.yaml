@@ -53,7 +53,7 @@ stages:
 
   - stage: Wait_${{env.name}}
     displayName: '${{env.name}} Waiting for Approval'
-    condition: succeeded('Terraform_Init_${{ env.name }}')
+    condition: succeeded('Terraform_Plan_${{ env.name }}')
     dependsOn: Terraform_Plan_${{ env.name }}
     jobs:
       - job: waitForValidation
