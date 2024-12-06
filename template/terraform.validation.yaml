@@ -1,6 +1,8 @@
 parameters:
   - name: tfversion
     type: string
+  - name: backendServiceArm
+    type: string
   - name: backendAzureRmResourceGroupName
     type: string
   - name: backendAzureRmStorageAccountName
@@ -34,7 +36,7 @@ steps:
       provider: 'azurerm'
       command: 'init'
       tfVersion: ${{ parameters.tfversion }}
-      #backendServiceArm: ${{ parameters.backendServiceArm }}
+      backendServiceArm: ${{ parameters.backendServiceArm }}
       backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
       backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
       backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
