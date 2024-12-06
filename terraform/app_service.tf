@@ -1,8 +1,8 @@
 resource "azurerm_linux_web_app" "webapp" {
-  name                      = "app-web-${var.environment}-001"
-  resource_group_name       = var.resource_group_hp
-  location                  = var.location
-  tags                      = var.tags
+  name                = "app-web-${var.environment}-001"
+  resource_group_name = var.resource_group_hp
+  location            = var.location
+  tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
   }
