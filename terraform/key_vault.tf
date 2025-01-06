@@ -14,7 +14,7 @@
 # }
 
 resource "azurerm_key_vault" "webappkv" {
-  name                = "kv-${var.environment}-uks-001"
+  name                = "kv-${var.environment}-uks"
   resource_group_name = var.resource_group_hp
   location            = var.location
   sku_name            = "standard"

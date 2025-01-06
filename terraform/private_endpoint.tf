@@ -1,5 +1,5 @@
 resource "azurerm_private_endpoint" "storage_private_endpoint" {
-  name                = "pe-sa-${var.environment}-uks-001"
+  name                = "pe-sa-${var.environment}-uks"
   location            = var.location
   resource_group_name = var.resource_group_hp
   subnet_id           = azurerm_subnet.service.id
@@ -13,7 +13,7 @@ resource "azurerm_private_endpoint" "storage_private_endpoint" {
 }
 
 resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
-  name                = "pe-kv-${var.environment}-uks-001"
+  name                = "pe-kv-${var.environment}-uks"
   location            = var.location
   resource_group_name = var.resource_group_hp
   subnet_id           = azurerm_subnet.service.id
@@ -27,7 +27,7 @@ resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
 }
 
 resource "azurerm_private_endpoint" "sql_private_endpoint" {
-  name                = "pe-sql-${var.environment}-uks-001"
+  name                = "pe-sql-${var.environment}-uks"
   location            = var.location
   resource_group_name = var.resource_group_hp
   subnet_id           = azurerm_subnet.database.id

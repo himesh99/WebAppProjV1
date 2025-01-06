@@ -1,5 +1,5 @@
 data "azurerm_key_vault" "config_kv" {
-  name                = "kv-backend-001"
+  name                = "kv-backend"
   resource_group_name = var.resource_group_hp
 }
 
