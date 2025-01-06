@@ -11,10 +11,10 @@ parameters:
 - name: environments
   type: object
   default:
-    - name: development
+    - name: dev
       dependsOnEnv: ""
-    - name: production
-      dependsOnEnv: "development"
+    - name: prod
+      dependsOnEnv: "dev"
       
 pool:
   vmImage: ubuntu-latest

@@ -1,6 +1,6 @@
 variable "environment" {
   type    = string
-  default = "development"
+  default = "dev"
 }
 
 variable "resource_group_hp" {

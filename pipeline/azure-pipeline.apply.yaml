@@ -16,10 +16,10 @@ parameters:
 - name: environments
   type: object
   default:
-    - name: development
+    - name: dev
       dependsOnEnv: ""
-    - name: production
-      dependsOnEnv: "development"
+    - name: prod
+      dependsOnEnv: "dev"
 
 variables:
   tfversion: '1.7.1'
