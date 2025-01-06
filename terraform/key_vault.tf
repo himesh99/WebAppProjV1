@@ -18,15 +18,15 @@ resource "azurerm_key_vault" "webappkv" {
   resource_group_name = var.resource_group_hp
   location            = var.location
   sku_name            = "standard"
-  tenant_id           = data.azurerm_key_vault_secret.tenant_id.value
+  tenant_id           = var.tenant_id
   tags                = var.tags
 
 }
 
 resource "azurerm_key_vault_access_policy" "access_policy_1" {
   key_vault_id = azurerm_key_vault.webappkv.id
-  tenant_id    = data.azurerm_key_vault_secret.tenant_id.value
-  object_id    = data.azurerm_key_vault_secret.object_id.value
+  tenant_id    = var.tenant_id
+  object_id    = var.object_id
 
   key_permissions = [
     "Get",
@@ -53,9 +53,9 @@ resource "azurerm_key_vault_access_policy" "access_policy_1" {
 
 resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
   key_vault_id = azurerm_key_vault.webappkv.id
-  tenant_id    = data.azurerm_key_vault_secret.tenant_id.value
+  tenant_id    = var.tenant_id
   #Allow V1-ADOTeam
-  object_id = data.azurerm_key_vault_secret.v1_object_id.value
+  object_id = var.v1_object_id
   key_permissions = [
     "Get",
     "List",
