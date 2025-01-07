@@ -1,18 +1,3 @@
-# import {
-#   to = azurerm_key_vault_access_policy.access_policy_1
-#   id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/18755058-a4c0-4705-b50a-35348fb876d6"
-# }
-
-# import {
-#   to = azurerm_key_vault_access_policy.webappkv_access_policy_2
-#   id = "/subscriptions/4ac7e4ba-2b33-4c38-8852-1a6ba4098aa3/resourceGroups/patelh-sandbox-rg/providers/Microsoft.KeyVault/vaults/app-kv-development-001/objectId/0e4b967e-0513-4269-aa22-687166d31276"
-# }
-
-# import {
-#   to = azurerm_key_vault_secret.sql_server_admin_password
-#   id = "https://kv-development-uks-001.vault.azure.net/secrets/sql-server-development-password/e93daaaeb9884ff4827a13689156960f"
-# }
-
 resource "azurerm_key_vault" "webappkv" {
   name                = "kv-webapp-${var.environment}-uks"
   resource_group_name = var.resource_group_hp
@@ -87,3 +72,17 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   content_type = "password"
   depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
 }
+
+# resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
+#   name                = "pe-kv-${var.environment}-uks"
+#   location            = var.location
+#   resource_group_name = var.resource_group_hp
+#   subnet_id           = azurerm_subnet.service.id
+
+#   private_service_connection {
+#     name                           = "keyvault-private-connection-${var.environment}-001"
+#     private_connection_resource_id = azurerm_key_vault.webappkv.id
+#     is_manual_connection           = false
+#     subresource_names              = ["vault"]
+#   }
+# }
