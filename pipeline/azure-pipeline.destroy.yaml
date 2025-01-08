@@ -1,0 +1,11 @@
+trigger:
+- none
+
+pool:
+  vmImage: 'ubuntu-latest'
+steps:
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'destroy'
+    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
