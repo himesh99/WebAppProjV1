@@ -1,6 +1,15 @@
 trigger:
 - none
 
+parameters:
+- name: environments
+  type: object
+  default:
+    - name: dev
+      dependsOnEnv: ""
+    - name: prod
+      dependsOnEnv: "dev"
+
 pool:
   vmImage: 'ubuntu-latest'
 variables:
@@ -13,31 +22,36 @@ variables:
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
 
-steps:
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-    tfversion: '1.7.1'
-    backendServiceArm: 'UKDDC_Azure_Subscription'
-    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-    backendAzureRmStorageAccountName: 'sahpstatevuks'
-    backendAzureRmContainerName: 'tfstatefiles'
-    backendAzureRmKey: 'terraform.tfstate'
-      
+- ${{ each env in parameters.environments }}:
+  - stage: Terraform_Plan_${{ env.name }}
+    displayName: Terraform Plan ${{ env.name }}
+    jobs:
+      - job: ${{ replace(env.name, ' ', '_') }}_Environment
+        steps:
+        - task: TerraformTaskV4@4
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+            workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+            tfversion: '1.7.1'
+            backendServiceArm: ${{ variables.backendServiceArm }}
+            backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+            backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+            backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
+            backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+              
 
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'azurerm'
-    command: 'destroy'
-    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-    workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-    tfversion: '1.7.1'
-    backendServiceArm: 'UKDDC_Azure_Subscription'
-    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
-    backendAzureRmStorageAccountName: 'sahpstatevuks'
-    backendAzureRmContainerName: 'tfstatefiles'
-    backendAzureRmKey: 'terraform.tfstate'
-      
+        - task: TerraformTaskV4@4
+          inputs:
+            provider: 'azurerm'
+            command: 'destroy'
+            environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+            workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+            tfversion: '1.7.1'
+            backendServiceArm: ${{ variables.backendServiceArm }}
+            backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+            backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+            backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
+            backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+              
