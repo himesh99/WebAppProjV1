@@ -46,7 +46,7 @@ stages:
 
   - stage: Terraform_Destroy_${{ env.name }}
     displayName: Terraform Destroy ${{ env.name }}
-    condition: succeeded('Wait_${{ env.name }}')
+    #condition: succeeded('Wait_${{ env.name }}')
     #dependsOn: Wait_${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
