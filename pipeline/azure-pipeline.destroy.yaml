@@ -26,5 +26,4 @@ steps:
     backendAzureRmStorageAccountName: 'sahpstatevuks'
     backendAzureRmContainerName: 'tfstatefiles'
     backendAzureRmKey: 'terraform.tfstate'
-    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
       
