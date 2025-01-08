@@ -25,22 +25,6 @@ variables:
 
 stages:
 - ${{ each env in parameters.environments }}:
-  - stage: Wait_${{env.name}}
-    displayName: '${{env.name}} Waiting for Approval'
-    condition: succeeded('Terraform_Init_${{ env.name }}')
-    dependsOn: Terraform_Init_${{ env.name }}
-    jobs:
-      - job: waitForValidation
-        displayName: '${{env.name}} Wait for external validation'
-        pool: server
-        timeoutInMinutes: 180 # task times out in 3 hours
-        steps:
-        - task: ManualValidation@0
-          timeoutInMinutes: 120 # task times out in 2 hours
-          inputs:
-            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
-            onTimeout: 'reject'
-            
   - stage: Terraform_Init_${{ env.name }}
     displayName: Terraform Init ${{ env.name }}
     jobs:
