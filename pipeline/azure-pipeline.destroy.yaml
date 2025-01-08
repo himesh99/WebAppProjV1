@@ -66,17 +66,17 @@ stages:
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps: 
-         - template: ../template/terraform.plan-destroy.yaml
+          - template: ../template/terraform.plan-destroy.yaml
             parameters:
-              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              env: ${{ env.name }}
-              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
-              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-              tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
-              workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+                environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+                env: ${{ env.name }}
+                backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+                backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
+                backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+                tfversion: ${{ variables.tfversion }}
+                backendServiceArm: ${{ variables.backendServiceArm }}
+                workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
+                tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
         
               
