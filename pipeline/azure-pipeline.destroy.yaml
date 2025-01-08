@@ -3,9 +3,28 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
+variables:
+  workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+  tfversion: '1.7.1'
+  backendServiceArm: 'UKDDC_Azure_Subscription'
+  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+  backendAzureRmStorageAccountName: 'sahpstatevuks'
+  backendAzureRmContainerName: 'tfstatefiles'
+  backendAzureRmKey: 'terraform.tfstate'
+  environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+
 steps:
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
     command: 'destroy'
     environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+    workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+    tfversion: '1.7.1'
+    backendServiceArm: 'UKDDC_Azure_Subscription'
+    backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+    backendAzureRmStorageAccountName: 'sahpstatevuks'
+    backendAzureRmContainerName: 'tfstatefiles'
+    backendAzureRmKey: 'terraform.tfstate'
+    environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
+      
