@@ -43,7 +43,12 @@ stages:
             backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
             backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               
-
+        - task: ManualValidation@0
+          timeoutInMinutes: 120 # task times out in 2 hours
+          inputs:
+            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
+            onTimeout: 'reject'
+            
         - task: TerraformTaskV4@4
           inputs:
             provider: 'azurerm'
