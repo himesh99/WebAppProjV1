@@ -12,6 +12,7 @@ parameters:
 
 pool:
   vmImage: 'ubuntu-latest'
+
 variables:
   workingDirectory: $(System.DefaultWorkingDirectory)/terraform
   tfversion: '1.7.1'
@@ -22,9 +23,10 @@ variables:
   backendAzureRmKey: 'terraform.tfstate'
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
 
+stages:
 - ${{ each env in parameters.environments }}:
-  - stage: Terraform_Plan_${{ env.name }}
-    displayName: Terraform Plan ${{ env.name }}
+  - stage: Terraform_Destroy_${{ env.name }}
+    displayName: Terraform Destroy ${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
