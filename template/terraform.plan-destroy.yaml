@@ -1,0 +1,51 @@
+parameters:
+  - name: environmentServiceNameAzureRM
+    type: string
+  - name: backendAzureRmResourceGroupName
+    type: string
+  - name: tfversion
+    type: string
+  - name: backendServiceArm
+    type: string
+  - name: backendAzureRmStorageAccountName
+    type: string
+  - name: backendAzureRmContainerName
+    type: string
+  - name: workingDirectory
+    type: string
+  - name: backendAzureRmKey
+    type: string
+  - name: tfvarsfile
+    type: string
+  - name: env
+    type: string
+
+steps:
+      
+  - task: TerraformTaskV4@4
+    displayName: Terraform Init
+    inputs:
+      provider: 'azurerm'
+      command: 'init'
+      tfVersion: ${{ parameters.tfversion }}
+      backendServiceArm: ${{ parameters.backendServiceArm }}
+      backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+      backendAzureRmStorageAccountName: ${{ parameters.backendAzureRmStorageAccountName }}
+      backendAzureRmContainerName: ${{ parameters.backendAzureRmContainerName }} 
+      backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
+      workingDirectory: ${{ parameters.workingDirectory }}
+      commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
+      env:  ${{ parameters.env }}
+
+
+  - task: TerraformTaskV4@4
+    displayName: Terraform Destroy
+    inputs:
+      provider: 'azurerm'
+      command: 'destroy'
+      environmentServiceNameAzureRM: ${{ parameters.environmentServiceNameAzureRM }}
+      backendAzureRmResourceGroupName: ${{ parameters.backendAzureRmResourceGroupName }}
+      workingDirectory: ${{ parameters.workingDirectory }}
+      commandOptions: '-var-file=${{ parameters.tfVarsFile }} -var "az-subscription-id=$(TF_VAR_az-subscription-id)"'  
+      env: ${{ parameters.env }}     
+

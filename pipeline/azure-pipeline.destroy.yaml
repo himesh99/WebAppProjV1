@@ -33,7 +33,7 @@ stages:
         - task: TerraformTaskV4@4
           inputs:
             provider: 'azurerm'
-            command: 'init'
+            command: 'init -reconfigure'
             environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
             workingDirectory: $(System.DefaultWorkingDirectory)/terraform
             tfversion: '1.7.1'
@@ -43,24 +43,40 @@ stages:
             backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
             backendAzureRmKey: ${{ variables.backendAzureRmKey }}
               
+  - stage: Wait_${{env.name}}
+    displayName: '${{env.name}} Waiting for Approval'
+    condition: succeeded('Terraform_Init_${{ env.name }}')
+    dependsOn: Terraform_Init_${{ env.name }}
+    jobs:
+      - job: waitForValidation
+        displayName: '${{env.name}} Wait for external validation'
+        pool: server
+        timeoutInMinutes: 180 # task times out in 3 hours
+        steps:
+        - task: ManualValidation@0
+          timeoutInMinutes: 120 # task times out in 2 hours
+          inputs:
+            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
+            onTimeout: 'reject'
 
   - stage: Terraform_Destroy_${{ env.name }}
     displayName: Terraform Destroy ${{ env.name }}
-    #condition: succeeded('Wait_${{ env.name }}')
-    #dependsOn: Wait_${{ env.name }}
+    condition: succeeded('Wait_${{ env.name }}')
+    dependsOn: Wait_${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps: 
-        - task: TerraformTaskV4@4
-          inputs:
-            provider: 'azurerm'
-            command: 'destroy'
-            environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
-            workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-            tfversion: '1.7.1'
-            backendServiceArm: ${{ variables.backendServiceArm }}
-            backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-            backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
-            backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
-            backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+         - template: ../template/terraform.plan-destroy.yaml
+            parameters:
+              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+              env: ${{ env.name }}
+              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
+              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+              tfversion: ${{ variables.tfversion }}
+              backendServiceArm: ${{ variables.backendServiceArm }}
+              workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
+              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+        
               
