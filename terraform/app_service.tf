@@ -5,11 +5,17 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
+    linux_fx_version = "DOCKER|wordpress:latest"
   }
   service_plan_id = azurerm_service_plan.webappservice.id
 
 
-
+  app_settings = {
+    "WORDPRESS_DB_HOST"     = "${azurerm_sql_server.sqlsvr.name}.database.windows.net"
+    "WORDPRESS_DB_USER"     = "${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name}"
+    "WORDPRESS_DB_PASSWORD" = "${random_password.sqlpass.result}"
+    "WORDPRESS_DB_NAME"     = "${azurerm_sql_database.sqldb.name}"
+  }
 
   connection_string {
     name  = "DATABASE_URL"
