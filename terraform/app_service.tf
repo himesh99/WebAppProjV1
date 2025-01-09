@@ -5,9 +5,9 @@ resource "azurerm_app_service" "webapp" {
   tags                = var.tags
   site_config {
     #minimum_tls_version = "1.2"
-    linux_fx_version    = "DOCKER|wordpress:latest"
+    linux_fx_version = "DOCKER|wordpress:latest"
   }
-  app_service_plan_id  = azurerm_service_plan.webappservice.id
+  app_service_plan_id = azurerm_service_plan.webappservice.id
 
 
   app_settings = {
