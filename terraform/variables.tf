@@ -83,5 +83,5 @@ variable "v1_object_id" {
 variable "wordpress_image" {
   type        = string
   description = "Docker repository name with tag, e.g. Defaults to onazureio/wordpress:5.5"
-  default     = "onazureio/wordpress:5.5"
+  default     = "wordpress:latest"
 }

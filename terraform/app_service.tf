@@ -6,6 +6,7 @@ resource "azurerm_app_service" "webapp" {
   app_service_plan_id = azurerm_service_plan.webappservice.id
 
   site_config {
+    always_on        = true
     min_tls_version  = 1.2
     linux_fx_version = "DOCKER|${var.wordpress_image}"
   }
