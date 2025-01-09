@@ -1,13 +1,16 @@
-resource "azurerm_app_service" "webapp" {
+resource "azurerm_linux_web_app" "webapp" {
   name                = "app-web-${var.environment}"
   resource_group_name = var.resource_group_hp
   location            = var.location
   tags                = var.tags
   site_config {
-    #minimum_tls_version = "1.2"
-    linux_fx_version = "DOCKER|wordpress:latest"
+    minimum_tls_version = "1.2"
+    application_stack {
+      docker_image_name = "DOCKER/wordpress:php8.3-fpm-alpine"
+    }
   }
-  app_service_plan_id = azurerm_service_plan.webappservice.id
+  service_plan_id = azurerm_service_plan.webappservice.id
+
 
 
   app_settings = {
