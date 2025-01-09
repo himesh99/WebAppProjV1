@@ -15,8 +15,8 @@ resource "azurerm_app_service" "webapp" {
 
 
   app_settings = {
-    "WORDPRESS_DB_HOST"     = "${azurerm_sql_server.sqlsvr.name}.database.windows.net"
-    "WORDPRESS_DB_USER"     = "${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name}"
+    "WORDPRESS_DB_HOST"     = "${azurerm_mysql_server.sqlsvr.name}.database.windows.net"
+    "WORDPRESS_DB_USER"     = "${azurerm_mysql_server.sqlsvr.administrator_login}@${azurerm_mysql_server.sqlsvr.name}"
     "WORDPRESS_DB_PASSWORD" = "${random_password.sqlpass.result}"
     "WORDPRESS_DB_NAME"     = "${azurerm_sql_database.sqldb.name}"
     "DOCKER_ENABLE_CI"      = "true"
@@ -25,6 +25,6 @@ resource "azurerm_app_service" "webapp" {
   connection_string {
     name  = "DATABASE_URL"
     type  = "SQLServer"
-    value = "Server=tcp:${azurerm_sql_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_sql_database.sqldb.name};User ID=${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
+    value = "Server=tcp:${azurerm_mysql_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_database.sqldb.name};User ID=${azurerm_mysql_server.sqlsvr.administrator_login}@${azurerm_mysql_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
   }
 }
