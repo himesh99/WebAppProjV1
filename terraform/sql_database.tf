@@ -1,8 +1,7 @@
-resource "azurerm_mysql_database" "sqldb" {
+resource "azurerm_sql_database" "sqldb" {
   name                = "sqldb-webapp-${var.environment}"
   resource_group_name = var.resource_group_hp
   server_name         = azurerm_sql_server.sqlsvr.name
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
-  depends_on          = [azurerm_sql_server.sqlsvr]
 }
