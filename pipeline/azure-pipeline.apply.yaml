@@ -31,16 +31,16 @@ variables:
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
 stages:
-- ${{ each env in parameters.environments }}:
-  - stage: Docker_pre${{ env.name }}
-    displayName: Docker install ${{ env.name }}
-    jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        steps:
-        - script: |
-            sudo apt-get remove containerd.io
-            sudo apt install docker.io docker-compose -y
-          displayName: 'Install Docker and Docker Compose'
+# - ${{ each env in parameters.environments }}:
+#   - stage: Docker_pre${{ env.name }}
+#     displayName: Docker install ${{ env.name }}
+#     jobs:
+#       - job: ${{ replace(env.name, ' ', '_') }}_Environment
+#         steps:
+#         - script: |
+#             sudo apt-get remove containerd.io
+#             sudo apt install docker.io docker-compose -y
+#           displayName: 'Install Docker and Docker Compose'
 
   - stage: Terraform_Plan_${{ env.name }}
     displayName: Terraform Plan ${{ env.name }}
