@@ -18,7 +18,7 @@ resource "azurerm_app_service" "webapp" {
     "WORDPRESS_DB_HOST"     = "${azurerm_mysql_server.sqlsvr.name}.database.windows.net"
     "WORDPRESS_DB_USER"     = "${azurerm_mysql_server.sqlsvr.administrator_login}@${azurerm_mysql_server.sqlsvr.name}"
     "WORDPRESS_DB_PASSWORD" = "${random_password.sqlpass.result}"
-    "WORDPRESS_DB_NAME"     = "${azurerm_sql_database.sqldb.name}"
+    "WORDPRESS_DB_NAME"     = "${azurerm_mysql_database.sqldb.name}"
     "DOCKER_ENABLE_CI"      = "true"
   }
 
