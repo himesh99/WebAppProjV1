@@ -5,7 +5,8 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
-    application_stack {
+  
+  application_stack {
       docker_image_name = "DOCKER/wordpress:php8.3-fpm-alpine"
     }
   }
