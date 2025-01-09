@@ -79,3 +79,9 @@ variable "v1_object_id" {
   default = "0e4b967e-0513-4269-aa22-687166d31276"
 
 }
+
+variable "wordpress_image" {
+  type 				= string
+  description = "Docker repository name with tag, e.g. Defaults to onazureio/wordpress:5.5"
+  default     = "onazureio/wordpress:5.5"
+}

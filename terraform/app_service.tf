@@ -5,7 +5,7 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
-    linux_fx_version    = "DOCKER/wordpress:latest"
+    linux_fx_version = "DOCKER|${var.wordpress_image}"
   }
   service_plan_id = azurerm_service_plan.webappservice.id
 
@@ -16,6 +16,7 @@ resource "azurerm_linux_web_app" "webapp" {
     "WORDPRESS_DB_USER"     = "${azurerm_sql_server.sqlsvr.administrator_login}@${azurerm_sql_server.sqlsvr.name}"
     "WORDPRESS_DB_PASSWORD" = "${random_password.sqlpass.result}"
     "WORDPRESS_DB_NAME"     = "${azurerm_sql_database.sqldb.name}"
+    "DOCKER_ENABLE_CI"                       = "true"
   }
 
   connection_string {
