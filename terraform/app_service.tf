@@ -1,10 +1,10 @@
-resource "azurerm_web_app" "webapp" {
+resource "azurerm_app_service" "webapp" {
   name                = "app-web-${var.environment}"
   resource_group_name = var.resource_group_hp
   location            = var.location
   tags                = var.tags
   site_config {
-    minimum_tls_version = "1.2"
+    #minimum_tls_version = "1.2"
     linux_fx_version    = "DOCKER/wordpress:php8.3-fpm-alpine"
 
   }
