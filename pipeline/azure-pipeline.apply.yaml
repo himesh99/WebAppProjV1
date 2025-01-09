@@ -38,8 +38,8 @@ stages:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
         - script: |
-            sudo apt-get update
-            sudo apt-get install -y docker.io docker-compose
+            sudo apt-get remove containerd.io
+            sudo apt install docker.io docker-compose -y
           displayName: 'Install Docker and Docker Compose'
 
   - stage: Terraform_Plan_${{ env.name }}
