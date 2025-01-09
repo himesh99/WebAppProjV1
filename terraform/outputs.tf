@@ -1,7 +1,7 @@
-output "web_app" {
-  value       = azurerm_web_app.webapp.name
-  description = "The URL of the deployed web application."
-}
+# output "web_app" {
+#   value       = azurerm_linux_web_app.webapp.name
+#   description = "The URL of the deployed web application."
+# }
 
 output "sql_server_name" {
   value       = azurerm_sql_server.sqlsvr.name
