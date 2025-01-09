@@ -13,7 +13,7 @@ resource "azurerm_mysql_server" "sqlsvr" {
   resource_group_name          = var.resource_group_hp
   location                     = var.location
   sku_name                     = "B_Gen4_1"
-  version                      = "8.0"
+  version                      = "5.7"
   administrator_login          = local.sql_server_username
   administrator_login_password = random_password.sqlpass.result
   tags                         = var.tags
