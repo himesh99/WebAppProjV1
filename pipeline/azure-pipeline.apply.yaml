@@ -33,7 +33,7 @@ variables:
 stages:
 - ${{ each env in parameters.environments }}:
   - stage: Docker_pre${{ env.name }}
-    displayName: Terraform Apply ${{ env.name }}
+    displayName: Docker install ${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
@@ -41,7 +41,7 @@ stages:
             sudo apt-get update
             sudo apt-get install -y docker.io docker-compose
             displayName: 'Install Docker and Docker Compose'
-            
+
   - stage: Terraform_Plan_${{ env.name }}
     displayName: Terraform Plan ${{ env.name }}
     condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
@@ -99,7 +99,7 @@ stages:
   
   
   - stage: Docker_post${{ env.name }}
-    displayName: Terraform Apply ${{ env.name }}
+    displayName: Docker Compose ${{ env.name }}
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
