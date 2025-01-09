@@ -9,13 +9,13 @@ resource "random_password" "sqlpass" {
 }
 
 resource "azurerm_mysql_flexible_server" "sqlsvr" {
-  name                         = "sqlsvr-webapp-${var.environment}"
-  resource_group_name          = var.resource_group_hp
-  location                     = var.location
-  version                      = "12.0"
-  administrator_login          = local.sql_server_username
+  name                   = "sqlsvr-webapp-${var.environment}"
+  resource_group_name    = var.resource_group_hp
+  location               = var.location
+  version                = "12.0"
+  administrator_login    = local.sql_server_username
   administrator_password = random_password.sqlpass.result
-  tags                         = var.tags
+  tags                   = var.tags
 
 }
 
