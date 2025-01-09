@@ -31,7 +31,7 @@ variables:
   environmentServiceNameAzureRM: 'UKDDC_Azure_Subscription'
  
 stages:
-# - ${{ each env in parameters.environments }}:
+  - ${{ each env in parameters.environments }}:
 #   - stage: Docker_pre${{ env.name }}
 #     displayName: Docker install ${{ env.name }}
 #     jobs:
@@ -42,69 +42,69 @@ stages:
 #             sudo apt install docker.io docker-compose -y
 #           displayName: 'Install Docker and Docker Compose'
 
-  - stage: Terraform_Plan_${{ env.name }}
-    displayName: Terraform Plan ${{ env.name }}
-    condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
-    jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        steps:
-          - template: ../template/terraform.validation.yaml
-            parameters:
-              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              env: ${{ env.name }}
-              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
-              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-              tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
-              workingDirectory: $(System.DefaultWorkingDirectory)/terraform
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
+    - stage: Terraform_Plan_${{ env.name }}
+      displayName: Terraform Plan ${{ env.name }}
+      condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
+      jobs:
+        - job: ${{ replace(env.name, ' ', '_') }}_Environment
+          steps:
+            - template: ../template/terraform.validation.yaml
+              parameters:
+                environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+                env: ${{ env.name }}
+                backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+                backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
+                backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+                tfversion: ${{ variables.tfversion }}
+                backendServiceArm: ${{ variables.backendServiceArm }}
+                workingDirectory: $(System.DefaultWorkingDirectory)/terraform
+                tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars 
 
-  - stage: Wait_${{env.name}}
-    displayName: '${{env.name}} Waiting for Approval'
-    condition: succeeded('Terraform_Plan_${{ env.name }}')
-    dependsOn: Terraform_Plan_${{ env.name }}
-    jobs:
-      - job: waitForValidation
-        displayName: '${{env.name}} Wait for external validation'
-        pool: server
-        timeoutInMinutes: 180 # task times out in 3 hours
-        steps:
-        - task: ManualValidation@0
-          timeoutInMinutes: 120 # task times out in 2 hours
-          inputs:
-            instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
-            onTimeout: 'reject'
+    - stage: Wait_${{env.name}}
+      displayName: '${{env.name}} Waiting for Approval'
+      condition: succeeded('Terraform_Plan_${{ env.name }}')
+      dependsOn: Terraform_Plan_${{ env.name }}
+      jobs:
+        - job: waitForValidation
+          displayName: '${{env.name}} Wait for external validation'
+          pool: server
+          timeoutInMinutes: 180 # task times out in 3 hours
+          steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 120 # task times out in 2 hours
+            inputs:
+              instructions: 'Please validate the Terraform Plan for ${{env.name}} environment to resume'
+              onTimeout: 'reject'
 
-  - stage: Terraform_Apply_${{ env.name }}
-    displayName: Terraform Apply ${{ env.name }}
-    condition: succeeded('Wait_${{ env.name }}')
-    dependsOn: Wait_${{ env.name }}
-    jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        steps:
-          - template: ../template/terraform.plan-apply.yaml
-            parameters:
-              environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
-              env: ${{ env.name }}
-              backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
-              backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
-              backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
-              backendAzureRmKey: ${{ variables.backendAzureRmKey }}
-              tfversion: ${{ variables.tfversion }}
-              backendServiceArm: ${{ variables.backendServiceArm }}
-              workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
-              tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
-  
-  
-  - stage: Docker_post${{ env.name }}
-    displayName: Docker Compose ${{ env.name }}
-    jobs:
-      - job: ${{ replace(env.name, ' ', '_') }}_Environment
-        steps:
-        - script: |
-            docker-compose -f docker-compose.yml up -d
-            displayName: 'Deploy WordPress and MySQL'
-            curl -I http://localhost:8080
-            displayName: 'Validate WordPress Deployment'
+    - stage: Terraform_Apply_${{ env.name }}
+      displayName: Terraform Apply ${{ env.name }}
+      condition: succeeded('Wait_${{ env.name }}')
+      dependsOn: Wait_${{ env.name }}
+      jobs:
+        - job: ${{ replace(env.name, ' ', '_') }}_Environment
+          steps:
+            - template: ../template/terraform.plan-apply.yaml
+              parameters:
+                environmentServiceNameAzureRM: ${{ variables.environmentServiceNameAzureRM }}
+                env: ${{ env.name }}
+                backendAzureRmResourceGroupName: ${{ variables.backendAzureRmResourceGroupName }}
+                backendAzureRmStorageAccountName: ${{ variables.backendAzureRmStorageAccountName }}${{env.name}}
+                backendAzureRmContainerName: ${{ variables.backendAzureRmContainerName }}${{env.name}}
+                backendAzureRmKey: ${{ variables.backendAzureRmKey }}
+                tfversion: ${{ variables.tfversion }}
+                backendServiceArm: ${{ variables.backendServiceArm }}
+                workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
+                tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
+    
+    
+    - stage: Docker_post${{ env.name }}
+      displayName: Docker Compose ${{ env.name }}
+      jobs:
+        - job: ${{ replace(env.name, ' ', '_') }}_Environment
+          steps:
+          - script: |
+              docker-compose -f docker-compose.yml up -d
+              displayName: 'Deploy WordPress and MySQL'
+              curl -I http://localhost:8080
+              displayName: 'Validate WordPress Deployment'
