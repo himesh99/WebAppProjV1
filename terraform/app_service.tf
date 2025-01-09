@@ -5,7 +5,7 @@ resource "azurerm_linux_web_app" "webapp" {
   tags                = var.tags
   site_config {
     minimum_tls_version = "1.2"
-    linux_fx_version = "DOCKER/wordpress:php8.3-fpm-alpine"
+    linux_fx_version    = "DOCKER/wordpress:php8.3-fpm-alpine"
   }
   service_plan_id = azurerm_service_plan.webappservice.id
 
