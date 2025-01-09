@@ -15,6 +15,7 @@ resource "azurerm_mysql_flexible_server" "sqlsvr" {
   administrator_login    = local.sql_server_username
   administrator_password = random_password.sqlpass.result
   tags                   = var.tags
+  sku_name               = "B_Standard_B1s"
 
 }
 
