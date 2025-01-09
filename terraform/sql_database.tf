@@ -4,4 +4,5 @@ resource "azurerm_mysql_database" "sqldb" {
   server_name         = azurerm_sql_server.sqlsvr.name
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
+  depends_on = [ azurerm_sql_server.sqlsvr ]
 }
