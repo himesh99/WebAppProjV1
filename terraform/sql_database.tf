@@ -1,4 +1,4 @@
-resource "azurerm_sql_database" "sqldb" {
+resource "azurerm_mysql_flexible_database" "sqldb" {
   name                = "sqldb-webapp-${var.environment}"
   resource_group_name = var.resource_group_hp
   server_name         = azurerm_sql_server.sqlsvr.name
