@@ -8,7 +8,7 @@ resource "azurerm_app_service" "webapp" {
   site_config {
     always_on        = true
     min_tls_version  = 1.2
-    linux_fx_version = "mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
+    linux_fx_version = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
   }
 
 
