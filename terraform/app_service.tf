@@ -8,7 +8,7 @@ resource "azurerm_linux_web_app" "webapp" {
   site_config {
     always_on = true
     application_stack {
-      docker_image_name = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
+      docker_image = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
     }
   }
 
