@@ -1,16 +1,14 @@
-resource "azurerm_linux_web_app" "webapp" {
+resource "azurerm_app_service" "webapp" {
   name                = "app-web-${var.environment}"
   resource_group_name = var.resource_group_hp
   location            = var.location
   tags                = var.tags
-  service_plan_id     = azurerm_service_plan.webappservice.id
+  app_service_plan_id = azurerm_service_plan.webappservice.id
 
   site_config {
-    always_on = true
-    application_stack {
-      docker_image     = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
-      docker_image_tag = ""
-    }
+    always_on        = true
+    min_tls_version  = 1.2
+    linux_fx_version = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
   }
 
 
