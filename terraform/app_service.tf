@@ -33,17 +33,17 @@ resource "azurerm_app_service" "webapp" {
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_EMAIL"
-    type  = "Custom"
+    type  = "custom"
     value = "himesh.patel@version1.com"
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_PASSWORD"
-    type  = "Custom"
+    type  = "custom"
     value = azurerm_mysql_flexible_server.sqlsvr.administrator_password
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_USER"
-    type  = "Custom"
+    type  = "custom"
     value = "himesh.patel"
   }
 }
