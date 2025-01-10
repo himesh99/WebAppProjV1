@@ -8,18 +8,22 @@ resource "azurerm_app_service" "webapp" {
   site_config {
     always_on        = true
     min_tls_version  = 1.2
-    linux_fx_version = "DOCKER|${var.wordpress_image}"
+    linux_fx_version = "mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
   }
 
 
 
 
   app_settings = {
-    "WORDPRESS_DB_HOST"     = "${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net"
-    "WORDPRESS_DB_USER"     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name}"
-    "WORDPRESS_DB_PASSWORD" = "${random_password.sqlpass.result}"
-    "WORDPRESS_DB_NAME"     = "${azurerm_mysql_flexible_database.sqldb.name}"
-    "DOCKER_ENABLE_CI"      = "true"
+    "WORDPRESS_DB_HOST"                     = "${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net"
+    "WORDPRESS_DB_USER"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name}"
+    "WORDPRESS_DB_PASSWORD"                 = "${random_password.sqlpass.result}"
+    "WORDPRESS_DB_NAME"                     = "${azurerm_mysql_flexible_database.sqldb.name}"
+    "SETUP_PHPMYADMIN"                      = true
+    "WEBSITES_CONTAINER_START_TIME_LIMIT"   = 1800
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE"   = true
+    "WORDPRESS_LOCAL_STORAGE_CACHE_ENABLED" = true
+    "DOCKER_REGISTRY_SERVER_URL"            = "https://mcr.microsoft.com"
   }
 
   connection_string {
@@ -27,4 +31,8 @@ resource "azurerm_app_service" "webapp" {
     type  = "SQLServer"
     value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
   }
+}
+
+resource "azurerm" "name" {
+
 }

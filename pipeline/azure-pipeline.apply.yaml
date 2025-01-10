@@ -32,16 +32,6 @@ variables:
  
 stages:
   - ${{ each env in parameters.environments }}:
-    - stage: Docker_pre${{ env.name }}
-      displayName: Docker install ${{ env.name }}
-      jobs:
-        - job: ${{ replace(env.name, ' ', '_') }}_Environment
-          steps:
-          - script: |
-              sudo apt-get remove containerd.io
-              sudo apt install docker.io docker-compose -y
-            displayName: 'Install Docker and Docker Compose'
-
     - stage: Terraform_Plan_${{ env.name }}
       displayName: Terraform Plan ${{ env.name }}
       condition: and(succeeded(), or(eq('${{ env.dependsOnEnv }}', ''), succeeded('Terraform_Apply_${{ env.dependsOnEnv }}')))
@@ -97,14 +87,3 @@ stages:
                 workingDirectory: $(System.DefaultWorkingDirectory)/terraform    
                 tfVarsFile: $(System.DefaultWorkingDirectory)/terraform/envs/${{env.name}}.tfvars   
     
-    
-    - stage: Docker_post${{ env.name }}
-      displayName: Docker Compose ${{ env.name }}
-      jobs:
-        - job: ${{ replace(env.name, ' ', '_') }}_Environment
-          steps:
-          - script: |
-              docker-compose -f docker-compose.yml up -d
-              displayName: 'Deploy WordPress and MySQL'
-              curl -I http://localhost:8080
-              displayName: 'Validate WordPress Deployment'
