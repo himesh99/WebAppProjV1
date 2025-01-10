@@ -32,18 +32,18 @@ resource "azurerm_app_service" "webapp" {
     value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
   }
   connection_string {
-    name = "WORDPRESS_ADMIN_EMAIL"
-    type = "Custom"
+    name  = "WORDPRESS_ADMIN_EMAIL"
+    type  = "Custom"
     value = "himesh.patel@version1.com"
   }
-   connection_string {
-    name = "WORDPRESS_ADMIN_PASSWORD"
-    type = "Custom"
+  connection_string {
+    name  = "WORDPRESS_ADMIN_PASSWORD"
+    type  = "Custom"
     value = azurerm_mysql_flexible_server.sqlsvr.administrator_password
   }
   connection_string {
-    name = "WORDPRESS_ADMIN_USER"
-    type = "Custom"
+    name  = "WORDPRESS_ADMIN_USER"
+    type  = "Custom"
     value = "himesh.patel"
   }
 }
