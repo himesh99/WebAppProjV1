@@ -6,8 +6,10 @@ resource "azurerm_linux_web_app" "webapp" {
   service_plan_id     = azurerm_service_plan.webappservice.id
 
   site_config {
-    always_on        = true
-    linux_fx_version = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
+    always_on = true
+    application_stack {
+      docker_image_name = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
+    }
   }
 
 
