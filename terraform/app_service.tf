@@ -23,6 +23,7 @@ resource "azurerm_app_service" "webapp" {
     "WEBSITES_CONTAINER_START_TIME_LIMIT"   = 1800
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE"   = true
     "WORDPRESS_LOCAL_STORAGE_CACHE_ENABLED" = true
+    "WORDPRESS_LOCALE_CODE"                 = "en_US"
     "DOCKER_REGISTRY_SERVER_URL"            = "https://mcr.microsoft.com"
   }
 
