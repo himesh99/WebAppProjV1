@@ -15,7 +15,7 @@ resource "azurerm_mysql_flexible_server" "sqlsvr" {
   administrator_login    = local.sql_server_username
   administrator_password = random_password.sqlpass.result
   sku_name               = "GP_Standard_D2ds_v4"
-  zone = "1"
+  zone                   = "1"
 
 }
 
