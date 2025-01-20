@@ -21,9 +21,9 @@ resource "azurerm_mysql_flexible_server" "sqlsvr" {
 resource "azurerm_mysql_flexible_server_configuration" "require_secure_transport" {
   name                = "require_secure_transport"
   resource_group_name = var.resource_group_hp
-  server_name = azurerm_mysql_flexible_server.sqlsvr.name
-  value = "OFF"
-  
+  server_name         = azurerm_mysql_flexible_server.sqlsvr.name
+  value               = "OFF"
+
 }
 
 resource "azurerm_mysql_flexible_server_firewall_rule" "allow_all_ips" {
