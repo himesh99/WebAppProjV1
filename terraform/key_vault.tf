@@ -73,16 +73,22 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
 }
 
-# resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
-#   name                = "pe-kv-${var.environment}-uks"
-#   location            = var.location
-#   resource_group_name = var.resource_group_hp
-#   subnet_id           = azurerm_subnet.service.id
+resource "azurerm_private_dns_zone" "kv" {
+  name                = "privatelink.kv.database.azure.com"
+  resource_group_name = var.resource_group_hp
 
-#   private_service_connection {
-#     name                           = "keyvault-private-connection-${var.environment}-001"
-#     private_connection_resource_id = azurerm_key_vault.webappkv.id
-#     is_manual_connection           = false
-#     subresource_names              = ["vault"]
-#   }
-# }
+}
+
+resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
+  name                = "pe-kv-${var.environment}-uks"
+  location            = var.location
+  resource_group_name = var.resource_group_hp
+  subnet_id           = azurerm_subnet.service.id
+
+  private_service_connection {
+    name                           = "keyvault-private-connection-${var.environment}-001"
+    private_connection_resource_id = azurerm_key_vault.webappkv.id
+    is_manual_connection           = false
+    subresource_names              = ["vault"]
+  }
+}
