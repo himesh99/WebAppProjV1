@@ -21,9 +21,9 @@ resource "azurerm_storage_container" "container" {
 }
 
 resource "azurerm_private_dns_zone" "sa" {
-  name = "privatelink.sa.database.azure.com"
+  name                = "privatelink.sa.database.azure.com"
   resource_group_name = var.resource_group_hp
-  
+
 }
 
 resource "azurerm_private_endpoint" "storage_private_endpoint" {
@@ -39,7 +39,7 @@ resource "azurerm_private_endpoint" "storage_private_endpoint" {
     subresource_names              = ["blob"]
   }
 
-  
+
 }
 
 
