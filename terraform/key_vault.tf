@@ -91,4 +91,8 @@ resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
     is_manual_connection           = false
     subresource_names              = ["vault"]
   }
+    private_dns_zone_group {
+    name                 = "kv-dns-zone-group"
+    private_dns_zone_ids = [azurerm_private_dns_zone.kv.id]
+  }
 }

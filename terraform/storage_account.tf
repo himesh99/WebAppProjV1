@@ -39,6 +39,11 @@ resource "azurerm_private_endpoint" "storage_private_endpoint" {
     subresource_names              = ["blob"]
   }
 
+    private_dns_zone_group {
+    name                 = "sa-dns-zone-group"
+    private_dns_zone_ids = [azurerm_private_dns_zone.sa.id]
+  }
+
 
 }
 

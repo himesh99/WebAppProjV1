@@ -24,4 +24,8 @@ resource "azurerm_private_endpoint" "database_private_endpoint" {
     is_manual_connection           = true
     subresource_names              = ["mysqlServer"]
   }
+    private_dns_zone_group {
+    name                 = "sql-dns-zone-group"
+    private_dns_zone_ids = [azurerm_private_dns_zone.sql.id]
+  }
 }
