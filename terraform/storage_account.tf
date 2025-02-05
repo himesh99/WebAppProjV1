@@ -28,7 +28,7 @@ resource "azurerm_private_dns_zone" "sa" {
 
 resource "azurerm_private_dns_zone_virtual_network_link" "saLink" {
   name                  = "sa-vnet-link"
-  resource_group_name = var.resource_group_hp
+  resource_group_name   = var.resource_group_hp
   private_dns_zone_name = azurerm_private_dns_zone.sa.name
   virtual_network_id    = azurerm_virtual_network.webapp_vnet.id
 }
