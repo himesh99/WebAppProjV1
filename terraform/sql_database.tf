@@ -24,7 +24,7 @@ resource "azurerm_private_dns_a_record" "sqlArecord" {
   zone_name           = azurerm_private_dns_zone.sql.name
   resource_group_name = var.resource_group_hp
   ttl                 = 10
-  records             = [azurerm_private_dns_zone.sql.id]
+  records             = ["10.0.1.5"]
 }
 
 

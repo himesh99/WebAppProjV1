@@ -38,7 +38,7 @@ resource "azurerm_private_dns_a_record" "saArecord" {
   zone_name           = azurerm_private_dns_zone.sa.name
   resource_group_name = var.resource_group_hp
   ttl                 = 10
-  records             = [azurerm_private_dns_zone.sa.id]
+  records             = ["10.0.2.6"]
 }
 
 resource "azurerm_private_endpoint" "storage_private_endpoint" {

@@ -91,7 +91,7 @@ resource "azurerm_private_dns_a_record" "kvArecord" {
   zone_name           = azurerm_private_dns_zone.kv.name
   resource_group_name = var.resource_group_hp
   ttl                 = 10
-  records             = [azurerm_private_dns_zone.kv.id]
+  records             = ["10.0.2.7"]
 }
 
 resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
