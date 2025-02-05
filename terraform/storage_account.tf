@@ -21,9 +21,24 @@ resource "azurerm_storage_container" "container" {
 }
 
 resource "azurerm_private_dns_zone" "sa" {
-  name                = "privatelink.sa.database.azure.com"
+  name                = "privatelink.sa.storage.azure.com"
   resource_group_name = var.resource_group_hp
 
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "saLink" {
+  name                  = "sa-vnet-link"
+  resource_group_name = var.resource_group_hp
+  private_dns_zone_name = azurerm_private_dns_zone.sa.name
+  virtual_network_id    = azurerm_virtual_network.webapp_vnet.id
+}
+
+resource "azurerm_private_dns_a_record" "saArecord" {
+  name                = "stwebappdatadev"
+  zone_name           = azurerm_private_dns_zone.sa.name
+  resource_group_name = var.resource_group_hp
+  ttl                 = 10
+  records             = [azurerm_private_dns_zone.sa.id]
 }
 
 resource "azurerm_private_endpoint" "storage_private_endpoint" {

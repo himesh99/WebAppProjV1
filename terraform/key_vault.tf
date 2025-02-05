@@ -79,6 +79,21 @@ resource "azurerm_private_dns_zone" "kv" {
 
 }
 
+resource "azurerm_private_dns_zone_virtual_network_link" "kvLink" {
+  name                  = "kv-vnet-link"
+  resource_group_name = var.resource_group_hp
+  private_dns_zone_name = azurerm_private_dns_zone.kv.name
+  virtual_network_id    = azurerm_virtual_network.webapp_vnet.id
+}
+
+resource "azurerm_private_dns_a_record" "kvArecord" {
+  name                = "kv-webapp-${var.environment}-uks"
+  zone_name           = azurerm_private_dns_zone.kv.name
+  resource_group_name = var.resource_group_hp
+  ttl                 = 10
+  records             = [azurerm_private_dns_zone.kv.id]
+}
+
 resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
   name                = "pe-kv-${var.environment}-uks"
   location            = var.location
