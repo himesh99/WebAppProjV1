@@ -34,3 +34,43 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "allow_all_ips" {
   end_ip_address      = "255.255.255.255"
 }
 
+resource "azurerm_private_dns_zone" "sqlsvr" {
+  name                = "privatelink.mysqlsvr.database.azure.com"
+  resource_group_name = var.resource_group_hp
+
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "sqlsvrLink" {
+  name                  = "sqlsvr-vnet-link"
+  resource_group_name   = var.resource_group_hp
+  private_dns_zone_name = azurerm_private_dns_zone.sqlsvr.name
+  virtual_network_id    = azurerm_virtual_network.webapp_vnet.id
+}
+
+resource "azurerm_private_dns_a_record" "sqlsvrArecord" {
+  name                = "sqlsvr-webapp-dev"
+  zone_name           = azurerm_private_dns_zone.sqlsvr.name
+  resource_group_name = var.resource_group_hp
+  ttl                 = 10
+  records             = ["10.0.1.5"]
+}
+
+
+resource "azurerm_private_endpoint" "database_private_endpoint" {
+  name                = "pe-svr-${var.environment}-uks"
+  location            = var.location
+  resource_group_name = var.resource_group_hp
+  subnet_id           = azurerm_subnet.database.id
+
+  private_service_connection {
+    name                           = "database-private-connection-${var.environment}-001"
+    private_connection_resource_id = azurerm_mysql_flexible_server.sqlsvr.id
+    is_manual_connection           = false
+    subresource_names              = ["mysqlServer"]
+  }
+  private_dns_zone_group {
+    name                 = "sqlsvr-dns-zone-group"
+    private_dns_zone_ids = [azurerm_private_dns_zone.sqlsvr.id]
+  }
+}
+
