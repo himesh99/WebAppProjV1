@@ -38,7 +38,7 @@ resource "azurerm_private_endpoint" "database_private_endpoint" {
     name                           = "database-private-connection-${var.environment}-001"
     private_connection_resource_id = azurerm_mysql_flexible_database.sqldb.id
     is_manual_connection           = false
-    subresource_names              = ["mysqlServer"]
+    subresource_names              = ["sqlServer"]
   }
   private_dns_zone_group {
     name                 = "sql-dns-zone-group"
