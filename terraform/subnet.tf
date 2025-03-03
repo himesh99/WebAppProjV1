@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "database" {
-  name                 = "snet-shared-uksouth-${var.environment}"
+  name                 = "db-snet-shared-uksouth-${var.environment}"
   resource_group_name  = var.resource_group_hp
   address_prefixes     = ["10.0.1.0/24"]
   service_endpoints    = ["Microsoft.Sql"]
