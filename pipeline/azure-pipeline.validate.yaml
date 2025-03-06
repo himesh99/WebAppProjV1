@@ -23,7 +23,7 @@ variables:
   workingDirectory: $(System.DefaultWorkingDirectory)/terraform
   tfversion: '1.7.1'
   backendServiceArm: 'UKDDC_Azure_Subscription'
-  backendAzureRmResourceGroupName: 'patelh-sandbox-rg'
+  backendAzureRmResourceGroupName: 'himesh-patel-sandbox-rg'
   backendAzureRmStorageAccountName: 'sahpstatevuks'
   backendAzureRmContainerName: 'tfstatefiles'
   backendAzureRmKey: 'terraform.tfstate'

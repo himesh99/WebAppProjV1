@@ -6,5 +6,5 @@ variable "environment" {
 variable "resource_group_hp" {
   type        = string
   description = "Resource Group to deploy resources into."
-  default     = "patelh-sandbox-rg"
+  default     = "himesh-patel-sandbox-rg"
 }

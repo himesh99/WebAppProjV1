@@ -1,6 +1,6 @@
 variable "resource_group_hp" {
   type        = string
-  default     = "patelh-sandbox-rg"
+  default     = "himesh-patel-sandbox-rg"
   description = "Resource Group to deploy resources into."
 }
 
