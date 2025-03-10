@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                = "kv-webapp-${var.environment}-uks"
+  name                = "kv-wp-webapp-${var.environment}-uks"
   resource_group_name = var.resource_group_hp
   location            = var.location
   sku_name            = "standard"
