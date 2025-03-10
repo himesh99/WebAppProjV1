@@ -1,5 +1,5 @@
 resource "azurerm_app_service" "webapp" {
-  name                = "app-web-${var.environment}"
+  name                = "wp-webapp-${var.environment}"
   resource_group_name = var.resource_group_hp
   location            = var.location
   tags                = var.tags

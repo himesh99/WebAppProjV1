@@ -101,7 +101,7 @@ resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
   subnet_id           = azurerm_subnet.service.id
 
   private_service_connection {
-    name                           = "keyvault-private-connection-${var.environment}-001"
+    name                           = "keyvault-private-connection-${var.environment}"
     private_connection_resource_id = azurerm_key_vault.webappkv.id
     is_manual_connection           = false
     subresource_names              = ["vault"]

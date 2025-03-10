@@ -63,7 +63,7 @@ resource "azurerm_private_endpoint" "database_private_endpoint" {
   subnet_id           = azurerm_subnet.database.id
 
   private_service_connection {
-    name                           = "database-private-connection-${var.environment}-001"
+    name                           = "database-private-connection-${var.environment}"
     private_connection_resource_id = azurerm_mysql_flexible_server.sqlsvr.id
     is_manual_connection           = false
     subresource_names              = ["mysqlServer"]
