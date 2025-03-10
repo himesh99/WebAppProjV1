@@ -75,7 +75,7 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
 
 resource "azurerm_key_vault_secret" "wp_password" {
   name         = "wp-webapp-${var.environment}-password"
-  value        = random_password.wppass.id
+  value        = random_password.wppass.result
   key_vault_id = azurerm_key_vault.webappkv.id
   tags         = var.tags
   content_type = "password"

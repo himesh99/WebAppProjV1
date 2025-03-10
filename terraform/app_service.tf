@@ -40,7 +40,7 @@ resource "azurerm_app_service" "webapp" {
   connection_string {
     name  = "WORDPRESS_ADMIN_PASSWORD"
     type  = "Custom"
-    value = random_password.wppass.id
+    value = random_password.wppass.result
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_USER"
