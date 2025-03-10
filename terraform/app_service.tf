@@ -40,7 +40,7 @@ resource "azurerm_app_service" "webapp" {
   connection_string {
     name  = "WORDPRESS_ADMIN_PASSWORD"
     type  = "Custom"
-    value = azurerm_mysql_flexible_server.sqlsvr.administrator_password
+    value = random_password.wppass.id
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_USER"
@@ -48,3 +48,11 @@ resource "azurerm_app_service" "webapp" {
     value = "himesh.patel"
   }
 }
+
+
+resource "random_password" "wppass" {
+  length           = 12
+  special          = true
+  override_special = "_%@"
+}
+

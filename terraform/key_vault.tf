@@ -73,6 +73,15 @@ resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
 }
 
+resource "azurerm_key_vault_secret" "wp_password" {
+  name         = "wp-webapp-${var.environment}-password"
+  value        = random_password.wppass.id
+  key_vault_id = azurerm_key_vault.webappkv.id
+  tags         = var.tags
+  content_type = "password"
+  depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
+}
+
 resource "azurerm_private_dns_zone" "kv" {
   name                = "privatelink.kv.database.azure.com"
   resource_group_name = var.resource_group_hp
