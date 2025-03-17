@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "database" {
-  name                 = "snet-db-shared-uksouth-${var.environment}"
+  name                 = "snet-db-shared-uks-${var.environment}"
   resource_group_name  = var.resource_group_hp
   address_prefixes     = [var.address_space_snet_db]
   service_endpoints    = ["Microsoft.Sql"]
@@ -9,7 +9,7 @@ resource "azurerm_subnet" "database" {
 }
 
 resource "azurerm_subnet" "service" {
-  name                 = "snet-service-shared-uksouth-${var.environment}"
+  name                 = "snet-service-shared-uks-${var.environment}"
   resource_group_name  = var.resource_group_hp
   address_prefixes     = [var.address_space_snet_sve]
   service_endpoints    = ["Microsoft.KeyVault", "Microsoft.Storage"]

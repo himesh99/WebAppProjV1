@@ -1,7 +1,7 @@
 check "webapp" {
   assert {
     condition     = data.azurerm_app_service.webapp.name == "wordpress-webapp-${var.environment}"
-    error_message = "Name of web app is ${data.azurerm_app_service.webapp.name}, should be wordpress-webapp-dev"
+    error_message = "Name of web app is ${data.azurerm_app_service.webapp.name}, should be wp-app-dev"
   }
   assert {
     condition     = data.azurerm_app_service.webapp.enabled == true

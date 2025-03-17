@@ -1,5 +1,5 @@
 resource "azurerm_service_plan" "webappservice" {
-  name                = "asp-wp-webapp-${var.environment}"
+  name                = "asp-wp-app-${var.environment}"
   resource_group_name = var.resource_group_hp
   location            = var.location
   os_type             = "Linux"
