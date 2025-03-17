@@ -89,14 +89,29 @@ variable "wordpress_image" {
 variable "address_space" {
   type        = string
   description = "(Required) VNET and subnet address space"
+
+  validation {
+    condition = can(cidrhost(var.address_space, 0))
+    error_message = "Must be valid IPv4 cidr"
+  }
 }
 
 variable "address_space_db" {
   type        = string
   description = "(Required) db subnet address space"
+
+    validation {
+    condition = can(cidrhost(var.address_space_db, 0))
+    error_message = "Must be valid IPv4 cidr"
+  }
 }
 
 variable "address_space_sve" {
   type        = string
   description = "(Required) services subnet address space"
+
+   validation {
+    condition = can(cidrhost(var.address_space_sve, 0))
+    error_message = "Must be valid IPv4 cidr"
+  }
 }
