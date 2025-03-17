@@ -87,16 +87,16 @@ variable "wordpress_image" {
 }
 
 variable "address_space" {
-  type = string
+  type        = string
   description = "(Required) VNET and subnet address space"
 }
 
 variable "address_space_db" {
-  type = string
+  type        = string
   description = "(Required) db subnet address space"
 }
 
 variable "address_space_sve" {
-  type = string
+  type        = string
   description = "(Required) services subnet address space"
 }
