@@ -85,3 +85,18 @@ variable "wordpress_image" {
   description = "Docker repository name with tag, e.g. Defaults to onazureio/wordpress:5.5"
   default     = "wordpress:latest"
 }
+
+variable "address_space" {
+  type = string
+  description = "(Required) VNET and subnet address space"
+}
+
+variable "address_space_db" {
+  type = string
+  description = "(Required) db subnet address space"
+}
+
+variable "address_space_sve" {
+  type = string
+  description = "(Required) services subnet address space"
+}
