@@ -89,6 +89,7 @@ variable "wordpress_image" {
 variable "address_space" {
   type        = string
   description = "(Required) VNET and subnet address space"
+  # from <env.tfvars>
 
   validation {
     condition     = can(cidrhost(var.address_space, 0))
