@@ -15,6 +15,9 @@ resource "azurerm_mysql_flexible_server" "sqlsvr" {
   administrator_login    = local.sql_server_username
   administrator_password = random_password.sqlpass.result
   sku_name               = "GP_Standard_D2ds_v4"
+  private_dns_zone_id = azurerm_private_dns_zone_virtual_network_link.sqlsvrLink.id
+
+  depends_on = [azurerm_private_dns_zone_virtual_network_link.sqlsvrLink]
 
 }
 
