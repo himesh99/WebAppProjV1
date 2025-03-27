@@ -8,6 +8,7 @@ resource "random_password" "sqlpass" {
   override_special = "_%@"
 }
 
+#tst
 resource "azurerm_mysql_flexible_server" "sqlsvr" {
   name                   = "sqlsvr-wp-app-${var.environment}"
   resource_group_name    = var.resource_group_hp
