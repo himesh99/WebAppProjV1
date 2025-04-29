@@ -35,7 +35,7 @@ parameters:
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
     
-steps:
+
   - task: TerraformCLI@1
     displayName: 'Terraform format'
     inputs:
