@@ -19,7 +19,9 @@ parameters:
     type: string
   - name: env
     type: string
-      
+
+steps:
+
   - task: TerraformTaskV4@4
     displayName: Terraform Init
     inputs:
@@ -34,7 +36,6 @@ parameters:
       workingDirectory: ${{ parameters.workingDirectory }}
       commandOptions: '-var-file=${{ parameters.tfVarsFile }}'
       env:  ${{ parameters.env }}
-    
 
   - task: TerraformCLI@1
     displayName: 'Terraform format'
