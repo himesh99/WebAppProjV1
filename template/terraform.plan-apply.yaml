@@ -21,7 +21,6 @@ parameters:
     type: string
 
 steps:
-
   - task: TerraformTaskV4@4
     displayName: Terraform Init
     inputs:

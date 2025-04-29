@@ -22,14 +22,6 @@ parameters:
 
 
 steps:
-
-  - task: TerraformCLI@1
-    displayName: 'Terraform format'
-    inputs:
-      command: 'fmt'
-      allowTelemetryCollection: false
-      workingDirectory: ${{ parameters.workingDirectory }}
-      
   - task: TerraformTaskV4@4
     displayName: Terraform Init
     inputs:
@@ -43,6 +35,13 @@ steps:
       backendAzureRmKey: ${{ parameters.backendAzureRmKey }}
       workingDirectory: ${{ parameters.workingDirectory }}
       env:  ${{ parameters.env }}
+
+  - task: TerraformCLI@1
+    displayName: 'Terraform format'
+    inputs:
+      command: 'fmt'
+      allowTelemetryCollection: false
+      workingDirectory: ${{ parameters.workingDirectory }}
 
   - task: TerraformCLI@1
     displayName: 'Terraform Validate'
