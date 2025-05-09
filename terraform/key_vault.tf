@@ -6,6 +6,12 @@ resource "azurerm_key_vault" "webappkv" {
   tenant_id           = var.tenant_id
   tags                = var.tags
 
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+    ip_rules       = ["84.69.91.47"]
+    virtual_network_subnet_ids = [azurerm_subnet.service.id]
+  }
 }
 
 resource "azurerm_key_vault_access_policy" "access_policy_1" {

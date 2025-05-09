@@ -32,8 +32,8 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "allow_all_ips" {
   name                = "all_ip"
   resource_group_name = var.resource_group_hp
   server_name         = azurerm_mysql_flexible_server.sqlsvr.name
-  start_ip_address    = "0.0.0.0"
-  end_ip_address      = "255.255.255.255"
+  start_ip_address    = "84.69.91.47"
+  end_ip_address      = "84.69.91.47"
 }
 
 resource "azurerm_private_dns_zone" "sqlsvr" {
