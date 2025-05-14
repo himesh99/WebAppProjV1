@@ -11,8 +11,8 @@ check "webapp" {
 
 check "vnet" {
   assert {
-    condition     = data.azurerm_virtual_network.webapp.location == "uksouth"
-    error_message = "Location of the virtual network is ${data.azurerm_virtual_network.webapp.location}, should be uksouth"
+    condition     = data.azurerm_virtual_network.webapp.location == "ukwest"
+    error_message = "Location of the virtual network is ${data.azurerm_virtual_network.webapp.location}, should be ukwest"
   }
 }
 
