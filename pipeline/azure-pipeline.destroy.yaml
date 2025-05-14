@@ -30,6 +30,10 @@ stages:
     jobs:
       - job: ${{ replace(env.name, ' ', '_') }}_Environment
         steps:
+        - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+          inputs:
+            terraformVersion: '1.7.1'
+
         - task: TerraformTaskV4@4
           inputs:
             provider: 'azurerm'

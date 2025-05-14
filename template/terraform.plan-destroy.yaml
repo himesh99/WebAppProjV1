@@ -21,9 +21,6 @@ parameters:
     type: string
 
 steps:
-  - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
-    inputs:
-      terraformVersion: '1.7.1'
       
   - task: TerraformTaskV4@4
     displayName: Terraform Init
