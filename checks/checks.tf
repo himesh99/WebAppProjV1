@@ -1,6 +1,6 @@
 check "webapp" {
   assert {
-    condition     = data.azurerm_app_service.webapp.name == "wordpress-webapp-${var.environment}"
+    condition     = data.azurerm_app_service.webapp.name == "wp-app-${var.environment}"
     error_message = "Name of web app is ${data.azurerm_app_service.webapp.name}, should be wp-app-dev"
   }
   assert {
@@ -11,8 +11,8 @@ check "webapp" {
 
 check "vnet" {
   assert {
-    condition     = data.azurerm_virtual_network.webapp.location == "uksouth"
-    error_message = "Location of the virtual network is ${data.azurerm_virtual_network.webapp.location}, should be uksouth"
+    condition     = data.azurerm_virtual_network.webapp.location == "ukwest"
+    error_message = "Location of the virtual network is ${data.azurerm_virtual_network.webapp.location}, should be ukwest"
   }
 }
 
