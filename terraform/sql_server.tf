@@ -10,15 +10,15 @@ resource "random_password" "sqlpass" {
 
 #tst
 resource "azurerm_mysql_flexible_server" "sqlsvr" {
-  name                          = "sqlsvr-wp-app-${var.environment}"
-  resource_group_name           = var.resource_group_hp
-  location                      = var.location
-  administrator_login           = local.sql_server_username
-  administrator_password        = random_password.sqlpass.result
-  sku_name                      = "GP_Standard_D2ds_v4"
-  zone                          = "1"
-  public_network_access_enabled = true
-
+  name                   = "sqlsvr-wp-app-${var.environment}"
+  resource_group_name    = var.resource_group_hp
+  location               = var.location
+  administrator_login    = local.sql_server_username
+  administrator_password = random_password.sqlpass.result
+  sku_name               = "GP_Standard_D2ds_v4"
+  zone                   = "1"
+  private_dns_zone_id    = azurerm_private_dns_zone.sqlsvr.id
+  public_network_access  = enabled
 
 }
 
