@@ -9,7 +9,7 @@ resource "azurerm_storage_account" "storageaccount" {
   tags                            = var.tags
   network_rules {
     default_action             = "Deny"
-    ip_rules                   = ["84.69.91.47", "20.61.71.107"]
+    ip_rules                   = ["84.69.91.47", "20.61.71.107", "52.236.93.30"]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
   }
 }
