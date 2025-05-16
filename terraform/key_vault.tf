@@ -7,7 +7,7 @@ resource "azurerm_key_vault" "webappkv" {
   tags                = var.tags
 
   network_acls {
-    default_action             = "Allow"
+    default_action             = "Deny"
     bypass                     = "AzureServices"
     ip_rules                   = ["84.69.91.47"]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
