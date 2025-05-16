@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "storageaccount" {
   tags                          = var.tags
   public_network_access_enabled = true
   network_rules {
-    default_action = "Deny"
+    default_action = "Allow"
     ip_rules = [
       "84.69.91.47"
     ]
