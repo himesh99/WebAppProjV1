@@ -4,11 +4,11 @@ resource "azurerm_storage_account" "storageaccount" {
   location                        = var.location
   account_tier                    = "Standard"
   account_replication_type        = "LRS"
-  public_network_access_enabled   = false
-  allow_nested_items_to_be_public = false
+  public_network_access_enabled   = true
+  allow_nested_items_to_be_public = true
   tags                            = var.tags
   network_rules {
-    default_action             = "Allow"
+    default_action             = "Deny"
     ip_rules                   = ["84.69.91.47"]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
   }

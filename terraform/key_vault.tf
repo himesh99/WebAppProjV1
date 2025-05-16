@@ -1,14 +1,14 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                = "kv-wp-uks-${var.environment}"
-  resource_group_name = var.resource_group_hp
-  location            = var.location
-  sku_name            = "standard"
-  tenant_id           = var.tenant_id
-  tags                = var.tags
-  public_network_access_enabled = false
+  name                          = "kv-wp-uks-${var.environment}"
+  resource_group_name           = var.resource_group_hp
+  location                      = var.location
+  sku_name                      = "standard"
+  tenant_id                     = var.tenant_id
+  tags                          = var.tags
+  public_network_access_enabled = true
 
   network_acls {
-    default_action             = "Allow"
+    default_action             = "Deny"
     bypass                     = "AzureServices"
     ip_rules                   = ["84.69.91.47"]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
