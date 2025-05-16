@@ -29,7 +29,8 @@ resource "azurerm_storage_account" "storageaccount" {
       "150.171.76.0/24",
       "137.135.190.0/24",
       "13.74.220.0/24",
-      "137.135.191.0/24"
+      "137.135.191.0/24",
+      "20.61.71.0/24"
     ]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
   }
