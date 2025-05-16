@@ -1,16 +1,15 @@
 resource "azurerm_storage_account" "storageaccount" {
-  name                          = "stwpdata${var.environment}"
-  resource_group_name           = var.resource_group_hp
-  location                      = var.location
-  account_tier                  = "Standard"
-  account_replication_type      = "LRS"
-  tags                          = var.tags
-  public_network_access_enabled = false
+  name                            = "stwpdata${var.environment}"
+  resource_group_name             = var.resource_group_hp
+  location                        = var.location
+  account_tier                    = "Standard"
+  account_replication_type        = "LRS"
+  public_network_access_enabled   = false
+  allow_nested_items_to_be_public = false
+  tags                            = var.tags
   network_rules {
-    default_action = "Deny"
-    ip_rules = [
-      "84.69.91.47"
-    ]
+    default_action             = "Allow"
+    ip_rules                   = ["84.69.91.47"]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
   }
 }
