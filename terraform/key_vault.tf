@@ -8,7 +8,7 @@ resource "azurerm_key_vault" "webappkv" {
   public_network_access_enabled = true
 
   network_acls {
-    default_action = "Allow"
+    default_action = "Deny"
     bypass         = "AzureServices"
     ip_rules = [
       "84.69.91.47"
