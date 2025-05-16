@@ -5,7 +5,6 @@ resource "azurerm_storage_account" "storageaccount" {
   account_tier                    = "Standard"
   account_replication_type        = "LRS"
   public_network_access_enabled   = true
-  allow_nested_items_to_be_public = true
   tags                            = var.tags
   network_rules {
     default_action             = "Deny"
