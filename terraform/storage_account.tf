@@ -5,7 +5,7 @@ resource "azurerm_storage_account" "storageaccount" {
   account_tier                  = "Standard"
   account_replication_type      = "LRS"
   tags                          = var.tags
-  public_network_access_enabled = true
+  public_network_access_enabled = false
   network_rules {
     default_action = "Allow"
     ip_rules = [
