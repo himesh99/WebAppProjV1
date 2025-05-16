@@ -7,7 +7,7 @@ resource "azurerm_storage_account" "storageaccount" {
   tags                     = var.tags
   network_rules {
     default_action = "Deny"
-     ip_rules = [
+    ip_rules = [
       "84.69.91.47",
       "51.140.190.0/23",
       "51.140.192.0/23",
@@ -21,8 +21,8 @@ resource "azurerm_storage_account" "storageaccount" {
       "13.107.9.0/24",
       "13.107.42.0/24",
       "13.107.43.0/24",
-      "150.171.22.0/24", 
-      "150.171.23.0/24", 
+      "150.171.22.0/24",
+      "150.171.23.0/24",
       "150.171.73.0/24",
       "150.171.74.0/24",
       "150.171.75.0/24",
