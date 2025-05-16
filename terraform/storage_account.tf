@@ -1,11 +1,11 @@
 resource "azurerm_storage_account" "storageaccount" {
-  name                            = "stwpdata${var.environment}"
-  resource_group_name             = var.resource_group_hp
-  location                        = var.location
-  account_tier                    = "Standard"
-  account_replication_type        = "LRS"
-  public_network_access_enabled   = true
-  tags                            = var.tags
+  name                          = "stwpdata${var.environment}"
+  resource_group_name           = var.resource_group_hp
+  location                      = var.location
+  account_tier                  = "Standard"
+  account_replication_type      = "LRS"
+  public_network_access_enabled = true
+  tags                          = var.tags
   network_rules {
     default_action             = "Deny"
     ip_rules                   = ["84.69.91.47"]
