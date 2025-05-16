@@ -1,38 +1,17 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                = "kv-wp-uks-${var.environment}"
-  resource_group_name = var.resource_group_hp
-  location            = var.location
-  sku_name            = "standard"
-  tenant_id           = var.tenant_id
-  tags                = var.tags
+  name                          = "kv-wp-uks-${var.environment}"
+  resource_group_name           = var.resource_group_hp
+  location                      = var.location
+  sku_name                      = "standard"
+  tenant_id                     = var.tenant_id
+  tags                          = var.tags
+  public_network_access_enabled = true
 
   network_acls {
-    default_action = "Deny"
+    default_action = "Allow"
     bypass         = "AzureServices"
     ip_rules = [
-      "84.69.91.47",
-      "51.140.190.0/23",
-      "51.140.192.0/23",
-      "51.140.194.0/24",
-      "51.140.195.0/24",
-      "51.140.196.0/24",
-      "51.140.197.0/24",
-      "51.140.198.0/24",
-      "51.140.199.0/24",
-      "13.107.6.0/24",
-      "13.107.9.0/24",
-      "13.107.42.0/24",
-      "13.107.43.0/24",
-      "150.171.22.0/24",
-      "150.171.23.0/24",
-      "150.171.73.0/24",
-      "150.171.74.0/24",
-      "150.171.75.0/24",
-      "150.171.76.0/24",
-      "137.135.190.0/24",
-      "13.74.220.0/24",
-      "137.135.191.0/24",
-      "20.61.71.0/24"
+      "84.69.91.47"
     ]
     virtual_network_subnet_ids = [azurerm_subnet.service.id]
   }
