@@ -5,6 +5,7 @@ resource "azurerm_key_vault" "webappkv" {
   sku_name            = "standard"
   tenant_id           = var.tenant_id
   tags                = var.tags
+  public_network_access_enabled = false
 
   network_acls {
     default_action             = "Allow"
