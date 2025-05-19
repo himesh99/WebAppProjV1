@@ -7,11 +7,6 @@ resource "azurerm_storage_account" "storageaccount" {
   public_network_access_enabled   = false
   allow_nested_items_to_be_public = false
   tags                            = var.tags
-  network_rules {
-    default_action             = "Allow"
-    ip_rules                   = ["84.69.91.47"]
-    virtual_network_subnet_ids = [azurerm_subnet.private_endpoint]
-  }
 }
 
 resource "azurerm_storage_container" "container" {
