@@ -10,7 +10,7 @@ resource "random_password" "sqlpass" {
 
 #tst
 resource "azurerm_mysql_flexible_server" "sqlsvr" {
-  name                   = "sqlsvr-wp-${var.environment}- uks"
+  name                   = "sqlsvr-wp-${var.environment}-uks"
   resource_group_name    = var.resource_group_hp
   location               = var.location
   administrator_login    = local.sql_server_username
