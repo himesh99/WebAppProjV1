@@ -102,7 +102,7 @@ variable "address_space_snet_int" {
   description = "(Required) db subnet address space"
 
   validation {
-    condition     = can(cidrhost(var.address_space_snet_db, 0))
+    condition     = can(cidrhost(var.address_space_snet_int, 0))
     error_message = "Must be valid IPv4 cidr"
   }
 }
@@ -112,7 +112,7 @@ variable "address_space_snet_pe" {
   description = "(Required) services subnet address space"
 
   validation {
-    condition     = can(cidrhost(var.address_space_snet_sve, 0))
+    condition     = can(cidrhost(var.address_space_snet_pe, 0))
     error_message = "Must be valid IPv4 cidr"
   }
 }

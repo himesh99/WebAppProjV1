@@ -50,7 +50,7 @@ resource "azurerm_app_service" "webapp" {
   }
 }
 
-resource "azurerm_app_service_virtual_network_swift_connection" "wp-{var.environment}-vnet-connect" {
+resource "azurerm_app_service_virtual_network_swift_connection" "wp-vnet-connect" {
   app_service_id = azurerm_app_service.webapp.id
   subnet_id      = azurerm_subnet.integration_service.id
 }
