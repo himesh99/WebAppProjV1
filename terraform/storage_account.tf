@@ -5,8 +5,14 @@ resource "azurerm_storage_account" "storageaccount" {
   account_tier                    = "Standard"
   account_replication_type        = "LRS"
   public_network_access_enabled   = false
-  allow_nested_items_to_be_public = false
+  allow_nested_items_to_be_public = true
   tags                            = var.tags
+
+  network_rules {
+    default_action             = "Allow"
+    bypass                     = ["AzureServices"]
+    ip_rules                   = ["84.69.91.47"]
+  }
 }
 
 resource "azurerm_storage_container" "container" {

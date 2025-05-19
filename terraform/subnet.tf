@@ -13,6 +13,14 @@ resource "azurerm_subnet" "integration_service" {
   resource_group_name  = var.resource_group_hp
   address_prefixes     = [var.address_space_snet_int]
   virtual_network_name = azurerm_virtual_network.webapp_vnet.name
-
+  delegation {
+    name = "delegation"
+    service_delegation {
+      name    = "Microsoft.Web/serverFarms"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/action"
+      ]
+    }
+  }
 
 }
