@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "storageaccount" {
   network_rules {
     default_action             = "Allow"
     ip_rules                   = ["84.69.91.47"]
-    virtual_network_subnet_ids = [azurerm_subnet.service.id]
+    virtual_network_subnet_ids = [azurerm_subnet.private_endpoint]
   }
 }
 
