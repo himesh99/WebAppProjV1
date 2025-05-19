@@ -55,7 +55,7 @@ resource "azurerm_private_dns_a_record" "sqlsvrArecord" {
   zone_name           = azurerm_private_dns_zone.sqlsvr.name
   resource_group_name = var.resource_group_hp
   ttl                 = 10
-  records             = ["10.0.1.5"]
+  records             = ["10.0.2.3"]
 }
 
 
