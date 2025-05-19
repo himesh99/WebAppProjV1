@@ -10,7 +10,7 @@ resource "random_password" "sqlpass" {
 
 #tst
 resource "azurerm_mysql_flexible_server" "sqlsvr" {
-  name                   = "sqlsvr-wp-app-${var.environment}"
+  name                   = "sqlsvr-wp-${var.environment}- uks"
   resource_group_name    = var.resource_group_hp
   location               = var.location
   administrator_login    = local.sql_server_username
@@ -63,7 +63,7 @@ resource "azurerm_private_endpoint" "database_private_endpoint" {
   name                = "pe-svr-${var.environment}-uks"
   location            = var.location
   resource_group_name = var.resource_group_hp
-  subnet_id           = azurerm_subnet.database.id
+  subnet_id           = azurerm_subnet.private_endpoint.id
 
   private_service_connection {
     name                           = "database-private-connection-${var.environment}"

@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "webappkv" {
-  name                          = "kv-wp-uks-${var.environment}"
+  name                          = "kv-wp-${var.environment}-uks"
   resource_group_name           = var.resource_group_hp
   location                      = var.location
   sku_name                      = "standard"
@@ -8,12 +8,12 @@ resource "azurerm_key_vault" "webappkv" {
   public_network_access_enabled = true
 
   network_acls {
-    default_action = "Deny"
+    default_action = "Allow"
     bypass         = "AzureServices"
     ip_rules = [
       "84.69.91.47"
     ]
-    virtual_network_subnet_ids = [azurerm_subnet.service.id]
+    virtual_network_subnet_ids = [azurerm_subnet.private_endpoint.id]
   }
 }
 
@@ -116,7 +116,7 @@ resource "azurerm_private_endpoint" "keyvault_private_endpoint" {
   name                = "pe-kv-${var.environment}-uks"
   location            = var.location
   resource_group_name = var.resource_group_hp
-  subnet_id           = azurerm_subnet.service.id
+  subnet_id           = azurerm_subnet.private_endpoint.id
 
   private_service_connection {
     name                           = "keyvault-private-connection-${var.environment}"

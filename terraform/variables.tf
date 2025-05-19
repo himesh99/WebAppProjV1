@@ -97,7 +97,7 @@ variable "address_space" {
   }
 }
 
-variable "address_space_snet_db" {
+variable "address_space_snet_int" {
   type        = string
   description = "(Required) db subnet address space"
 
@@ -107,7 +107,7 @@ variable "address_space_snet_db" {
   }
 }
 
-variable "address_space_snet_sve" {
+variable "address_space_snet_pe" {
   type        = string
   description = "(Required) services subnet address space"
 

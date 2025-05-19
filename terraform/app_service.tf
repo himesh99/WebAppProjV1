@@ -25,6 +25,7 @@ resource "azurerm_app_service" "webapp" {
     "WORDPRESS_LOCAL_STORAGE_CACHE_ENABLED" = true
     "WORDPRESS_LOCALE_CODE"                 = "en_US"
     "DOCKER_REGISTRY_SERVER_URL"            = "https://mcr.microsoft.com"
+    "AZURE_STORAGE_CONNECTION_STRING" = azurerm_storage_account.storageaccount.primary_connection_string
   }
 
   connection_string {
@@ -47,6 +48,11 @@ resource "azurerm_app_service" "webapp" {
     type  = "Custom"
     value = "himesh.patel"
   }
+}
+
+resource azurerm_app_service_virtual_network_swift_connection "wp-{var.environment}-vnet-connect" {
+  app_service_id      = azurerm_app_service.webapp.id
+  subnet_id           = azurerm_subnet.integration_service.id
 }
 
 
