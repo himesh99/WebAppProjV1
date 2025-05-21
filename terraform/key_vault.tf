@@ -18,7 +18,7 @@ resource "azurerm_key_vault" "webappkv" {
   }
 }
 
-resource "azure_role_assignment" "keyvault_role_assignment" {
+resource "azurerm_role_assignment" "keyvault_role_assignment" {
   scope                = azurerm_key_vault.webappkv.id
   role_definition_name = "Key Vault Administrator"
   principal_id         = var.object_id
