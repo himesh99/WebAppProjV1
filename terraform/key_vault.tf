@@ -6,7 +6,7 @@ resource "azurerm_key_vault" "webappkv" {
   tenant_id                     = var.tenant_id
   tags                          = var.tags
   public_network_access_enabled = true
-  enable_rbac_authorization = true
+  enable_rbac_authorization     = true
 
   network_acls {
     default_action = "Allow"
