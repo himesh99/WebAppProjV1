@@ -17,7 +17,8 @@ resource "azurerm_app_service" "webapp" {
   app_settings = {
     "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
     "DATABASE_USERNAME"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}"
-    "DATABASE_PASSWORD"                     = "${random_password.sqlpass.result}"
+    "DATABASE_PASSWORD"                     = "${azurerm_key_vault_secret.sql_server_admin_password.value}"
+    "WORDPRESS_DB_HOST"                     = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
     "DATABASE_NAME"                         = "${azurerm_mysql_flexible_database.sqldb.name}"
     "SETUP_PHPMYADMIN"                      = true
     "WEBSITES_CONTAINER_START_TIME_LIMIT"   = 1800
