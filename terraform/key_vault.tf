@@ -75,12 +75,19 @@ resource "azurerm_key_vault_access_policy" "webappkv_access_policy_2" {
 
 resource "azurerm_key_vault_secret" "sql_server_admin_password" {
   name         = "sql-server-${var.environment}-password"
-  value        = azurerm_mysql_flexible_server.sqlsvr.administrator_password
+  value        = random_password.sqlpass.result
   key_vault_id = azurerm_key_vault.webappkv.id
   tags         = var.tags
   content_type = "password"
   depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
 }
+
+resource "random_password" "sqlpass" {
+  length           = 12
+  special          = true
+  override_special = "_%@"
+}
+
 
 resource "azurerm_key_vault_secret" "wp_password" {
   name         = "wp-webapp-${var.environment}-password"
@@ -90,6 +97,13 @@ resource "azurerm_key_vault_secret" "wp_password" {
   content_type = "password"
   depends_on   = [azurerm_key_vault_access_policy.webappkv_access_policy_2]
 }
+
+resource "random_password" "wppass" {
+  length           = 12
+  special          = true
+  override_special = "_%@"
+}
+
 
 resource "azurerm_private_dns_zone" "kv" {
   name                = "privatelink.kv.database.azure.com"

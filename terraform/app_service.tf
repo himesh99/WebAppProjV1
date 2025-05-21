@@ -15,9 +15,9 @@ resource "azurerm_app_service" "webapp" {
 
 
   app_settings = {
-    "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
+    "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com"
     "DATABASE_USERNAME"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}"
-    "DATABASE_PASSWORD"                     = "${random_password.sqlpass.result}"
+    "DATABASE_PASSWORD"                     = "${azurerm_key_vault_secret.wp_password.value}"
     "DATABASE_NAME"                         = "${azurerm_mysql_flexible_database.sqldb.name}"
     "SETUP_PHPMYADMIN"                      = true
     "WEBSITES_CONTAINER_START_TIME_LIMIT"   = 1800
@@ -53,12 +53,5 @@ resource "azurerm_app_service" "webapp" {
 resource "azurerm_app_service_virtual_network_swift_connection" "wp-vnet-connect" {
   app_service_id = azurerm_app_service.webapp.id
   subnet_id      = azurerm_subnet.integration_service.id
-}
-
-
-resource "random_password" "wppass" {
-  length           = 12
-  special          = true
-  override_special = "_%@"
 }
 
