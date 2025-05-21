@@ -13,7 +13,6 @@ resource "azurerm_mysql_flexible_server" "sqlsvr" {
   zone                          = "1"
   private_dns_zone_id           = azurerm_private_dns_zone.sqlsvr.id
   depends_on                    = [azurerm_private_dns_zone_virtual_network_link.sqlsvrLink]
-  public_network_access_enabled = true
 
 }
 
