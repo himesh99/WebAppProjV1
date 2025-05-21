@@ -26,12 +26,14 @@ resource "azurerm_app_service" "webapp" {
     "WORDPRESS_LOCALE_CODE"                 = "en_US"
     "DOCKER_REGISTRY_SERVER_URL"            = "https://mcr.microsoft.com"
     "AZURE_STORAGE_CONNECTION_STRING"       = azurerm_storage_account.storageaccount.primary_connection_string
+    "WORDPRESS_USER"                        = "himesh.patel"
+    "WORDPRESS_PASSWORD"                    = azurerm_key_vault_secret.wp_password.value
   }
 
   connection_string {
     name  = "DATABASE_URL"
     type  = "SQLServer"
-    value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
+    value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${azurerm_key_vault_secret.sql_server_admin_password.value};Encrypt=true;Connection Timeout=30;"
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_EMAIL"
