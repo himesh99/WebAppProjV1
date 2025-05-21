@@ -15,10 +15,9 @@ resource "azurerm_app_service" "webapp" {
 
 
   app_settings = {
-    "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
-    "DATABASE_USERNAME"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}"
+    "DATABASE_HOST"     = "${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com" 
     "DATABASE_PASSWORD"                     = "${azurerm_key_vault_secret.sql_server_admin_password.value}"
-    "WORDPRESS_DB_HOST"                     = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
+    "WORDPRESS_DB_HOST" = "${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com"
     "DATABASE_NAME"                         = "${azurerm_mysql_flexible_database.sqldb.name}"
     "SETUP_PHPMYADMIN"                      = true
     "WEBSITES_CONTAINER_START_TIME_LIMIT"   = 1800
@@ -32,7 +31,7 @@ resource "azurerm_app_service" "webapp" {
   connection_string {
     name  = "DATABASE_URL"
     type  = "SQLServer"
-    value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
+    value = "Server=${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com;Database=${azurerm_mysql_flexible_database.sqldb.name};Uid=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Pwd=${azurerm_key_vault_secret.sql_server_admin_password.value};SslMode=Required;"
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_EMAIL"
