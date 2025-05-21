@@ -12,8 +12,8 @@ resource "azurerm_mysql_flexible_server" "sqlsvr" {
   sku_name               = "GP_Standard_D2ds_v4"
   zone                   = "1"
   private_dns_zone_id    = azurerm_private_dns_zone.sqlsvr.id
-  depends_on = [ azurerm_private_dns_zone_virtual_network_link.sqlsvrLink ]
-  
+  depends_on             = [azurerm_private_dns_zone_virtual_network_link.sqlsvrLink]
+
 }
 
 resource "azurerm_mysql_flexible_server_configuration" "require_secure_transport" {
