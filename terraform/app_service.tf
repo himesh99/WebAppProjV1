@@ -15,16 +15,10 @@ resource "azurerm_app_service" "webapp" {
 
 
   app_settings = {
-    "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com"
-    "DATABASE_PORT"                         = "3306"
+    "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
+    "DATABASE_USERNAME"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}"
+    "DATABASE_PASSWORD"                     = "${random_password.sqlpass.result}"
     "DATABASE_NAME"                         = "${azurerm_mysql_flexible_database.sqldb.name}"
-    "DATABASE_USERNAME"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name}"
-    "DATABASE_PASSWORD"                     = "${azurerm_key_vault_secret.wp_password.value}"
-    "WORDPRESS_DB_HOST"                     = "${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com"
-    "WORDPRESS_DB_PORT"                     = "3306"
-    "WORDPRESS_DB_NAME"                     = "${azurerm_mysql_flexible_database.sqldb.name}"
-    "WORDPRESS_DB_USER"                     = "${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name}"
-    "WORDPRESS_DB_PASSWORD"                 = "${azurerm_key_vault_secret.sql_server_admin_password.value}"
     "SETUP_PHPMYADMIN"                      = true
     "WEBSITES_CONTAINER_START_TIME_LIMIT"   = 1800
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE"   = true
@@ -35,11 +29,9 @@ resource "azurerm_app_service" "webapp" {
   }
 
   connection_string {
-    name = "DATABASE_URL"
-    #type  = "SQLServer"
-    #value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com,3306;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
-    type  = "MySQL"
-    value = "mysql://${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name}:${azurerm_key_vault_secret.wp_password.value}@${azurerm_mysql_flexible_server.sqlsvr.name}.privatelink.mysql.database.azure.com:3306/${azurerm_mysql_flexible_database.sqldb.name}?sslmode=required"
+    name  = "DATABASE_URL"
+    type  = "SQLServer"
+    value = "Server=tcp:${azurerm_mysql_flexible_server.sqlsvr.name}.database.windows.net,1433;Database=${azurerm_mysql_flexible_database.sqldb.name};User ID=${azurerm_mysql_flexible_server.sqlsvr.administrator_login}@${azurerm_mysql_flexible_server.sqlsvr.name};Password=${random_password.sqlpass.result};Encrypt=true;Connection Timeout=30;"
   }
   connection_string {
     name  = "WORDPRESS_ADMIN_EMAIL"
@@ -61,5 +53,12 @@ resource "azurerm_app_service" "webapp" {
 resource "azurerm_app_service_virtual_network_swift_connection" "wp-vnet-connect" {
   app_service_id = azurerm_app_service.webapp.id
   subnet_id      = azurerm_subnet.integration_service.id
+}
+
+
+resource "random_password" "wppass" {
+  length           = 12
+  special          = true
+  override_special = "_%@"
 }
 
