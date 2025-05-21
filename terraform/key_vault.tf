@@ -24,7 +24,7 @@ resource "azurerm_role_assignment" "keyvault_role_assignment" {
   principal_id         = var.object_id
 }
 
-resource "azurerm_role_assignment" "keyvault_role_assignment" {
+resource "azurerm_role_assignment" "keyvault_role_assignment_v1" {
   scope                = azurerm_key_vault.webappkv.id
   role_definition_name = "Key Vault Reader"
   principal_id         = var.v1_object_id
