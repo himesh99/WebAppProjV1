@@ -56,10 +56,3 @@ resource "azurerm_app_service_virtual_network_swift_connection" "wp-vnet-connect
   subnet_id      = azurerm_subnet.integration_service.id
 }
 
-
-resource "random_password" "wppass" {
-  length           = 12
-  special          = true
-  override_special = "_%@"
-}
-
