@@ -28,6 +28,7 @@ resource "azurerm_app_service" "webapp" {
     "AZURE_STORAGE_CONNECTION_STRING"       = azurerm_storage_account.storageaccount.primary_connection_string
     "WORDPRESS_USER"                        = "himesh.patel"
     "WORDPRESS_PASSWORD"                    = azurerm_key_vault_secret.wp_password.value
+    "WORDPRESS TITLE"                       = "Himesh Web App Demo"
   }
 
   connection_string {
