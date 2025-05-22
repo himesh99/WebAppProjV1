@@ -4,15 +4,15 @@ locals {
 
 #tst
 resource "azurerm_mysql_flexible_server" "sqlsvr" {
-  name                   = "sqlsvr-wp-${var.environment}-uks"
-  resource_group_name    = var.resource_group_hp
-  location               = var.location
-  administrator_login    = local.sql_server_username
-  administrator_password = azurerm_key_vault_secret.sql_server_admin_password.value
-  sku_name               = "GP_Standard_D2ds_v4"
-  zone                   = "1"
+  name                          = "sqlsvr-wp-${var.environment}-uks"
+  resource_group_name           = var.resource_group_hp
+  location                      = var.location
+  administrator_login           = local.sql_server_username
+  administrator_password        = azurerm_key_vault_secret.sql_server_admin_password.value
+  sku_name                      = "GP_Standard_D2ds_v4"
+  zone                          = "1"
   public_network_access_enabled = true
-  private_dns_zone_id    = azurerm_private_dns_zone.sqlsvr.id
+  private_dns_zone_id           = azurerm_private_dns_zone.sqlsvr.id
 
 }
 
