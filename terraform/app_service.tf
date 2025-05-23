@@ -6,13 +6,11 @@ resource "azurerm_app_service" "webapp" {
   app_service_plan_id = azurerm_service_plan.webappservice.id
 
   site_config {
-    always_on        = true
-    min_tls_version  = 1.2
-    linux_fx_version = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
+    always_on              = true
+    min_tls_version        = 1.2
+    vnet_route_all_enabled = true
+    linux_fx_version       = "DOCKER|mcr.microsoft.com/appsvc/wordpress-debian-php:8.3"
   }
-
-
-
 
   app_settings = {
     "DATABASE_HOST"                         = "${azurerm_mysql_flexible_server.sqlsvr.name}.mysql.database.azure.com"
@@ -27,6 +25,7 @@ resource "azurerm_app_service" "webapp" {
     "DOCKER_REGISTRY_SERVER_URL"            = "https://mcr.microsoft.com"
     "AZURE_STORAGE_CONNECTION_STRING"       = azurerm_storage_account.storageaccount.primary_connection_string
     "WORDPRESS_PASSWORD"                    = azurerm_key_vault_secret.wp_password.value
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE"   = "true"
   }
 
   connection_string {
@@ -49,6 +48,8 @@ resource "azurerm_app_service" "webapp" {
     type  = "Custom"
     value = "himesh.patel"
   }
+
+
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "wp-vnet-connect" {
