@@ -64,19 +64,19 @@ variable "environment" {
 
 variable "tenant_id" {
   type    = string
-  default = "3e0088dc-0629-4ae6-aa8c-813e7a296f50"
+  default = "abcdef"
 
 }
 
 variable "object_id" {
   type    = string
-  default = "18755058-a4c0-4705-b50a-35348fb876d6"
+  default = "abcdef"
 
 }
 
 variable "v1_object_id" {
   type    = string
-  default = "0e4b967e-0513-4269-aa22-687166d31276"
+  default = "abcdef"
 
 }
 
